@@ -26,8 +26,8 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 
 | Deck | Transaction |
 |---|---|
-| Talk | [3ixx3Qbu…](https://explorer.solana.com/tx/3ixx3QbuGZSUZsDXJdfbhHcoYa3npzwvS5P2veMxenu1yLGjv6jnwCDu9H6untnouWSs89Rgc4mmFJfrGebi5rc5?cluster=devnet) |
-| Pitch | [58QWdzTK…](https://explorer.solana.com/tx/58QWdzTKzf3swngNhuy8UQa65YNkNAAksxWpYnguchjgzWCMRMeqpS9Q3FtJGQ8jQwXNsgsvjhA928kNi96Psv4M?cluster=devnet) |
+| Talk | [FbN65d9o…](https://explorer.solana.com/tx/FbN65d9o6gypBygCxTRLqSpkLVn2XRz2wfKCZnqSWJCMGx1e9XMQUUaWCpbRzpCiEXLJfUVDTt7tf87rFjnghw8?cluster=devnet) |
+| Pitch | [4699cQsL…](https://explorer.solana.com/tx/4699cQsLBfJVdFbDsR9zvokmMDP4jsP3c3snsspYxKKUKqSsjhhMgGKjWDW6MrqtoVCVa9vhbJWg3kGymkUyDbKd?cluster=devnet) |
 
 ## Install
 

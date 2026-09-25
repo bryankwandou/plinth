@@ -1,4 +1,14 @@
 [
-  {"title":"Talk: What 5,428 hackathon projects say about pitching","deck":"decks/talk-5428-projects.html","memo":"plinth:v1 sha256=5199d9832dd1736715a23fe91615e489bf3991bc1c1cbdec30626aad7092717f score=100 slides=9","signature":"3ixx3QbuGZSUZsDXJdfbhHcoYa3npzwvS5P2veMxenu1yLGjv6jnwCDu9H6untnouWSs89Rgc4mmFJfrGebi5rc5"},
-  {"title":"Pitch: Plinth, pitched with Plinth","deck":"decks/pitch-plinth.html","memo":"plinth:v1 sha256=24be43cb312a230149586f01226dc4187c31e2f2bee74cd43d08f0f865822a55 score=100 slides=8","signature":"58QWdzTKzf3swngNhuy8UQa65YNkNAAksxWpYnguchjgzWCMRMeqpS9Q3FtJGQ8jQwXNsgsvjhA928kNi96Psv4M"}
+  {
+    "title": "Talk: What 5,428 hackathon projects say about pitching",
+    "deck": "decks/talk-5428-projects.html",
+    "memo": "plinth:v1 sha256=6916c8f774bceb1064cc30deb187ac930d0e5540f01d3f80120fb32ed894bb7f score=100 slides=9",
+    "signature": "FbN65d9o6gypBygCxTRLqSpkLVn2XRz2wfKCZnqSWJCMGx1e9XMQUUaWCpbRzpCiEXLJfUVDTt7tf87rFjnghw8"
+  },
+  {
+    "title": "Pitch: Plinth, pitched with Plinth",
+    "deck": "decks/pitch-plinth.html",
+    "memo": "plinth:v1 sha256=25a204d9d13be30e5bad327b3a276f063eccd01a5527d9d18a46e2827c33c55b score=100 slides=8",
+    "signature": "4699cQsLBfJVdFbDsR9zvokmMDP4jsP3c3snsspYxKKUKqSsjhhMgGKjWDW6MrqtoVCVa9vhbJWg3kGymkUyDbKd"
+  }
 ]

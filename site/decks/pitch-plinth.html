@@ -14,8 +14,8 @@
 .dark{ --bg:#111214; --ink:#F2F1EC; --muted:#9A9CA3; --line:#2A2B30; --panel:#1A1B1F; }
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:#0c0c0e;font-family:var(--font);-webkit-font-smoothing:antialiased}
-.stage{position:fixed;inset:0;display:grid;place-items:center}
-.deck{width:1280px;height:720px;position:relative;transform-origin:center}
+.stage{position:fixed;inset:0;overflow:hidden}
+.deck{width:1280px;height:720px;position:absolute;left:50%;top:50%;margin:-360px 0 0 -640px;transform-origin:center}
 section{position:absolute;inset:0;background:var(--bg);color:var(--ink);padding:64px 64px 56px;display:flex;flex-direction:column;
   opacity:0;pointer-events:none;transition:opacity .35s ease}
 section.on{opacity:1;pointer-events:auto}
@@ -50,7 +50,7 @@ aside.notes{display:none}
 #hint{position:fixed;right:16px;top:12px;font:12px var(--font);color:#777}
 @media print{
   @page{size:1280px 720px;margin:0}
-  html,body{background:none} .stage{position:static;display:block} .deck{transform:none!important;width:auto;height:auto}
+  html,body{background:none} .stage{position:static;display:block} .deck{transform:none!important;position:static;margin:0;width:auto;height:auto}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
@@ -127,7 +127,7 @@ aside.notes{display:none}
 (()=>{
   const deck=document.getElementById('deck'),S=[...deck.querySelectorAll('section')],bar=document.getElementById('progress'),nb=document.getElementById('notes');
   let i=Math.min(S.length-1,Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
-  const fit=()=>{const k=Math.min(innerWidth/1280,innerHeight/720);deck.style.transform=`scale(${k})`};
+  const fit=()=>{const k=Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
   const show=n=>{i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
     bar.style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));
     const a=S[i].querySelector('aside.notes');nb.textContent=a?a.textContent.trim():'';};
