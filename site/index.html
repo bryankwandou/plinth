@@ -118,13 +118,56 @@ footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
   .rules{grid-template-columns:1fr} nav .links{display:none} .cmp .r{grid-template-columns:120px 1fr 44px;font-size:13px}
   header{padding:56px 0 48px} .deck iframe{transform:scale(.27)}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}h1 .u{background-size:100% 6px}}
+/* motion layer */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:30;pointer-events:none}
+nav .links a{position:relative;padding:4px 0;transition:color .2s}
+nav .links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:100% 50%;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
+.tog button,.theme,.presets button,.install button{transition:background .2s,color .2s,border-color .2s,transform .12s}
+.theme:hover,.presets button:hover,.install button:hover{border-color:var(--ink);color:var(--ink)}
+.tog button:not(.on):hover{color:var(--ink)}
+.btn:active,.presets button:active,.install button:active,.theme:active,.tog button:active{transform:scale(.97)}
+.btn.pri:hover{box-shadow:0 12px 24px -14px var(--accent)}
+.btn .ar{transition:transform .2s cubic-bezier(.2,.7,.2,1)}.btn:hover .ar{transform:translateX(3px)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hl{position:relative;isolation:isolate}
+.hl::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--accent) 10%,transparent),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:-1}
+.hl:hover::before{opacity:1}
+.step{transition:transform .25s cubic-bezier(.2,.7,.2,1),border-color .25s,box-shadow .25s}
+.step:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:0 24px 48px -36px rgba(0,0,0,.4)}
+.deck .m b{transition:color .2s}.deck:hover .m b{color:var(--accent)}
+.deck iframe{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.stat{transition:border-color .3s}.stat:hover{border-color:var(--accent)}
+.rules p{transition:padding-left .25s cubic-bezier(.2,.7,.2,1),color .2s}.rules p:hover{padding-left:6px}
+.stagebox{will-change:transform;transition:box-shadow .3s}
+.mini>*{opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s cubic-bezier(.2,.7,.2,1)}
+.mini.on>*{opacity:1;transform:none}
+.mini.on>*:nth-child(2){transition-delay:.08s}.mini.on>*:nth-child(3){transition-delay:.18s}.mini.on>*:nth-child(4){transition-delay:.26s}
+.mini .bars i{transform:scaleX(0);transform-origin:0 50%;transition:transform .8s .3s cubic-bezier(.2,.7,.2,1)}.mini.on .bars i{transform:none}
+.dots b{transition:background .3s,width .3s}.dots b.on{width:16px;border-radius:3px}
+.hero>div:first-child>*{animation:rise .8s both cubic-bezier(.2,.7,.2,1)}
+.hero>div:first-child>*:nth-child(2){animation-delay:.08s}.hero>div:first-child>*:nth-child(3){animation-delay:.16s}.hero>div:first-child>*:nth-child(4){animation-delay:.24s}.hero>div:first-child>*:nth-child(5){animation-delay:.32s}
+.stagebox{animation:rise 1s .2s both cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+.step.reveal,.deck.reveal,.stat.reveal{transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1),border-color .25s,box-shadow .25s}
+.rules p.reveal{transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1),padding-left .25s}
+.reveal{transition-delay:calc(var(--i,0) * 70ms)}
+.issues li{animation:in .35s both cubic-bezier(.2,.7,.2,1);animation-delay:calc(var(--i,0) * 45ms)}
+.score b.bump{animation:bump .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes bump{50%{transform:scale(1.04)}}
+.score b{display:inline-block;transform-origin:0 100%}
+/* video */
+.vid{margin-top:40px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--panel);aspect-ratio:16/9;box-shadow:0 40px 80px -56px rgba(0,0,0,.4)}
+.vid video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.vidnote{font-size:13px;color:var(--muted);margin-top:14px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal,.mini>*,.hero>div:first-child>*{opacity:1;transform:none}.mini .bars i{transform:none}.progress{display:none}h1 .u{background-size:100% 6px}}
 </style>
 </head>
 <body>
+<div class="progress" id="prog" aria-hidden="true"></div>
 <nav><div class="wrap">
   <a class="brand" href="#"><img src="logo.svg" alt="">Plinth</a>
-  <div class="links"><a href="#data" data-i="n1">Data</a><a href="#how" data-i="n2">How it works</a><a href="#try" data-i="n3">Try the linter</a><a href="#decks" data-i="n4">Examples</a></div>
+  <div class="links"><a href="#data" data-i="n1">Data</a><a href="#how" data-i="n2">How it works</a><a href="#try" data-i="n3">Try the linter</a><a href="#decks" data-i="n4">Examples</a><a href="#video" data-i="n5">Video</a></div>
   <div class="tog" role="group" aria-label="Language"><button data-l="en" class="on">EN</button><button data-l="id">ID</button></div>
   <button class="theme" id="theme" aria-label="Toggle theme">◐</button>
 </div></nav>
@@ -135,7 +178,7 @@ footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
     <h1 data-i="h1">Slides that make <span class="u">an argument</span></h1>
     <p class="sub" data-i="h2">Plinth writes your headlines first, gives each slide one job, then checks every word for filler. Built for hackathon pitches, investor decks and talks.</p>
     <div class="cta">
-      <a class="btn pri" href="#try" data-i="c1">Lint a deck now</a>
+      <a class="btn pri" href="#try"><span data-i="c1">Lint a deck now</span><span class="ar" aria-hidden="true">&rarr;</span></a>
       <a class="btn" href="https://github.com/bryankwandou/plinth" data-i="c2">Get the skill</a>
     </div>
     <div class="install"><code>git clone https://github.com/bryankwandou/plinth &amp;&amp; cp -r plinth/skill/plinth ~/.claude/skills/</code><button id="copy" data-i="cp">Copy</button></div>
@@ -172,9 +215,9 @@ footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
   <div class="eyebrow reveal" data-i="w0">How it works</div>
   <h2 class="reveal" data-i="w1">Headlines first, slides second, lint last</h2>
   <div class="steps">
-    <div class="step reveal"><div class="k">01 · spine</div><h3 data-i="t1">Write the case as claims</h3><p data-i="p1">Every headline is a full sentence with a verb. Read top to bottom, the list alone should make your case.</p></div>
-    <div class="step reveal"><div class="k">02 · build</div><h3 data-i="t2">One job per slide</h3><p data-i="p2">A number, a chart, a screenshot, or three short points. One HTML file with speaker notes and print to PDF.</p></div>
-    <div class="step reveal"><div class="k">03 · lint</div><h3 data-i="t3">Check every word</h3><p data-i="p3">Filler, topic-label headlines, crowded slides and numbers without a source get flagged before anyone sees them.</p></div>
+    <div class="step hl reveal"><div class="k">01 · spine</div><h3 data-i="t1">Write the case as claims</h3><p data-i="p1">Every headline is a full sentence with a verb. Read top to bottom, the list alone should make your case.</p></div>
+    <div class="step hl reveal"><div class="k">02 · build</div><h3 data-i="t2">One job per slide</h3><p data-i="p2">A number, a chart, a screenshot, or three short points. One HTML file with speaker notes and print to PDF.</p></div>
+    <div class="step hl reveal"><div class="k">03 · lint</div><h3 data-i="t3">Check every word</h3><p data-i="p3">Filler, topic-label headlines, crowded slides and numbers without a source get flagged before anyone sees them.</p></div>
   </div>
 </div></section>
 
@@ -199,23 +242,31 @@ footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
   <div class="eyebrow reveal" data-i="k0">Examples</div>
   <h2 class="reveal" data-i="k1">Two decks built with the skill, both scoring 100</h2>
   <div class="decks">
-    <a class="deck reveal" href="decks/talk-5428-projects.html"><div class="fr"><iframe src="decks/talk-5428-projects.html" loading="lazy" tabindex="-1" title="Talk deck preview"></iframe></div><div class="m"><b data-i="e1">What 5,428 hackathon projects say about pitching</b><span data-i="e2">Talk · 9 slides · arrow keys to present</span></div></a>
-    <a class="deck reveal" href="decks/pitch-plinth.html"><div class="fr"><iframe src="decks/pitch-plinth.html" loading="lazy" tabindex="-1" title="Pitch deck preview"></iframe></div><div class="m"><b data-i="e3">Plinth, pitched with Plinth</b><span data-i="e4">Pitch · 8 slides · honest about zero traction</span></div></a>
+    <a class="deck hl reveal" href="decks/talk-5428-projects.html"><div class="fr"><iframe src="decks/talk-5428-projects.html" loading="lazy" tabindex="-1" title="Talk deck preview"></iframe></div><div class="m"><b data-i="e1">What 5,428 hackathon projects say about pitching</b><span data-i="e2">Talk · 9 slides · arrow keys to present</span></div></a>
+    <a class="deck hl reveal" href="decks/pitch-plinth.html"><div class="fr"><iframe src="decks/pitch-plinth.html" loading="lazy" tabindex="-1" title="Pitch deck preview"></iframe></div><div class="m"><b data-i="e3">Plinth, pitched with Plinth</b><span data-i="e4">Pitch · 8 slides · honest about zero traction</span></div></a>
   </div>
+</div></section>
+
+<section id="video"><div class="wrap">
+  <div class="eyebrow reveal" data-i="v0">Walkthrough</div>
+  <h2 class="reveal" data-i="v1">Watch one deck go from outline to a score of 100</h2>
+  <p class="lead reveal" data-i="v2">A short screen recording: the skill writes the headline spine, builds the slides, then lints and fixes the copy.</p>
+  <div class="vid reveal"><video controls preload="metadata" playsinline src="walkthrough.mp4" poster="walkthrough-poster.png" aria-label="Plinth walkthrough video"></video></div>
+  <p class="vidnote reveal" data-i="v3">Walkthrough video of the Plinth skill.</p>
 </div></section>
 
 <section id="rules"><div class="wrap">
   <div class="eyebrow reveal" data-i="r0">The rules</div>
   <h2 class="reveal" data-i="r1">Eight rules the skill will not break</h2>
-  <div class="rules reveal">
-    <p data-i="q1">A headline is a claim, never a topic label.</p>
-    <p data-i="q2">Twelve words or fewer per headline.</p>
-    <p data-i="q3">One piece of evidence per slide.</p>
-    <p data-i="q4">Every number carries its source.</p>
-    <p data-i="q5">One accent color, used where the eye should land.</p>
-    <p data-i="q6">No emoji, no exclamation marks, no gradient text.</p>
-    <p data-i="q7">Missing data is marked on the slide, never invented.</p>
-    <p data-i="q8">Under three minutes for a hackathon pitch.</p>
+  <div class="rules">
+    <p class="reveal" data-i="q1">A headline is a claim, never a topic label.</p>
+    <p class="reveal" data-i="q2">Twelve words or fewer per headline.</p>
+    <p class="reveal" data-i="q3">One piece of evidence per slide.</p>
+    <p class="reveal" data-i="q4">Every number carries its source.</p>
+    <p class="reveal" data-i="q5">One accent color, used where the eye should land.</p>
+    <p class="reveal" data-i="q6">No emoji, no exclamation marks, no gradient text.</p>
+    <p class="reveal" data-i="q7">Missing data is marked on the slide, never invented.</p>
+    <p class="reveal" data-i="q8">Under three minutes for a hackathon pitch.</p>
   </div>
 </div></section>
 
@@ -239,7 +290,7 @@ l0:"Coba",l1:"Tempel slide Anda dan lihat apa yang akan dilihat juri",l2:'Baris 
 pb:"Muat deck yang lemah",pg:"Muat hasil tulis ulang",pc:"Kosongkan",k0:"Contoh",k1:"Dua deck yang dibuat dengan skill ini, keduanya skor 100",
 e1:"Apa kata 5.428 proyek hackathon soal pitching",e2:"Presentasi · 9 slide · tombol panah untuk presentasi",e3:"Plinth, di-pitch dengan Plinth",e4:"Pitch · 8 slide · jujur soal traksi nol",
 r0:"Aturan",r1:"Delapan aturan yang tidak akan dilanggar",q1:"Judul adalah klaim, bukan label topik.",q2:"Maksimal dua belas kata per judul.",q3:"Satu bukti per slide.",q4:"Setiap angka menyertakan sumbernya.",
-q5:"Satu warna aksen, dipakai di titik yang harus dilihat.",q6:"Tanpa emoji, tanpa tanda seru, tanpa teks gradien.",q7:"Data yang tidak ada ditandai di slide, tidak dikarang.",q8:"Di bawah tiga menit untuk pitch hackathon.",f1:"Dibuat oleh Bryan Kwandou. Lisensi MIT."}};
+q5:"Satu warna aksen, dipakai di titik yang harus dilihat.",q6:"Tanpa emoji, tanpa tanda seru, tanpa teks gradien.",q7:"Data yang tidak ada ditandai di slide, tidak dikarang.",q8:"Di bawah tiga menit untuk pitch hackathon.",n5:"Video",v0:"Panduan",v1:"Lihat satu deck dari kerangka sampai skor 100",v2:"Rekaman layar singkat: skill menyusun tulang punggung judul, membangun slide, lalu memeriksa dan memperbaiki teksnya.",v3:"Video panduan skill Plinth.",f1:"Dibuat oleh Bryan Kwandou. Lisensi MIT."}};
 const EN={};document.querySelectorAll('[data-i]').forEach(e=>EN[e.dataset.i]=e.innerHTML);T.en=EN;
 function setLang(l){document.documentElement.lang=l;document.querySelectorAll('[data-i]').forEach(e=>{const v=T[l][e.dataset.i];if(v!=null)e.innerHTML=v});
   document.querySelectorAll('.tog button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));try{localStorage.setItem('plinth-lang',l)}catch(e){}}
@@ -257,6 +308,18 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return
     const f=n=>{const p=Math.min(1,(n-t0)/1200),v=to*(1-Math.pow(1-p,3));c.textContent=v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
   t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w+'%')}),{threshold:.2});
 document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+// stagger siblings: index among .reveal siblings in the same parent
+document.querySelectorAll('.stats,.steps,.decks,.rules,.cmp').forEach(g=>[...g.querySelectorAll(':scope>.reveal')].forEach((e,i)=>e.style.setProperty('--i',i)));
+document.querySelectorAll('.wrap').forEach(w=>{let i=0;[...w.children].forEach(e=>{if(e.classList.contains('reveal'))e.style.setProperty('--i',i++)})});
+document.addEventListener('transitionend',e=>{const t=e.target;if(t.classList&&t.classList.contains('seen')&&e.propertyName==='opacity')t.style.setProperty('--i',0)});
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+// scroll progress + hero parallax
+(()=>{const pg=document.getElementById('prog'),st=document.getElementById('stage');let q=0;
+ const f=()=>{q=0;const h=document.documentElement,y=h.scrollTop,m=h.scrollHeight-h.clientHeight;pg.style.transform='scaleX('+(m>0?y/m:0)+')';
+  if(!RM&&y<900)st.style.translate='0 '+(y*-.06).toFixed(1)+'px'};
+ addEventListener('scroll',()=>{if(!q)q=requestAnimationFrame(f)},{passive:true});f()})();
+// cursor highlight on cards
+document.querySelectorAll('.hl').forEach(c=>c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')}));
 // linter
 const P={bad:`The Problem
 - Seamless onboarding for everyone
@@ -277,10 +340,13 @@ source: devnet test run, 50 transfers
 ---
 Two founders who ran a warung payments desk for three years`,clear:''};
 const src=document.getElementById('src'),sc=document.getElementById('sc'),mt=document.getElementById('mt'),iss=document.getElementById('iss');
-function run(){const sl=PlinthLint.parseText(src.value);if(!sl.length){sc.textContent='0';mt.style.width='0';iss.innerHTML='';return}
- const r=PlinthLint.lintSlides(sl);sc.textContent=r.score;sc.style.color=r.score>=90?'var(--good)':r.score<60?'var(--bad)':'var(--ink)';mt.style.width=r.score+'%';
- iss.innerHTML=r.issues.length?r.issues.map(i=>`<li><span class="sl">slide ${i.slide}</span><span class="kd">${i.kind}</span><span></span></li>`).join(''):'<li style="grid-template-columns:1fr">No issues. Ship it.</li>';
+function run(){const sl=PlinthLint.parseText(src.value);if(!sl.length){countTo(0);mt.style.width='0';iss.innerHTML='';return}
+ const r=PlinthLint.lintSlides(sl);countTo(r.score);sc.style.color=r.score>=90?'var(--good)':r.score<60?'var(--bad)':'var(--ink)';mt.style.width=r.score+'%';
+ iss.innerHTML=r.issues.length?r.issues.map((i,j)=>`<li style="--i:${Math.min(j,12)}"><span class="sl">slide ${i.slide}</span><span class="kd">${i.kind}</span><span></span></li>`).join(''):'<li style="grid-template-columns:1fr">No issues. Ship it.</li>';
  [...iss.querySelectorAll('li span:last-child')].forEach((s,j)=>{if(r.issues[j])s.textContent=r.issues[j].msg})}
+let cur=0,raf;function countTo(to){cancelAnimationFrame(raf);if(RM||to===cur){cur=to;sc.textContent=to;return}
+ const from=cur,t0=performance.now();sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump');
+ const f=n=>{const p=Math.min(1,(n-t0)/600),v=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));sc.textContent=v;cur=v;if(p<1)raf=requestAnimationFrame(f)};raf=requestAnimationFrame(f)}
 let tm;src.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(run,120)});
 document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{src.value=P[b.dataset.p];run()});
 src.value=P.bad;run();

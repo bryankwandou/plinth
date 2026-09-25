@@ -60,3 +60,13 @@ Top-down TAM ("$4T payments market") gets ignored. Go bottom-up and show the ari
 ## Script
 
 Voiceover runs at about 150 words per minute, so 3 minutes is about 450 words. Read it aloud once and cut every sentence you stumble on.
+
+## Outside the deck: presence
+
+The one gap the data showed was not in any slide: 96% of winners linked an X account, against 80% of the rest. This is a correlation, not a proven cause, but it costs little. Before submitting, check:
+
+- The project has a public X account, linked in the submission.
+- At least one progress post per week of the hackathon, each with a screenshot or clip of something that works.
+- The repo is public and the README opens with the one-liner from slide 1.
+- The demo video is unlisted or public on YouTube, not a private drive link.
+- The deck, the README, and the submission form use the same one-liner, word for word.

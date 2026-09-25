@@ -6,6 +6,14 @@ Live site with an in-browser linter: https://plinthdeck.vercel.app
 
 ![Landing page](docs/evidence/landing-desktop.png)
 
+## Walkthrough
+
+60-second video of both example decks: https://plinthdeck.vercel.app/walkthrough.mp4 ([file](site/walkthrough.mp4)).
+
+## Audit
+
+A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md](docs/AUDIT.md).
+
 ## Install
 
 ```bash
