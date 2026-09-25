@@ -145,8 +145,10 @@ $('sign').onclick = async () => {
     const conn = new web3.Connection(RPC, 'confirmed');
     const tx = new web3.Transaction().add(new web3.TransactionInstruction({ programId: new web3.PublicKey(MEMO), keys: [{ pubkey: pk, isSigner: true, isWritable: false }], data: new TextEncoder().encode(memoA) }));
     tx.feePayer = pk; tx.recentBlockhash = (await conn.getLatestBlockhash()).blockhash;
-    const signed = await w.signTransaction(tx);
-    const sig = await conn.sendRawTransaction(signed.serialize());
+    // Wallets that can send (Phantom, Solflare) get the whole transaction, which is what they recommend.
+    const sig = w.signAndSendTransaction
+      ? (await w.signAndSendTransaction(tx)).signature
+      : await conn.sendRawTransaction((await w.signTransaction(tx)).serialize());
     await conn.confirmTransaction(sig, 'confirmed');
     show($('outA'), `<span class="ok">Recorded.</span> Signature <code>${esc(sig)}</code><br><a href="${explorer(sig)}" target="_blank" rel="noopener">View on Solana Explorer</a>`);
   } catch (e) { show($('outA'), `<span class="no">Not recorded.</span> ${esc(e.message || e)}`); }

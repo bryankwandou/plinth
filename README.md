@@ -29,6 +29,8 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 | Talk | [FbN65d9o…](https://explorer.solana.com/tx/FbN65d9o6gypBygCxTRLqSpkLVn2XRz2wfKCZnqSWJCMGx1e9XMQUUaWCpbRzpCiEXLJfUVDTt7tf87rFjnghw8?cluster=devnet) |
 | Pitch | [4699cQsL…](https://explorer.solana.com/tx/4699cQsLBfJVdFbDsR9zvokmMDP4jsP3c3snsspYxKKUKqSsjhhMgGKjWDW6MrqtoVCVa9vhbJWg3kGymkUyDbKd?cluster=devnet) |
 
+Tested with the real Phantom extension (v26.30.2, Testnet Mode, Solana Devnet): connect, sign and send, then check. Receipt [5SSrix23…](https://explorer.solana.com/tx/5SSrix23ZnyUTdCj5WSbskKs4DgWY9R3fNX5GdZToxUhTzzNHHms7eH447kxDF5D9uLjsx5FnmXEt5X5Vo2RbaVS?cluster=devnet) came back as a match ([screenshot](docs/evidence/phantom-e2e.png)). On devnet, Phantom shows "Failed to simulate" before you confirm. A plain 1-lamport transfer with no Plinth code in it gets the same warning ([screenshot](docs/evidence/phantom-plain-transfer-same-warning.png)), so the warning comes from Phantom's devnet simulation, not from the memo.
+
 ## Install
 
 ```bash
