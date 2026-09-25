@@ -14,6 +14,21 @@ Live site with an in-browser linter: https://plinthdeck.vercel.app
 
 A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md](docs/AUDIT.md).
 
+## PowerPoint, scenarios, languages
+
+- `node skill/plinth/scripts/to-pptx.mjs deck.html` writes an editable 16:9 .pptx with speaker notes. Examples: [talk](examples/talk-5428-projects.pptx), [pitch](examples/pitch-plinth.pptx).
+- [references/scenarios.md](skill/plinth/references/scenarios.md): 14 spines, from a 3-minute hackathon video to a board pre-read and a thesis defense.
+- [references/languages.md](skill/plinth/references/languages.md): register, number format and hype words for 17 languages; the linter checks all of them. The site itself is in 22 languages.
+
+## Solana devnet receipts
+
+`node skill/plinth/scripts/anchor.mjs deck.html` writes `plinth:v1 sha256=<file hash> score=<lint> slides=<n>` as an SPL Memo. Anyone can check a receipt against a file at https://plinthdeck.vercel.app/anchor.html. Both example decks are recorded:
+
+| Deck | Transaction |
+|---|---|
+| Talk | [3ixx3Qbu…](https://explorer.solana.com/tx/3ixx3QbuGZSUZsDXJdfbhHcoYa3npzwvS5P2veMxenu1yLGjv6jnwCDu9H6untnouWSs89Rgc4mmFJfrGebi5rc5?cluster=devnet) |
+| Pitch | [58QWdzTK…](https://explorer.solana.com/tx/58QWdzTKzf3swngNhuy8UQa65YNkNAAksxWpYnguchjgzWCMRMeqpS9Q3FtJGQ8jQwXNsgsvjhA928kNi96Psv4M?cluster=devnet) |
+
 ## Install
 
 ```bash

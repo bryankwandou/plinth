@@ -1,0 +1,13 @@
+{
+  "name": "plinth",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/lint.test.mjs",
+    "build": "node scripts/build-decks.mjs",
+    "pptx": "node skill/plinth/scripts/to-pptx.mjs"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.99.0",
+    "pptxgenjs": "^3.12.0"
+  }
+}

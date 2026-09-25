@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plinth Deck Receipts</title>
+<meta name="description" content="Record a deck's SHA-256 and lint score on Solana devnet, and check a receipt against a file.">
+<link rel="icon" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF7;--ink:#15161A;--muted:#63666E;--line:#E4E3DD;--panel:#F2F1EB;--card:#FFFFFF;--accent:#2F5BEA;--bad:#C2410C;--good:#15803D;--font:Inter,system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101113;--ink:#F2F1EC;--muted:#9A9DA5;--line:#26272C;--panel:#17181C;--card:#1B1C20;--accent:#6E8BFF;--bad:#FB923C;--good:#4ADE80}}
+:root[data-theme="dark"]{--bg:#101113;--ink:#F2F1EC;--muted:#9A9DA5;--line:#26272C;--panel:#17181C;--card:#1B1C20;--accent:#6E8BFF;--bad:#FB923C;--good:#4ADE80}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+nav{border-bottom:1px solid var(--line)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+nav .wrap{display:flex;align-items:center;gap:10px;height:64px;font-weight:600}
+nav img{width:26px;height:26px} nav .back{margin-left:auto;font-size:14px;color:var(--muted);font-weight:500;text-decoration:none}
+header{padding:64px 0 32px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(34px,5vw,52px);line-height:1.08;letter-spacing:-.02em;margin-top:12px;max-width:20ch}
+.sub{font-size:18px;color:var(--muted);max-width:60ch;margin-top:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-bottom:64px}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0;animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.card:nth-child(2){animation-delay:.08s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+h2{font-size:22px;letter-spacing:-.01em}
+.card p.hint{color:var(--muted);font-size:14px;margin-top:6px}
+[hidden]{display:none!important}
+.drop{display:block;margin-top:18px;border:1.5px dashed var(--line);border-radius:12px;padding:22px;text-align:center;color:var(--muted);font-size:14px;cursor:pointer;transition:border-color .2s,background .2s}
+.drop.over,.drop:hover{border-color:var(--accent);background:var(--panel)}
+input[type=text]{width:100%;margin-top:14px;font:14px var(--mono);padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.btn{margin-top:16px;display:inline-flex;gap:8px;align-items:center;padding:11px 16px;border-radius:10px;font:600 15px var(--font);border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)} .btn:active{transform:scale(.98)} .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.ghost{background:transparent;color:var(--ink)}
+dl{margin-top:18px;display:grid;grid-template-columns:max-content 1fr;gap:6px 14px;font-size:14px}
+dt{color:var(--muted)} dd{font-family:var(--mono);word-break:break-all}
+.out{margin-top:16px;font-size:14px;padding:12px 14px;border-radius:10px;background:var(--panel);display:none;word-break:break-all}
+.out.show{display:block;animation:rise .35s both}
+.ok{color:var(--good);font-weight:600} .no{color:var(--bad);font-weight:600}
+.proof{border-top:1px solid var(--line);padding:40px 0 72px}
+.proof table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+.proof td,.proof th{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.proof th{color:var(--muted);font-weight:500}
+.proof td.m{font-family:var(--mono);word-break:break-all}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><img src="logo.svg" alt=""><span>Plinth</span><a class="back" href="./">Back to Plinth</a></div></nav>
+<main class="wrap">
+<header>
+  <p class="eyebrow">Solana devnet</p>
+  <h1>A receipt that proves which deck passed the linter</h1>
+  <p class="sub">Drop a deck file. The page hashes it and scores it in your browser, then writes <code>plinth:v1 sha256=… score=…</code> as a memo on Solana devnet. A judge can later drop the same file next to the signature and see if it matches, byte for byte.</p>
+</header>
+<section class="grid">
+  <div class="card">
+    <h2>Write a receipt</h2>
+    <p class="hint">Needs a Solana wallet such as Phantom or Solflare set to devnet. The file never leaves your machine; only the hash goes on chain.</p>
+    <label class="drop" id="dropA">Drop a .html or .txt deck, or click to choose<input type="file" id="fileA" accept=".html,.htm,.txt" hidden></label>
+    <dl id="factsA" hidden><dt>File</dt><dd id="nameA"></dd><dt>SHA-256</dt><dd id="shaA"></dd><dt>Lint</dt><dd id="scoreA"></dd><dt>Memo</dt><dd id="memoA"></dd></dl>
+    <button class="btn" id="sign" disabled>Connect wallet and sign</button>
+    <div class="out" id="outA"></div>
+  </div>
+  <div class="card">
+    <h2>Check a receipt</h2>
+    <p class="hint">Paste a transaction signature and drop the file you were sent.</p>
+    <input type="text" id="sig" placeholder="Transaction signature" spellcheck="false" autocomplete="off">
+    <label class="drop" id="dropB"><span id="dropBtxt">Drop the deck file to compare</span><input type="file" id="fileB" accept=".html,.htm,.txt" hidden></label>
+    <button class="btn ghost" id="check">Check</button>
+    <div class="out" id="outB"></div>
+  </div>
+</section>
+<section class="proof">
+  <p class="eyebrow">Receipts for the two example decks</p>
+  <table><thead><tr><th>Deck</th><th>Memo</th><th>Transaction</th></tr></thead><tbody id="proofs"></tbody></table>
+</section>
+</main>
+<script src="lint-core.js"></script>
+<script type="module">
+const RPC = 'https://api.devnet.solana.com';
+const MEMO = 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr';
+const $ = id => document.getElementById(id);
+const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+const sha256 = async bytes => hex(await crypto.subtle.digest('SHA-256', bytes));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const explorer = s => `https://explorer.solana.com/tx/${s}?cluster=devnet`;
+
+// Same extraction as scripts/lint-deck.mjs, so browser and CLI give the same score.
+const strip = s => s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').trim();
+function slidesOf(raw) {
+  if (!/<section[\s>]/i.test(raw)) return PlinthLint.parseText(raw);
+  return [...raw.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/gi)].map(([, s]) => {
+    s = s.replace(/<aside[\s\S]*?<\/aside>/gi, '').replace(/<div class="[^"]*specimen[^"]*">[\s\S]*?<\/div>/gi, '');
+    const h = (s.match(/<h[12][^>]*>([\s\S]*?)<\/h[12]>/i) || s.match(/class="quote"[^>]*>([\s\S]*?)<\/p>/i) || [])[1] || '';
+    const source = strip((s.match(/class="source"[^>]*>([\s\S]*?)<\//i) || [])[1] || '');
+    const body = s.replace(/<h[12][^>]*>[\s\S]*?<\/h[12]>/i, '').replace(/class="(eyebrow|source)"[^>]*>[\s\S]*?</gi, '><').replace(/<li[^>]*>/gi, '\n- ');
+    return { headline: strip(h), body: strip(body), source };
+  });
+}
+function dropzone(zone, input, onFile) {
+  input.onchange = () => input.files[0] && onFile(input.files[0]);
+  zone.ondragover = e => { e.preventDefault(); zone.classList.add('over'); };
+  zone.ondragleave = () => zone.classList.remove('over');
+  zone.ondrop = e => { e.preventDefault(); zone.classList.remove('over'); e.dataTransfer.files[0] && onFile(e.dataTransfer.files[0]); };
+}
+const show = (el, html) => { el.innerHTML = html; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); };
+
+async function rpc(method, params) {
+  const r = await fetch(RPC, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) });
+  const j = await r.json(); if (j.error) throw new Error(j.error.message); return j.result;
+}
+async function readMemo(sig) {
+  const tx = await rpc('getTransaction', [sig, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0, commitment: 'confirmed' }]);
+  if (!tx) throw new Error('Transaction not found on devnet');
+  const ix = tx.transaction.message.instructions.find(i => i.programId === MEMO);
+  if (!ix) throw new Error('No memo in this transaction');
+  const signer = tx.transaction.message.accountKeys.find(k => k.signer)?.pubkey;
+  return { memo: typeof ix.parsed === 'string' ? ix.parsed : '', signer, time: tx.blockTime };
+}
+const parseMemo = m => Object.fromEntries([...m.matchAll(/(\w+)=(\S+)/g)].map(x => [x[1], x[2]]));
+
+// Write
+let memoA = '';
+dropzone($('dropA'), $('fileA'), async f => {
+  const buf = await f.arrayBuffer(), sha = await sha256(buf);
+  const r = PlinthLint.lintSlides(slidesOf(new TextDecoder().decode(buf)));
+  memoA = `plinth:v1 sha256=${sha} score=${r.score} slides=${r.slides}`;
+  $('nameA').textContent = f.name; $('shaA').textContent = sha;
+  $('scoreA').textContent = `${r.score}/100, ${r.slides} slides, ${r.issues.length} issues`;
+  $('memoA').textContent = memoA; $('factsA').hidden = false; $('sign').disabled = false;
+});
+$('sign').onclick = async () => {
+  const w = window.phantom?.solana || window.solflare || window.solana;
+  if (!w) return show($('outA'), 'No Solana wallet found in this browser. Install Phantom or Solflare, switch it to devnet, and reload. Or use the CLI: <code>node skill/plinth/scripts/anchor.mjs deck.html</code>');
+  try {
+    $('sign').disabled = true; show($('outA'), 'Waiting for the wallet…');
+    const web3 = await import('https://cdn.jsdelivr.net/npm/@solana/web3.js@1.95.3/+esm');
+    await w.connect(); const pk = new web3.PublicKey(w.publicKey.toString());
+    const conn = new web3.Connection(RPC, 'confirmed');
+    const tx = new web3.Transaction().add(new web3.TransactionInstruction({ programId: new web3.PublicKey(MEMO), keys: [{ pubkey: pk, isSigner: true, isWritable: false }], data: new TextEncoder().encode(memoA) }));
+    tx.feePayer = pk; tx.recentBlockhash = (await conn.getLatestBlockhash()).blockhash;
+    const signed = await w.signTransaction(tx);
+    const sig = await conn.sendRawTransaction(signed.serialize());
+    await conn.confirmTransaction(sig, 'confirmed');
+    show($('outA'), `<span class="ok">Recorded.</span> Signature <code>${esc(sig)}</code><br><a href="${explorer(sig)}" target="_blank" rel="noopener">View on Solana Explorer</a>`);
+  } catch (e) { show($('outA'), `<span class="no">Not recorded.</span> ${esc(e.message || e)}`); }
+  finally { $('sign').disabled = false; }
+};
+
+// Check
+let bufB = null;
+dropzone($('dropB'), $('fileB'), async f => { bufB = await f.arrayBuffer(); $('dropBtxt').textContent = f.name; });
+$('check').onclick = async () => {
+  const sig = $('sig').value.trim(); if (!sig) return show($('outB'), 'Paste a signature first.');
+  show($('outB'), 'Reading devnet…');
+  try {
+    const { memo, signer, time } = await readMemo(sig), m = parseMemo(memo);
+    if (!memo.startsWith('plinth:v1')) throw new Error('This memo is not a Plinth receipt');
+    let verdict = 'No file dropped, so only the receipt is shown.';
+    if (bufB) verdict = (await sha256(bufB)) === m.sha256
+      ? '<span class="ok">Match.</span> This is the exact file that was recorded.'
+      : '<span class="no">No match.</span> The file differs from the one recorded, even if only by one byte.';
+    show($('outB'), `${verdict}<br><br>Score at recording: <b>${esc(m.score)}/100</b> over ${esc(m.slides)} slides<br>Signed by <code>${esc(signer)}</code><br>${time ? new Date(time * 1000).toUTCString() : ''}<br><a href="${explorer(sig)}" target="_blank" rel="noopener">View on Solana Explorer</a>`);
+  } catch (e) { show($('outB'), `<span class="no">Could not check.</span> ${esc(e.message || e)}`); }
+};
+
+// Proof table for the bundled examples
+fetch('receipts.json').then(r => r.json()).then(list => {
+  $('proofs').innerHTML = list.map(p => `<tr><td><a href="${esc(p.deck)}">${esc(p.title)}</a></td><td class="m">${esc(p.memo)}</td><td class="m"><a href="${explorer(p.signature)}" target="_blank" rel="noopener">${esc(p.signature.slice(0, 12))}…</a></td></tr>`).join('');
+}).catch(() => {});
+</script>
+</body>
+</html>

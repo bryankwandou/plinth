@@ -26,9 +26,15 @@ nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
 .brand img{width:26px;height:26px}
 nav .links{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--muted)}
 nav .links a{text-decoration:none} nav .links a:hover{color:var(--ink)}
-.tog{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:12px;font-weight:600}
-.tog button{background:none;border:0;padding:6px 9px;color:var(--muted);cursor:pointer;font:inherit}
-.tog button.on{background:var(--ink);color:var(--bg)}
+.lang{position:relative;display:flex;flex:none}
+.lang select{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2363666E' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 8px center;border:1px solid var(--line);border-radius:8px;color:var(--ink);font:600 12px var(--font);height:30px;padding:0 24px 0 9px;max-width:128px;cursor:pointer;text-overflow:ellipsis}
+[dir=rtl] .lang select{background-position:left 8px center;padding:0 9px 0 24px}
+.lang select:hover{border-color:var(--ink)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+nav .links+.lang{margin-left:0}
+@media (max-width:860px){.lang{margin-left:auto}}
+.install{direction:ltr}.install button{flex:none;white-space:nowrap}[dir=rtl] .install{margin-left:auto}
+[dir=rtl] .btn .ar{display:inline-block;transform:scaleX(-1)}[dir=rtl] .btn:hover .ar{transform:scaleX(-1) translateX(3px)}
 .theme{background:none;border:1px solid var(--line);border-radius:8px;width:32px;height:30px;cursor:pointer;color:var(--muted)}
 header{padding:96px 0 72px}
 .eyebrow{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
@@ -123,10 +129,9 @@ footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
 nav .links a{position:relative;padding:4px 0;transition:color .2s}
 nav .links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:100% 50%;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
-.tog button,.theme,.presets button,.install button{transition:background .2s,color .2s,border-color .2s,transform .12s}
+.theme,.presets button,.install button{transition:background .2s,color .2s,border-color .2s,transform .12s}
 .theme:hover,.presets button:hover,.install button:hover{border-color:var(--ink);color:var(--ink)}
-.tog button:not(.on):hover{color:var(--ink)}
-.btn:active,.presets button:active,.install button:active,.theme:active,.tog button:active{transform:scale(.97)}
+.btn:active,.presets button:active,.install button:active,.theme:active{transform:scale(.97)}
 .btn.pri:hover{box-shadow:0 12px 24px -14px var(--accent)}
 .btn .ar{transition:transform .2s cubic-bezier(.2,.7,.2,1)}.btn:hover .ar{transform:translateX(3px)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -168,8 +173,8 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
 <nav><div class="wrap">
   <a class="brand" href="#"><img src="logo.svg" alt="">Plinth</a>
   <div class="links"><a href="#data" data-i="n1">Data</a><a href="#how" data-i="n2">How it works</a><a href="#try" data-i="n3">Try the linter</a><a href="#decks" data-i="n4">Examples</a><a href="#video" data-i="n5">Video</a></div>
-  <div class="tog" role="group" aria-label="Language"><button data-l="en" class="on">EN</button><button data-l="id">ID</button></div>
-  <button class="theme" id="theme" aria-label="Toggle theme">◐</button>
+  <label class="lang"><span class="vh" data-i="lg">Language</span><select id="lang" aria-label="Language" data-ia="lg"></select></label>
+  <button class="theme" id="theme" aria-label="Toggle theme" data-ia="th">◐</button>
 </div></nav>
 
 <header><div class="wrap hero">
@@ -184,10 +189,10 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
     <div class="install"><code>git clone https://github.com/bryankwandou/plinth &amp;&amp; cp -r plinth/skill/plinth ~/.claude/skills/</code><button id="copy" data-i="cp">Copy</button></div>
   </div>
   <div class="stagebox" id="stage" aria-label="Example slides">
-    <div class="mini on"><div class="e">Base rate</div><h3 data-i="m1">One project in eighteen takes home a prize</h3><div class="n">5.4%</div></div>
-    <div class="mini"><div class="e">What does not matter</div><h3 data-i="m2">Winners write one-liners as long as everyone else</h3><div class="n">13</div><div class="s">median words, both groups</div></div>
-    <div class="mini"><div class="e">What does</div><h3 data-i="m3">Winners are far more likely to build in public</h3><div class="bars"><i class="hi" style="width:96%"></i><i style="width:80%"></i></div></div>
-    <div class="mini"><div class="e">Takeaway</div><h3 data-i="m4">Format is table stakes. The argument wins.</h3></div>
+    <div class="mini on"><div class="e" data-i="x1">Base rate</div><h3 data-i="m1">One project in eighteen takes home a prize</h3><div class="n">5.4%</div></div>
+    <div class="mini"><div class="e" data-i="x2">What does not matter</div><h3 data-i="m2">Winners write one-liners as long as everyone else</h3><div class="n">13</div><div class="s" data-i="x5">median words, both groups</div></div>
+    <div class="mini"><div class="e" data-i="x3">What does</div><h3 data-i="m3">Winners are far more likely to build in public</h3><div class="bars"><i class="hi" style="width:96%"></i><i style="width:80%"></i></div></div>
+    <div class="mini"><div class="e" data-i="x4">Takeaway</div><h3 data-i="m4">Format is table stakes. The argument wins.</h3></div>
     <div class="dots"><b class="on"></b><b></b><b></b><b></b></div>
   </div>
 </div></header>
@@ -245,6 +250,7 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
     <a class="deck hl reveal" href="decks/talk-5428-projects.html"><div class="fr"><iframe src="decks/talk-5428-projects.html" loading="lazy" tabindex="-1" title="Talk deck preview"></iframe></div><div class="m"><b data-i="e1">What 5,428 hackathon projects say about pitching</b><span data-i="e2">Talk · 9 slides · arrow keys to present</span></div></a>
     <a class="deck hl reveal" href="decks/pitch-plinth.html"><div class="fr"><iframe src="decks/pitch-plinth.html" loading="lazy" tabindex="-1" title="Pitch deck preview"></iframe></div><div class="m"><b data-i="e3">Plinth, pitched with Plinth</b><span data-i="e4">Pitch · 8 slides · honest about zero traction</span></div></a>
   </div>
+  <p class="vidnote reveal">Editable PowerPoint, speaker notes kept: <a href="decks/talk-5428-projects.pptx" download>talk.pptx</a> · <a href="decks/pitch-plinth.pptx" download>pitch.pptx</a>. Both HTML decks are hashed on Solana devnet: <a href="anchor.html">check the receipts</a>. The skill ships 14 scenario spines, from a 3-minute hackathon video to a board pre-read, and lints copy in 17 languages.</p>
 </div></section>
 
 <section id="video"><div class="wrap">
@@ -273,31 +279,29 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
 <footer><div class="wrap">
   <a class="brand" href="#"><img src="logo.svg" alt="">Plinth</a>
   <span data-i="f1">Made by Bryan Kwandou. MIT license.</span>
+  <a href="anchor.html">Devnet receipts</a>
   <a href="https://github.com/bryankwandou/plinth">GitHub</a>
 </div></footer>
 
 <script src="lint-core.js"></script>
+<script src="i18n.js"></script>
 <script>
-const T={id:{n1:"Data",n2:"Cara kerja",n3:"Coba linter",n4:"Contoh",h0:"Skill Claude untuk slide",h1:'Slide yang punya <span class="u">argumen</span>',
-h2:"Plinth menulis judul slide lebih dulu, memberi tiap slide satu tugas, lalu memeriksa setiap kata dari basa-basi. Untuk pitch hackathon, deck investor, dan presentasi.",
-c1:"Cek deck sekarang",c2:"Ambil skill-nya",cp:"Salin",m1:"Hanya satu dari delapan belas proyek yang menang",m2:"Pemenang menulis one-liner sepanjang peserta lain",m3:"Pemenang jauh lebih sering membangun di depan publik",m4:"Format itu syarat minimum. Argumenlah yang menang.",
-d0:"Riset",d1:"Kami membandingkan semua pemenang Colosseum dengan proyek yang tidak menang",d2:"Hal yang paling sering dipoles ternyata sama persis di kedua kelompok. Aturan Plinth diambil dari yang tersisa.",
-s1:"proyek terindeks",s2:"pemenang hadiah",s3:"tingkat kemenangan",s4:"batas durasi pitch",b1:"Akun X ditautkan, pemenang",b2:"Akun X ditautkan, lainnya",b3:"Kata hype, pemenang",b4:"Kata hype, lainnya",
-src:"Sumber: API Colosseum Copilot, sampel 363 proyek dari 15 kueri kategori, diambil 25 September 2026. Panduan penilaian dari blog.colosseum.com.",
-w0:"Cara kerja",w1:"Judul dulu, slide kemudian, cek terakhir",t1:"Tulis argumennya sebagai klaim",p1:"Setiap judul adalah kalimat utuh dengan kata kerja. Dibaca dari atas ke bawah, daftar judul saja sudah harus meyakinkan.",
-t2:"Satu tugas per slide",p2:"Satu angka, satu grafik, satu tangkapan layar, atau tiga poin pendek. Satu file HTML dengan catatan pembicara dan cetak ke PDF.",t3:"Periksa setiap kata",p3:"Kata basa-basi, judul berupa label topik, slide yang penuh, dan angka tanpa sumber ditandai sebelum ada yang melihat.",
-l0:"Coba",l1:"Tempel slide Anda dan lihat apa yang akan dilihat juri",l2:'Baris pertama tiap slide adalah judul. Pisahkan slide dengan baris tiga tanda hubung. Tambahkan "source:" di bawah angka. Tidak ada data yang keluar dari browser Anda.',
-pb:"Muat deck yang lemah",pg:"Muat hasil tulis ulang",pc:"Kosongkan",k0:"Contoh",k1:"Dua deck yang dibuat dengan skill ini, keduanya skor 100",
-e1:"Apa kata 5.428 proyek hackathon soal pitching",e2:"Presentasi · 9 slide · tombol panah untuk presentasi",e3:"Plinth, di-pitch dengan Plinth",e4:"Pitch · 8 slide · jujur soal traksi nol",
-r0:"Aturan",r1:"Delapan aturan yang tidak akan dilanggar",q1:"Judul adalah klaim, bukan label topik.",q2:"Maksimal dua belas kata per judul.",q3:"Satu bukti per slide.",q4:"Setiap angka menyertakan sumbernya.",
-q5:"Satu warna aksen, dipakai di titik yang harus dilihat.",q6:"Tanpa emoji, tanpa tanda seru, tanpa teks gradien.",q7:"Data yang tidak ada ditandai di slide, tidak dikarang.",q8:"Di bawah tiga menit untuk pitch hackathon.",n5:"Video",v0:"Panduan",v1:"Lihat satu deck dari kerangka sampai skor 100",v2:"Rekaman layar singkat: skill menyusun tulang punggung judul, membangun slide, lalu memeriksa dan memperbaiki teksnya.",v3:"Video panduan skill Plinth.",f1:"Dibuat oleh Bryan Kwandou. Lisensi MIT."}};
-const EN={};document.querySelectorAll('[data-i]').forEach(e=>EN[e.dataset.i]=e.innerHTML);T.en=EN;
-function setLang(l){document.documentElement.lang=l;document.querySelectorAll('[data-i]').forEach(e=>{const v=T[l][e.dataset.i];if(v!=null)e.innerHTML=v});
-  document.querySelectorAll('.tog button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));try{localStorage.setItem('plinth-lang',l)}catch(e){}}
-document.querySelectorAll('.tog button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
-try{const s=localStorage.getItem('plinth-lang');if(s)setLang(s);else if(/^id/i.test(navigator.language))setLang('id')}catch(e){}
+const I=window.PLINTH_I18N,T=I.strings,EN={};document.querySelectorAll('[data-i]').forEach(e=>EN[e.dataset.i]=e.innerHTML);
+document.querySelectorAll('[data-ia]').forEach(e=>EN[e.dataset.ia]=e.getAttribute('aria-label'));T.en=EN;
+const LS=Object.keys(I.names),sel=document.getElementById('lang');
+LS.forEach(k=>{const o=document.createElement('option');o.value=k;o.lang=k;o.textContent=I.names[k];sel.appendChild(o)});
+function pick(v){if(!v)return null;v=String(v).toLowerCase();const x=LS.find(k=>k.toLowerCase()===v);if(x)return x;
+  if(v==='zh-hk'||v==='zh-mo'||v.startsWith('zh-hant'))return'zh-TW';if(v.startsWith('zh'))return'zh-CN';if(v.startsWith('pt'))return'pt-BR';if(v==='fil')return'tl';
+  const b=v.split('-')[0];return LS.find(k=>k===b)||null}
+function setLang(l,save){l=pick(l)||'en';const d=T[l],r=document.documentElement;r.lang=l;r.dir=I.rtl.includes(l)?'rtl':'ltr';
+  document.querySelectorAll('[data-i]').forEach(e=>{const v=d[e.dataset.i]??EN[e.dataset.i];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('[data-ia]').forEach(e=>{const v=d[e.dataset.ia]??EN[e.dataset.ia];if(v!=null)e.setAttribute('aria-label',v)});
+  sel.value=l;if(save)try{localStorage.setItem('plinth-lang',l)}catch(e){}}
+sel.onchange=()=>setLang(sel.value,true);
+(()=>{let q=null;try{q=new URLSearchParams(location.search).get('lang')}catch(e){}let s=null;try{s=localStorage.getItem('plinth-lang')}catch(e){}
+  setLang(pick(q)||pick(s)||(navigator.languages||[navigator.language]).map(pick).find(Boolean)||'en',!!pick(q))})();
 document.getElementById('theme').onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
-document.getElementById('copy').onclick=e=>{navigator.clipboard.writeText(document.querySelector('.install code').textContent);e.target.textContent='✓';setTimeout(()=>e.target.textContent=T[document.documentElement.lang].cp,1400)};
+document.getElementById('copy').onclick=e=>{navigator.clipboard.writeText(document.querySelector('.install code').textContent);e.target.textContent='✓';setTimeout(()=>e.target.textContent=(T[document.documentElement.lang].cp||EN.cp),1400)};
 // hero slides
 (()=>{const m=[...document.querySelectorAll('.mini')],d=[...document.querySelectorAll('.dots b')];let k=0;
  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;

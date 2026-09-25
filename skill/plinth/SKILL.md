@@ -19,6 +19,8 @@ Ask at most one question, only if the answer is not in the request:
 
 Always read `references/craft.md` (layout and type) and `references/voice.md` (words). They apply to every mode.
 
+Then open `references/scenarios.md` and take the spine for the specific occasion (hackathon video, demo day, seed meeting, accelerator, grant, sales, quarterly update, board, launch keynote, conference talk, lecture, thesis/skripsi defense, lightning talk, all-hands). If the deck is not in English, also read `references/languages.md` for register, number formats and headline length in that language.
+
 ## Step 1 — Write the spine before any slide
 
 Write the deck as headlines only, one line each, in a plain list. Read the list top to bottom. If it does not make the whole case on its own, the deck is not ready — fix the list, not the slides.
@@ -60,6 +62,15 @@ It flags filler vocabulary, headline length, slide density, missing sources on n
 ## Step 5 — Hand over
 
 Give the user: the HTML path, how to present (open in browser, `F` fullscreen, arrows, `P` print to PDF), the lint score, and anything you had to guess (a number with no source, a team bio you did not have). Guesses are listed, never hidden.
+
+Offer a PowerPoint copy when the user has to upload a .pptx, edit in PowerPoint/Keynote/Google Slides, or hand the deck to someone who does:
+
+```bash
+npm install pptxgenjs            # once
+node scripts/to-pptx.mjs path/to/deck.html [out.pptx]
+```
+
+The .pptx is editable (real text boxes, same fonts and colors, 16:9, speaker notes kept). Tell the user the fonts (Inter, JetBrains Mono) must be installed on the presenting machine, or PowerPoint will substitute and line breaks may shift. Custom inline layouts beyond the template's classes (eyebrow, h1/h2, p, lists, `.big`, `.stat`, `.quote`/`.who`, `.frame`, `.bar`, `.source`) come through as plain text; check those slides.
 
 ## Non-negotiables
 
