@@ -22,12 +22,14 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 
 ## Solana devnet receipts
 
-`node skill/plinth/scripts/anchor.mjs deck.html` writes `plinth:v1 sha256=<file hash> score=<lint> slides=<n>` as an SPL Memo. Anyone can check a receipt against a file at https://plinthdeck.vercel.app/anchor.html. Both example decks are recorded:
+`node skill/plinth/scripts/anchor.mjs deck.html` writes `plinth:v1 sha256=<file hash> score=<lint> slides=<n>` as an SPL Memo. Anyone can check a receipt against a file at https://plinthdeck.vercel.app/anchor.html. All four example decks are recorded:
 
 | Deck | Transaction |
 |---|---|
-| Talk | [FbN65d9o…](https://explorer.solana.com/tx/FbN65d9o6gypBygCxTRLqSpkLVn2XRz2wfKCZnqSWJCMGx1e9XMQUUaWCpbRzpCiEXLJfUVDTt7tf87rFjnghw8?cluster=devnet) |
-| Pitch | [4699cQsL…](https://explorer.solana.com/tx/4699cQsLBfJVdFbDsR9zvokmMDP4jsP3c3snsspYxKKUKqSsjhhMgGKjWDW6MrqtoVCVa9vhbJWg3kGymkUyDbKd?cluster=devnet) |
+| Talk | [3h8Gd39B…](https://explorer.solana.com/tx/3h8Gd39BZtKtYxPEDvLd9GxpTFdqR7BvTZoRUChrAGQTnDyF6mKR5AxiZEM5gZaKRtfn6zrNAxTYpqLqrN6ebwz7?cluster=devnet) |
+| Pitch | [3CxuH1wF…](https://explorer.solana.com/tx/3CxuH1wFzNMpbHUH7Z74jstEViSJbq8djaZcwUknCP4ttYeUyBcUZW8UA6mrWBNzw5zpVjQKSWe62JJ6hQFWcxoX?cluster=devnet) |
+| QuantCoin pitch | [3p4Bgyct…](https://explorer.solana.com/tx/3p4BgyctpbyvffbKabsYbF6NT9sTJhc8vkxvKMXKUDzeT7wh5kL2deQ7seaBgrEMVf7JDPjGxyQ2fb8jvs3zkCud?cluster=devnet) |
+| QuantCoin talk | [3bJkwEz1…](https://explorer.solana.com/tx/3bJkwEz1Hn4LEh4qjKMKPYsqFF4FVx5Bq7r7hypRgG6GDuMBuChAYTXoEE1qPqJD13kmBEi9AqrLnNSxMsUFZC26?cluster=devnet) |
 
 Tested with the real Phantom extension (v26.30.2, Testnet Mode, Solana Devnet): connect, sign and send, then check. Receipt [5SSrix23…](https://explorer.solana.com/tx/5SSrix23ZnyUTdCj5WSbskKs4DgWY9R3fNX5GdZToxUhTzzNHHms7eH447kxDF5D9uLjsx5FnmXEt5X5Vo2RbaVS?cluster=devnet) came back as a match ([screenshot](docs/evidence/phantom-e2e.png)). On devnet, Phantom shows "Failed to simulate" before you confirm. A plain 1-lamport transfer with no Plinth code in it gets the same warning ([screenshot](docs/evidence/phantom-plain-transfer-same-warning.png)), so the warning comes from Phantom's devnet simulation, not from the memo.
 
@@ -74,6 +76,8 @@ It exits non-zero below 90, so it can gate CI.
 
 - [Talk: What 5,428 hackathon projects say about pitching](https://plinthdeck.vercel.app/decks/talk-5428-projects.html), 9 slides, lint 100
 - [Pitch: Plinth, pitched with Plinth](https://plinthdeck.vercel.app/decks/pitch-plinth.html), 8 slides, lint 100
+- [Pitch: QuantCoin, 3-minute hackathon](https://plinthdeck.vercel.app/decks/pitch-quantcoin.html), 10 slides, lint 100
+- [Talk: A token cannot make Solana quantum-safe, but a vault can](https://plinthdeck.vercel.app/decks/talk-quantcoin.html), 13 slides, lint 100
 
 ![Talk slide](docs/evidence/deck-talk-slide3.png)
 

@@ -24,14 +24,16 @@ h1{font-size:72px;line-height:1.02;letter-spacing:-.035em;font-weight:700;max-wi
 h2{font-size:48px;line-height:1.08;letter-spacing:-.025em;font-weight:600;max-width:22ch}
 p,li{font-size:24px;line-height:1.45;color:var(--ink);max-width:40ch}
 .lede{color:var(--muted);margin-top:24px}
+h1+p,h2+p{margin-top:32px}
 ul{padding:0;list-style:none;margin-top:36px;display:grid;gap:18px}
 li{padding-left:28px;position:relative}
 li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;background:var(--accent)}
 .fill{flex:1;display:flex;flex-direction:column;justify-content:center}
 .center{align-items:center;text-align:center} .center h1,.center h2,.center p{margin-inline:auto}
-.big{font-size:180px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent);font-feature-settings:"tnum"}
+.big{white-space:nowrap;font-size:180px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent);font-feature-settings:"tnum"}
 .source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px}
 .row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:40px;flex:1;align-items:center}
+.row>*{min-width:0}
 .c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c4{grid-column:span 4}.c8{grid-column:span 8}
 .frame{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 24px 48px -28px rgba(0,0,0,.25)}
 .mono{font-family:var(--mono);font-size:17px;line-height:1.6}
@@ -79,6 +81,9 @@ aside.notes{display:none}
   const show=n=>{i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
     bar.style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));
     const a=S[i].querySelector('aside.notes');nb.textContent=a?a.textContent.trim():'';};
+  // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
+  const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
+  fitBig();document.fonts&&document.fonts.ready.then(fitBig);
   addEventListener('resize',fit);fit();show(i);
   addEventListener('keydown',e=>{
     if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}

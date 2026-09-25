@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plinth pitch</title>
+<title>QuantCoin pitch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
@@ -63,63 +63,85 @@ aside.notes{display:none}
 <div class="stage"><div class="deck" id="deck">
 <section class="center">
   <div class="fill center">
-    <h1>Plinth turns a founder's notes into a deck judges finish watching</h1>
-    <p class="lede">A Claude skill for pitch decks and talks · Bryan Kwandou</p>
+    <h1>QuantCoin keeps long-held Solana tokens safe from a quantum computer</h1>
+    <p class="lede">A Token-2022 token with a hybrid vault · Bryan Kwandou · devnet, pre-audit</p>
   </div>
-  <aside class="notes">Plinth is a skill for Claude that builds pitch decks and talks. You give it your notes, it gives back a deck with one claim per slide and a lint score for the words.</aside>
+  <aside class="notes">QuantCoin is a Solana token whose treasury, team and reserve balances sit in a vault that needs two signatures to open. One is the normal Ed25519 signature. The other is a hash-based signature that a quantum computer cannot forge. It is on devnet and it has not had an external audit yet.</aside>
 </section>
 <section>
   <div class="eyebrow">Problem</div>
-  <h2>Most AI-made decks look like every other AI-made deck</h2>
+  <h2>Every Solana balance rests on one signature a quantum computer can forge</h2>
   <div class="row">
-    <div class="c7"><p>A title, four bullets of equal length, an icon in a circle, a purple gradient. Judges see that pattern dozens of times a day and stop reading.</p></div>
-    <div class="c5 frame mono specimen">The Problem<br>- Seamless onboarding<br>- Unlock liquidity<br>- Empower users<br>- Next-gen UX</div>
+    <div class="c7"><p>Shor's algorithm recovers an Ed25519 private key from its public key. Public keys are on-chain today, so a treasury meant to sit for twenty years can be harvested now and drained later.</p></div>
+    <div class="c5 frame mono specimen">owner: Ed25519 only<br>public key: on-chain<br>protection after Shor: none</div>
   </div>
-  <aside class="notes">You have seen this slide. Topic label as the title, four buzzwords as bullets. Generated decks drift toward it because it is the average of every deck online.</aside>
+  <p class="source">Source: QuantCoin whitepaper, section 2</p>
+  <aside class="notes">This is not about today's wallets being hacked tomorrow. It is about money meant to sit still for decades. Its public key is already public. The day the machine exists, that key is the only lock.</aside>
 </section>
 <section>
-  <div class="eyebrow">Why it matters</div>
-  <h2>One in eighteen projects wins, and every one sends a pitch</h2>
-  <div class="row"><div class="c5"><div class="big">293</div></div><div class="c7"><p>winners out of 5,428 projects. The deck does not get you in; a clear argument inside it does.</p></div></div>
-  <p class="source">Source: Colosseum Copilot, pulled 2026-09-25</p>
-  <aside class="notes">Presence of a deck is universal, so it is not the differentiator. The argument is.</aside>
+  <div class="eyebrow">Why now</div>
+  <h2>NIST standardized hash-based signatures in 2024</h2>
+  <div class="row"><div class="c5"><div class="big">FIPS 205</div></div><div class="c7"><p>SLH-DSA rests only on a hash function. Grover's algorithm gives a square-root speedup against it, nothing more. The conservative choice now has a standard behind it.</p></div></div>
+  <p class="source">Source: NIST FIPS 205, August 2024</p>
+  <aside class="notes">Hash-based signatures are the oldest and most conservative post-quantum family. Once NIST put its name on them, using the same idea on Solana stopped being exotic.</aside>
 </section>
 <section>
   <div class="eyebrow">Product</div>
-  <h2>Headlines first, slides second, lint last</h2>
+  <h2>A vault opens only when both signatures check out</h2>
   <ul>
-    <li>Writes the spine as claims and checks it reads as a case</li>
-    <li>Builds one self-contained HTML deck with speaker notes</li>
-    <li>Scores the copy for filler, density and unsourced numbers</li>
+    <li>Ed25519 from the owner, as in any Solana wallet</li>
+    <li>A Winternitz one-time signature over SHA-256</li>
+    <li>Every spend empties the vault, so no key signs twice</li>
   </ul>
-  <aside class="notes">Three steps. The spine is the part people skip, and it is the part that matters most.</aside>
+  <aside class="notes">An attacker has to break both. Before quantum computers exist, Ed25519 also covers any bug in the newer Winternitz code. After, the hash half still holds. Everyday transfers stay plain Token-2022, so wallets need nothing new.</aside>
 </section>
 <section>
   <div class="eyebrow">Demo</div>
-  <h2>The linter catches the slide from two minutes ago</h2>
+  <h2>One devnet spend moved 22 trillion QC between vaults</h2>
   <div class="row">
-    <div class="c6 frame mono specimen">$ node lint-deck.mjs before.txt<br>slide 1 headline "The Problem" is a topic label<br>slide 1 voice "Seamless" is filler<br>slide 1 voice "Unlock" is filler<br>score 58/100</div>
-    <div class="c6 frame mono specimen">$ node lint-deck.mjs after.txt<br>no issues<br>score 100/100</div>
+    <div class="c6 frame mono specimen">spend Np26Uxfw…<br>sent       1,000,000 QC<br>refunded   21,999,999,000,000 QC<br>old vault  closed<br>compute    610,076 CU</div>
+    <div class="c6"><p>The TypeScript client signed, the Rust program verified. The two WOTS implementations agree byte for byte.</p></div>
   </div>
-  <aside class="notes">Same content, rewritten with the rules. The linter runs in the terminal and on the website, using the same code.</aside>
+  <p class="source">Source: QuantCoin README, devnet run 2026-09-23</p>
+  <aside class="notes">This is the whole supply moving. One million out to a destination, the rest into the owner's next vault, and the old vault closed. It used about six hundred thousand compute units, well under the limit.</aside>
 </section>
 <section>
   <div class="eyebrow">How it works</div>
-  <h2>A skill file, four references, one template and a zero-dependency linter</h2>
-  <div class="row"><div class="c12 frame mono" style="grid-column:span 12">SKILL.md → pitch.md | talk.md | review.md  +  craft.md, voice.md<br>assets/deck-template.html → your deck (arrows, notes, print to PDF)<br>scripts/lint-core.js → CLI and browser</div></div>
-  <aside class="notes">Everything is plain files. No server, no account. It runs anywhere Claude Code runs.</aside>
+  <h2>The program stores nothing and fits in 6,872 bytes</h2>
+  <div class="row"><div class="c5"><div class="big">6,872 B</div></div><div class="c7"><p>Pinocchio, one instruction. The vault address is derived from the Winternitz key and the owner. The signed message binds every account, so a relayer cannot redirect funds.</p></div></div>
+  <p class="source">Source: QuantCoin README, measured numbers</p>
+  <aside class="notes">No state means nothing to corrupt. The address itself commits to the keys. Program, vault, mint, destination, refund and amount are all inside the signed message.</aside>
 </section>
 <section>
   <div class="eyebrow">Traction</div>
-  <h2>Nothing yet; this is the first public release</h2>
-  <p class="lede">We will count installs and before-and-after lint scores from the first 50 users.</p>
-  <aside class="notes">Being honest here. No users yet. The next number on this slide will be real.</aside>
+  <h2>Twelve tests pass and an internal audit found no way in</h2>
+  <div class="row"><div class="c5"><div class="big">12/12</div></div><div class="c7"><p>Tests run against real Token-2022 and assert exact error codes. The internal audit fixed two issues and left five documented. There are no users yet.</p></div></div>
+  <p class="source">Source: QuantCoin audit/AUDIT.md</p>
+  <aside class="notes">I will be straight about this. The signal is engineering, not users. The audit found a test that passed for the wrong reason and a client bug that could lock a vault. Both are fixed.</aside>
 </section>
 <section>
-  <div class="eyebrow">Ask</div>
-  <h2>Try it on your next deck and send us the before score</h2>
-  <p class="lede">github.com/bryankwandou/plinth · plinthdeck.vercel.app</p>
-  <aside class="notes">That is the ask. Run it on a real deck, tell us what it missed.</aside>
+  <div class="eyebrow">Go-to-market</div>
+  <h2>The first users are treasuries that plan to hold for years</h2>
+  <ul>
+    <li>DAO and foundation treasuries on Solana</li>
+    <li>Team and investor vesting that runs for years</li>
+    <li>Wallets that add one Codama-generated instruction</li>
+  </ul>
+  <aside class="notes">Retail wallets are not the start. The first users are people who already think in decades: treasuries and long vesting. The Codama client means a wallet can add vault support with one generated instruction. I have not signed any of these yet.</aside>
+</section>
+<section>
+  <div class="eyebrow">Team</div>
+  <h2>One builder wrote the program, the client and the audit trail</h2>
+  <p>Bryan Kwandou built the Pinocchio vault, the TypeScript WOTS client, the Codama IDL and the internal audit. The next hire is a reviewer who did not write the code.</p>
+  <aside class="notes">It is one person today. That is the main risk, and the reason the external audit comes before anything else.</aside>
+</section>
+<section class="center">
+  <div class="fill center">
+    <div class="eyebrow">Ask</div>
+    <h2>Fund an external audit, then lock the program for good</h2>
+    <p class="lede">After the audit: deploy to mainnet and set the upgrade authority to final, because that key is an Ed25519 backdoor</p>
+  </div>
+  <aside class="notes">The ask is simple. An outside audit of a program under seven kilobytes. Then mainnet, and the upgrade key thrown away, because any Ed25519 key left behind would undo the whole point.</aside>
 </section>
 
 </div></div>

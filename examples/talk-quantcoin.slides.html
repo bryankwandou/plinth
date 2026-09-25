@@ -1,0 +1,99 @@
+<title>QuantCoin talk</title>
+<section class="center">
+  <div class="fill center">
+    <h1>A token cannot make Solana quantum-safe, but a vault can</h1>
+    <p class="lede">What QuantCoin protects, what it cannot, and what it cost to build · Bryan Kwandou</p>
+  </div>
+  <aside class="notes">This talk is about one narrow claim. No token fixes the chain it runs on. What a token can do is choose where its long-term balances live, and make that place need a signature a quantum computer cannot forge.</aside>
+</section>
+<section>
+  <div class="eyebrow">The question</div>
+  <h2>If Ed25519 falls, which Solana balances are still safe?</h2>
+  <p>Every wallet, exchange account and program authority signs with Ed25519. Shor's algorithm breaks it once a large enough quantum computer exists.</p>
+  <p class="source">Source: QuantCoin whitepaper, section 2</p>
+  <aside class="notes">Most people in this room hold something on Solana. The honest question is not whether this happens this year. It is what still stands if it happens while your money is still sitting there.</aside>
+</section>
+<section>
+  <div class="eyebrow">The answer</div>
+  <h2>Only balances that also need a hash-based signature survive</h2>
+  <div class="row">
+    <div class="c6 frame mono specimen">normal wallet<br>Ed25519<br>after Shor: open</div>
+    <div class="c6 frame mono specimen">hybrid vault<br>Ed25519 + WOTS/SHA-256<br>after Shor: hash half holds</div>
+  </div>
+  <aside class="notes">That is the whole finding. Everything after this slide is how we built the right-hand box, what it costs, and where it stops working.</aside>
+</section>
+<section>
+  <div class="eyebrow">Why hash-based</div>
+  <h2>Hash signatures lose only half their bits to Grover</h2>
+  <p>Grover's algorithm gives a square-root speedup against a hash, so a 192-bit digest keeps about 96 bits of post-quantum security. NIST standardized this family as SLH-DSA.</p>
+  <p class="source">Source: NIST FIPS 205, August 2024; QuantCoin whitepaper, section 3.3</p>
+  <aside class="notes">Lattice schemes are faster and smaller, but newer. Hash-based signatures assume only that SHA-256 behaves like a hash. For money meant to sit for decades, the oldest assumption is the one I wanted.</aside>
+</section>
+<section>
+  <div class="eyebrow">Design</div>
+  <h2>Winternitz keys sign once, so every spend empties the vault</h2>
+  <ul>
+    <li>Amount goes to the destination</li>
+    <li>The rest goes to the owner's next vault</li>
+    <li>The old vault's account is closed</li>
+  </ul>
+  <aside class="notes">A one-time signature leaks part of its key each time it signs. Signing twice would let someone forge. So the program never allows it: spend means drain, and the change moves to a fresh key.</aside>
+</section>
+<section>
+  <div class="eyebrow">Design</div>
+  <h2>The vault address itself commits to both keys</h2>
+  <p>The address is a PDA of the Winternitz key hash and the owner. The program recomputes the Winternitz public key from the signature and checks it lands on the same address. Nothing is stored on-chain.</p>
+  <aside class="notes">This is the trick that keeps the program stateless. There is no account holding a public key that could be swapped. If the signature does not rebuild the key that made the address, the spend fails.</aside>
+</section>
+<section>
+  <div class="eyebrow">Cost</div>
+  <h2>A quantum-safe spend uses about 610,000 compute units</h2>
+  <div class="row"><div class="c5"><div class="big">610k CU</div></div><div class="c7"><p>Typical spend on devnet. Projected worst case is 1.09 million, under the 1.4 million limit. The transaction is 1,124 of 1,232 bytes.</p></div></div>
+  <p class="source">Source: QuantCoin README, measured on devnet 2026-09-23</p>
+  <aside class="notes">This is the price. Verifying a Winternitz signature means hashing a lot. It fits in one transaction, but only just, which is why this is for cold storage and not for buying coffee.</aside>
+</section>
+<section>
+  <div class="eyebrow">Cost</div>
+  <h2>Deploying the program cost 0.0376 SOL on devnet</h2>
+  <div class="row"><div class="c5"><div class="big">0.0376</div></div><div class="c7"><p>SOL for the 6,872-byte program. Minting the full 22 trillion supply into the first vault cost another 0.0041 SOL.</p></div></div>
+  <p class="source">Source: QuantCoin README, devnet deployment table</p>
+  <aside class="notes">Small program, small rent. Pinocchio instead of Anchor is most of the reason it is under seven kilobytes.</aside>
+</section>
+<section>
+  <div class="eyebrow">Proof</div>
+  <h2>The whole supply moved once on devnet, and it matched</h2>
+  <p>Spend Np26Uxfw sent 1,000,000 QC, refunded 21,999,999,000,000 QC to a new vault and closed the old one. The TypeScript signer and Rust verifier agreed.</p>
+  <p class="source">Source: QuantCoin README, devnet run 2026-09-23</p>
+  <aside class="notes">Two separate implementations of the same hash chains, in two languages, agreeing on a real transaction. That is the test I trust more than any unit test.</aside>
+</section>
+<section>
+  <div class="eyebrow">Audit</div>
+  <h2>The internal audit caught a test that passed for the wrong reason</h2>
+  <p>Negative tests failed on an earlier check, not the one they claimed to test. Fixed, and every test now asserts its exact error code. A client bug that could lock a vault after a failed broadcast was fixed too.</p>
+  <p class="source">Source: QuantCoin audit/AUDIT.md, findings F1 and F2</p>
+  <aside class="notes">This is my favourite finding because it is so ordinary. The tests were green. They were green for the wrong reason. It only showed up when each test had to name the exact error it expected.</aside>
+</section>
+<section>
+  <div class="eyebrow">Caveats</div>
+  <h2>QuantCoin in a normal wallet is exactly as exposed as SOL</h2>
+  <ul>
+    <li>Only vault balances get the hash half</li>
+    <li>Vault secrets sit in plaintext until moved offline</li>
+    <li>No external audit yet, so no mainnet yet</li>
+  </ul>
+  <p class="source">Source: QuantCoin README; audit/AUDIT.md finding F5</p>
+  <aside class="notes">I want to be precise about the limits. Tokens you move to Phantom are protected by Phantom, which means Ed25519. The vault is for balances that sit still. And until someone outside checks the code, it stays on devnet.</aside>
+</section>
+<section>
+  <div class="eyebrow">Try this</div>
+  <h2>List every Ed25519 key that could still move your treasury</h2>
+  <p>Mint authority, freeze authority, metadata authority, program upgrade authority. Each one is a quantum backdoor. QuantCoin revoked the first three after genesis. The upgrade key goes before mainnet.</p>
+  <aside class="notes">This is the thing you can do on Monday without any new cryptography. Count the keys that can still change your token. Every one of them is a single Ed25519 signature away from someone else.</aside>
+</section>
+<section class="center">
+  <div class="fill center">
+    <h2>A token cannot make Solana quantum-safe, but a vault can</h2>
+    <p class="lede">Code, whitepaper and audit: github.com/bryankwandou/QUANTCOIN</p>
+  </div>
+  <aside class="notes">Same sentence as the start. Everything is public, including the parts that are not finished.</aside>
+</section>

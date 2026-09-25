@@ -2,13 +2,25 @@
   {
     "title": "Talk: What 5,428 hackathon projects say about pitching",
     "deck": "decks/talk-5428-projects.html",
-    "memo": "plinth:v1 sha256=6916c8f774bceb1064cc30deb187ac930d0e5540f01d3f80120fb32ed894bb7f score=100 slides=9",
-    "signature": "FbN65d9o6gypBygCxTRLqSpkLVn2XRz2wfKCZnqSWJCMGx1e9XMQUUaWCpbRzpCiEXLJfUVDTt7tf87rFjnghw8"
+    "memo": "plinth:v1 sha256=dd2bf63e260645d1f0e3404a23fd9f4398970e121e857c67f680386a6272066f score=100 slides=9",
+    "signature": "3h8Gd39BZtKtYxPEDvLd9GxpTFdqR7BvTZoRUChrAGQTnDyF6mKR5AxiZEM5gZaKRtfn6zrNAxTYpqLqrN6ebwz7"
   },
   {
     "title": "Pitch: Plinth, pitched with Plinth",
     "deck": "decks/pitch-plinth.html",
-    "memo": "plinth:v1 sha256=25a204d9d13be30e5bad327b3a276f063eccd01a5527d9d18a46e2827c33c55b score=100 slides=8",
-    "signature": "4699cQsLBfJVdFbDsR9zvokmMDP4jsP3c3snsspYxKKUKqSsjhhMgGKjWDW6MrqtoVCVa9vhbJWg3kGymkUyDbKd"
+    "memo": "plinth:v1 sha256=1b51b59254abe53049319388113be3b557200b31b82169ad85d06ddc7d451c33 score=100 slides=8",
+    "signature": "3CxuH1wFzNMpbHUH7Z74jstEViSJbq8djaZcwUknCP4ttYeUyBcUZW8UA6mrWBNzw5zpVjQKSWe62JJ6hQFWcxoX"
+  },
+  {
+    "title": "Pitch: QuantCoin, 3-minute hackathon",
+    "deck": "decks/pitch-quantcoin.html",
+    "memo": "plinth:v1 sha256=e174bb24efb2fe7953596dd76d353a617f18dbaad93ad1c607d907fe835e1be9 score=100 slides=10",
+    "signature": "3p4BgyctpbyvffbKabsYbF6NT9sTJhc8vkxvKMXKUDzeT7wh5kL2deQ7seaBgrEMVf7JDPjGxyQ2fb8jvs3zkCud"
+  },
+  {
+    "title": "Talk: A token cannot make Solana quantum-safe, but a vault can",
+    "deck": "decks/talk-quantcoin.html",
+    "memo": "plinth:v1 sha256=d86adf215b79ff168a6da15551fa00d568ca22d4401340e27f1dad8c87f06a79 score=100 slides=13",
+    "signature": "3bJkwEz1Hn4LEh4qjKMKPYsqFF4FVx5Bq7r7hypRgG6GDuMBuChAYTXoEE1qPqJD13kmBEi9AqrLnNSxMsUFZC26"
   }
 ]

@@ -80,3 +80,9 @@ test('translated topic labels are flagged', () => {
 test('full-width exclamation flagged', () => {
   assert.ok(lintSlides([{ headline: '今すぐ始めよう！', body: '' }]).issues.some(i => /Exclamation/.test(i.msg)));
 });
+test('technical names with digits are not data, real numbers still need a source', () => {
+  const ev = b => kinds(lintSlides([{ headline: 'The vault needs two signatures to open', body: b }])).includes('evidence');
+  assert.equal(ev('Ed25519 plus a Winternitz signature over SHA-256 on Token-2022'), false);
+  assert.equal(ev('Vesting that runs past 2030'), true);
+  assert.equal(ev('Cuts fees by 40%'), true);
+});

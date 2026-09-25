@@ -89,7 +89,8 @@
       if (EMOJI_RE.test(all)) add(n, 'voice', 'Emoji on a slide.', 3);
       EMOJI_RE.lastIndex = 0;
       if (/[!！]/.test(all)) add(n, 'voice', 'Exclamation mark. Let the claim carry the weight.', 2);
-      const nums = all.match(/(\$|Rp|USD|IDR)?\s?\d[\d.,]*\s?(%|x|k|m|b|bn|juta|miliar|triliun)?/gi) || [];
+      // Names with digits glued to letters (Ed25519, SHA-256, Token-2022, H100) are identifiers, not data.
+      const nums = all.replace(/\b[A-Za-z]+-?\d+[A-Za-z0-9-]*\b/g, '').match(/(\$|Rp|USD|IDR)?\s?\d[\d.,]*\s?(%|x|k|m|b|bn|juta|miliar|triliun)?/gi) || [];
       const hasBigNum = nums.some(x => /%|x|k|m|b|\$|Rp|juta|miliar|triliun/i.test(x) || x.replace(/\D/g, '').length >= 3);
       if (hasBigNum && !s.source && !/source|sumber|\[source needed\]/i.test(all)) add(n, 'evidence', 'Number with no source line.', 3);
     });
