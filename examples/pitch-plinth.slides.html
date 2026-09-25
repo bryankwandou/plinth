@@ -1,0 +1,61 @@
+<title>Plinth pitch</title>
+<section class="center">
+  <div class="fill center">
+    <h1>Plinth turns a founder's notes into a deck judges finish watching</h1>
+    <p class="lede">A Claude skill for pitch decks and talks · Bryan Kwandou</p>
+  </div>
+  <aside class="notes">Plinth is a skill for Claude that builds pitch decks and talks. You give it your notes, it gives back a deck with one claim per slide and a lint score for the words.</aside>
+</section>
+<section>
+  <div class="eyebrow">Problem</div>
+  <h2>Most AI-made decks look like every other AI-made deck</h2>
+  <div class="row">
+    <div class="c7"><p>A title, four bullets of equal length, an icon in a circle, a purple gradient. Judges see that pattern dozens of times a day and stop reading.</p></div>
+    <div class="c5 frame mono specimen">The Problem<br>- Seamless onboarding<br>- Unlock liquidity<br>- Empower users<br>- Next-gen UX</div>
+  </div>
+  <aside class="notes">You have seen this slide. Topic label as the title, four buzzwords as bullets. Generated decks drift toward it because it is the average of every deck online.</aside>
+</section>
+<section>
+  <div class="eyebrow">Why it matters</div>
+  <h2>One in eighteen projects wins, and every one sends a pitch</h2>
+  <div class="row"><div class="c5"><div class="big">293</div></div><div class="c7"><p>winners out of 5,428 projects. The deck does not get you in; a clear argument inside it does.</p></div></div>
+  <p class="source">Source: Colosseum Copilot, pulled 2026-09-25</p>
+  <aside class="notes">Presence of a deck is universal, so it is not the differentiator. The argument is.</aside>
+</section>
+<section>
+  <div class="eyebrow">Product</div>
+  <h2>Headlines first, slides second, lint last</h2>
+  <ul>
+    <li>Writes the spine as claims and checks it reads as a case</li>
+    <li>Builds one self-contained HTML deck with speaker notes</li>
+    <li>Scores the copy for filler, density and unsourced numbers</li>
+  </ul>
+  <aside class="notes">Three steps. The spine is the part people skip, and it is the part that matters most.</aside>
+</section>
+<section>
+  <div class="eyebrow">Demo</div>
+  <h2>The linter catches the slide from two minutes ago</h2>
+  <div class="row">
+    <div class="c6 frame mono specimen">$ node lint-deck.mjs before.txt<br>slide 1 headline "The Problem" is a topic label<br>slide 1 voice "Seamless" is filler<br>slide 1 voice "Unlock" is filler<br>score 58/100</div>
+    <div class="c6 frame mono specimen">$ node lint-deck.mjs after.txt<br>no issues<br>score 100/100</div>
+  </div>
+  <aside class="notes">Same content, rewritten with the rules. The linter runs in the terminal and on the website, using the same code.</aside>
+</section>
+<section>
+  <div class="eyebrow">How it works</div>
+  <h2>A skill file, four references, one template and a zero-dependency linter</h2>
+  <div class="row"><div class="c12 frame mono" style="grid-column:span 12">SKILL.md → pitch.md | talk.md | review.md  +  craft.md, voice.md<br>assets/deck-template.html → your deck (arrows, notes, print to PDF)<br>scripts/lint-core.js → CLI and browser</div></div>
+  <aside class="notes">Everything is plain files. No server, no account. It runs anywhere Claude Code runs.</aside>
+</section>
+<section>
+  <div class="eyebrow">Traction</div>
+  <h2>Nothing yet; this is the first public release</h2>
+  <p class="lede">We will count installs and before-and-after lint scores from the first 50 users.</p>
+  <aside class="notes">Being honest here. No users yet. The next number on this slide will be real.</aside>
+</section>
+<section>
+  <div class="eyebrow">Ask</div>
+  <h2>Try it on your next deck and send us the before score</h2>
+  <p class="lede">github.com/bryankwandou/plinth · plinthdeck.vercel.app</p>
+  <aside class="notes">That is the ask. Run it on a real deck, tell us what it missed.</aside>
+</section>

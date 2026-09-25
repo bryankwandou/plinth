@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What 5,428 hackathon projects say about pitching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAF7; --ink:#15161A; --muted:#6B6E76; --line:#E4E3DD; --panel:#F1F0EA;
+  --accent:#2F5BEA; --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+.dark{ --bg:#111214; --ink:#F2F1EC; --muted:#9A9CA3; --line:#2A2B30; --panel:#1A1B1F; }
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#0c0c0e;font-family:var(--font);-webkit-font-smoothing:antialiased}
+.stage{position:fixed;inset:0;display:grid;place-items:center}
+.deck{width:1280px;height:720px;position:relative;transform-origin:center}
+section{position:absolute;inset:0;background:var(--bg);color:var(--ink);padding:64px 64px 56px;display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .35s ease}
+section.on{opacity:1;pointer-events:auto}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+h1{font-size:72px;line-height:1.02;letter-spacing:-.035em;font-weight:700;max-width:18ch}
+h2{font-size:48px;line-height:1.08;letter-spacing:-.025em;font-weight:600;max-width:22ch}
+p,li{font-size:24px;line-height:1.45;color:var(--ink);max-width:40ch}
+.lede{color:var(--muted);margin-top:24px}
+ul{padding:0;list-style:none;margin-top:36px;display:grid;gap:18px}
+li{padding-left:28px;position:relative}
+li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;background:var(--accent)}
+.fill{flex:1;display:flex;flex-direction:column;justify-content:center}
+.center{align-items:center;text-align:center} .center h1,.center h2,.center p{margin-inline:auto}
+.big{font-size:180px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent);font-feature-settings:"tnum"}
+.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px}
+.row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:40px;flex:1;align-items:center}
+.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c4{grid-column:span 4}.c8{grid-column:span 8}
+.frame{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 24px 48px -28px rgba(0,0,0,.25)}
+.mono{font-family:var(--mono);font-size:17px;line-height:1.6}
+.quote{font-size:36px;line-height:1.3;letter-spacing:-.015em;max-width:30ch}
+.who{margin-top:20px;font-size:18px;color:var(--muted)}
+.accent{color:var(--accent)}
+.stat{border-top:2px solid var(--ink);padding-top:14px}
+.stat b{display:block;font-size:56px;letter-spacing:-.03em;font-weight:600;font-feature-settings:"tnum"}
+.stat span{font-size:18px;color:var(--muted)}
+.bar{height:14px;border-radius:3px;background:var(--line)} .bar.hi{background:var(--accent)}
+.foot{position:absolute;left:64px;right:64px;bottom:24px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+aside.notes{display:none}
+#progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
+#notes.show{display:block}
+#hint{position:fixed;right:16px;top:12px;font:12px var(--font);color:#777}
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{background:none} .stage{position:static;display:block} .deck{transform:none!important;width:auto;height:auto}
+  section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
+  #progress,#notes,#hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){section{transition:none}}
+</style>
+</head>
+<body>
+<div class="stage"><div class="deck" id="deck">
+<section class="center">
+  <div class="fill center">
+    <div class="eyebrow">Plinth research note · September 2026</div>
+    <h1>What 5,428 hackathon projects say about pitching</h1>
+    <p class="lede">Colosseum Copilot data, Renaissance to Cypherpunk</p>
+    <p class="source" style="margin-top:28px">Source: Colosseum Copilot project index, pulled 2026-09-25</p>
+  </div>
+  <aside class="notes">I pulled every Solana hackathon project Colosseum has indexed and compared the winners with everyone else. The short version: the things people polish are not the things that win.</aside>
+</section>
+<section>
+  <div class="eyebrow">Base rate</div>
+  <h2>Only one project in eighteen takes home a prize</h2>
+  <div class="row">
+    <div class="c5"><div class="big">5.4%</div></div>
+    <div class="c7"><p>293 winners out of 5,428 submissions across four global hackathons. Judges watch hundreds of three-minute videos per track.</p></div>
+  </div>
+  <p class="source">Source: Colosseum Copilot /compare, winnersOnly cohort vs all projects, pulled 2026-09-25</p>
+  <aside class="notes">Start with the odds. About five percent. Which means the judge watching your video has already seen dozens that look like it, and decides in the first minute whether to keep watching.</aside>
+</section>
+<section>
+  <div class="eyebrow">What does not separate winners</div>
+  <h2>Winners write their one-liners exactly as long as everyone else</h2>
+  <div class="row">
+    <div class="c4 stat"><b>13</b><span>median words, winners</span></div>
+    <div class="c4 stat"><b>13</b><span>median words, non-winners</span></div>
+    <div class="c4 stat"><b>4%</b><span>use hype words, in both groups</span></div>
+  </div>
+  <p class="source">Source: 363-project sample over 15 category queries (180 winners, 183 non-winners), Colosseum Copilot</p>
+  <aside class="notes">I expected shorter, punchier one-liners from winners. The median is identical, thirteen words. And the buzzword rate is the same four percent. So polishing the tagline is not where the prize comes from.</aside>
+</section>
+<section>
+  <div class="eyebrow">What does</div>
+  <h2>Winners are far more likely to be building in public</h2>
+  <div class="row">
+    <div class="c8" style="display:grid;gap:22px">
+      <div><p style="font-size:18px;color:var(--muted)">Winners with a linked X account</p><div style="display:flex;align-items:center;gap:16px"><div class="bar hi" style="width:96%"></div><b style="font-size:28px">96%</b></div></div>
+      <div><p style="font-size:18px;color:var(--muted)">Non-winners</p><div style="display:flex;align-items:center;gap:16px"><div class="bar" style="width:80%"></div><b style="font-size:28px">80%</b></div></div>
+    </div>
+    <div class="c4"><p>The one visible gap in the sample. Colosseum's own guide names it too: build in public, get beta testers early.</p></div>
+  </div>
+  <p class="source">Source: same sample; "How to Win a Colosseum Hackathon", blog.colosseum.com</p>
+  <aside class="notes">The one gap that did show up is presence. Ninety-six percent of winners link an account where they post progress, versus eighty percent of the rest. It is a proxy, not proof, but it lines up with what Colosseum tells people directly.</aside>
+</section>
+<section>
+  <div class="eyebrow">What judges ask for</div>
+  <h2>Six things, under three minutes</h2>
+  <ul>
+    <li>Who you are and why you started</li>
+    <li>What it is, who it is for, and a working demo</li>
+    <li>The market it opens and how you reach the first users</li>
+  </ul>
+  <p class="source">Source: "How to Win a Colosseum Hackathon" and "Perfecting Your Hackathon Submission", blog.colosseum.com</p>
+  <aside class="notes">Colosseum publishes the checklist: team background, product, why you started, market, how you get first users, and the demo. I grouped them into three pairs. Running over three minutes is on their list of top mistakes.</aside>
+</section>
+<section class="center">
+  <div class="fill center">
+    <p class="quote">"A clear and well-structured narrative is more valuable than professional video editing."</p>
+    <p class="who">Colosseum, Perfecting Your Hackathon Submission</p>
+  </div>
+  <aside class="notes">This is the line I would put above every desk during submission week. A voiceover over clean slides is enough. The story has to be right.</aside>
+</section>
+<section>
+  <div class="eyebrow">Two first-place one-liners</div>
+  <h2>Both name the user and the exact job, with no adjectives</h2>
+  <div class="row">
+    <div class="c6 frame"><p style="font-size:22px">"Transaction debugger for Solana providing line-by-line traces, source mapping, and local variable inspection."</p><p class="who">Seer · 1st place, Infrastructure</p></div>
+    <div class="c6 frame"><p style="font-size:22px">"Mobile sentiment prediction app where users stake on crowd opinions rather than event outcomes."</p><p class="who">Trepa · 1st place, Consumer</p></div>
+  </div>
+  <p class="source">Source: Colosseum Copilot project records</p>
+  <aside class="notes">Look at what these do. A category noun, then the specific job, then the detail that makes it different. Nobody is revolutionizing anything.</aside>
+</section>
+<section>
+  <div class="eyebrow">Takeaway</div>
+  <h2>Spend the last week on the story, not the edit</h2>
+  <ul>
+    <li>Write the headlines first; they should make the case alone</li>
+    <li>One claim per slide, one piece of evidence under it</li>
+    <li>Post progress in public from day one</li>
+  </ul>
+  <aside class="notes">Colosseum suggests roughly four weeks of engineering and one on the presentation. Use that week to get the spine right, then build slides around it.</aside>
+</section>
+<section class="center">
+  <div class="fill center">
+    <h1>Format is table stakes. The argument wins.</h1>
+    <p class="lede">plinthdeck.vercel.app</p>
+  </div>
+  <aside class="notes">That is the whole finding. Everyone submits a deck. The ones that win make a clearer argument.</aside>
+</section>
+
+</div></div>
+<div id="progress"></div><div id="notes"></div>
+<div id="hint">← → · F fullscreen · N notes · P print</div>
+<script>
+(()=>{
+  const deck=document.getElementById('deck'),S=[...deck.querySelectorAll('section')],bar=document.getElementById('progress'),nb=document.getElementById('notes');
+  let i=Math.min(S.length-1,Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
+  const fit=()=>{const k=Math.min(innerWidth/1280,innerHeight/720);deck.style.transform=`scale(${k})`};
+  const show=n=>{i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
+    bar.style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));
+    const a=S[i].querySelector('aside.notes');nb.textContent=a?a.textContent.trim():'';};
+  addEventListener('resize',fit);fit();show(i);
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}
+    else if(['ArrowLeft','PageUp'].includes(e.key))show(i-1);
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(S.length-1);
+    else if(e.key==='f'||e.key==='F')document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+    else if(e.key==='n'||e.key==='N')nb.classList.toggle('show');
+    else if(e.key==='p'||e.key==='P')print();
+  });
+  let x0=null;addEventListener('touchstart',e=>x0=e.touches[0].clientX);
+  addEventListener('touchend',e=>{if(x0==null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>40)show(i+(d<0?1:-1));x0=null});
+  deck.addEventListener('click',e=>show(i+(e.clientX>innerWidth/2?1:-1)));
+})();
+</script>
+</body>
+</html>

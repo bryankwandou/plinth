@@ -1,0 +1,13 @@
+docs/evidence/before.txt
+2 slides  score 24/100
+
+  slide  1  headline  "The Problem" is a topic label, not a claim. Put it in the eyebrow and write what is true.
+  slide  1  density   4 bullets. Three at most.
+  slide  1  voice     "Seamless" is filler. Say the fact behind it.
+  slide  1  voice     "Unlock" is filler. Say the fact behind it.
+  slide  1  voice     "Empower" is filler. Say the fact behind it.
+  slide  1  voice     "Next-gen" is filler. Say the fact behind it.
+  slide  1  voice     Exclamation mark. Let the claim carry the weight.
+  slide  2  voice     "revolutionizing" is filler. Say the fact behind it.
+  slide  2  voice     "cutting-edge" is filler. Say the fact behind it.
+  slide  2  evidence  Number with no source line.

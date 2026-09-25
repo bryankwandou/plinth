@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plinth: decks with an argument</title>
+<meta name="description" content="A Claude skill that builds pitch decks and talks with one claim per slide, then lints the words. Built on data from 5,428 Colosseum hackathon projects.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Plinth: decks with an argument">
+<meta property="og:description" content="A Claude skill for pitch decks and talks. Headlines first, slides second, lint last.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF7;--ink:#15161A;--muted:#63666E;--line:#E4E3DD;--panel:#F2F1EB;--card:#FFFFFF;--accent:#2F5BEA;--accent-ink:#FFFFFF;--bad:#C2410C;--good:#15803D;
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101113;--ink:#F2F1EC;--muted:#9A9DA5;--line:#26272C;--panel:#17181C;--card:#1B1C20;--accent:#6E8BFF;--accent-ink:#0B0C0E;--bad:#FB923C;--good:#4ADE80}}
+:root[data-theme="dark"]{--bg:#101113;--ink:#F2F1EC;--muted:#9A9DA5;--line:#26272C;--panel:#17181C;--card:#1B1C20;--accent:#6E8BFF;--accent-ink:#0B0C0E;--bad:#FB923C;--good:#4ADE80}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:hidden}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em;font-size:18px;text-decoration:none}
+.brand img{width:26px;height:26px}
+nav .links{display:flex;gap:22px;margin-left:auto;font-size:14px;color:var(--muted)}
+nav .links a{text-decoration:none} nav .links a:hover{color:var(--ink)}
+.tog{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:12px;font-weight:600}
+.tog button{background:none;border:0;padding:6px 9px;color:var(--muted);cursor:pointer;font:inherit}
+.tog button.on{background:var(--ink);color:var(--bg)}
+.theme{background:none;border:1px solid var(--line);border-radius:8px;width:32px;height:30px;cursor:pointer;color:var(--muted)}
+header{padding:96px 0 72px}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(40px,6.4vw,76px);line-height:1.02;letter-spacing:-.04em;font-weight:700;max-width:15ch;margin-top:18px}
+h1 .u{background:linear-gradient(var(--accent),var(--accent)) 0 92%/0% 6px no-repeat;animation:under 1.1s .5s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes under{to{background-size:100% 6px}}
+.sub{font-size:20px;color:var(--muted);max-width:52ch;margin-top:24px}
+.cta{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--line);background:var(--card);transition:transform .15s,border-color .15s}
+.btn:hover{transform:translateY(-1px);border-color:var(--ink)}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.install{margin-top:28px;font-family:var(--mono);font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;gap:12px;align-items:center;max-width:640px;overflow-x:auto}
+.install code{white-space:nowrap;flex:1}
+.install button{background:none;border:1px solid var(--line);border-radius:6px;padding:4px 8px;font:12px var(--font);color:var(--muted);cursor:pointer}
+/* hero preview */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero>div,.lint>div{min-width:0}
+.stagebox{aspect-ratio:16/9;position:relative;border-radius:14px;border:1px solid var(--line);background:var(--card);box-shadow:0 40px 80px -48px rgba(0,0,0,.35);overflow:hidden}
+.mini{position:absolute;inset:0;padding:7% 7%;display:flex;flex-direction:column;background:var(--card);opacity:0;transform:translateY(8px);transition:opacity .45s,transform .45s;z-index:0}
+.mini.on{z-index:1}.mini:not(.on){transition-duration:.15s}
+.mini.on{opacity:1;transform:none}
+.mini .e{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mini h3{font-size:clamp(16px,2.2vw,26px);letter-spacing:-.02em;line-height:1.12;margin-top:10px;max-width:20ch}
+.mini .n{font-size:clamp(48px,7vw,88px);font-weight:700;letter-spacing:-.05em;color:var(--accent);margin-top:auto;line-height:.9}
+.mini .s{font-size:10px;color:var(--muted);margin-top:auto}
+.mini .bars{margin-top:auto;display:grid;gap:8px}
+.mini .bars i{display:block;height:9px;border-radius:2px;background:var(--line)} .mini .bars i.hi{background:var(--accent)}
+.dots{position:absolute;bottom:12px;right:14px;display:flex;gap:5px}
+.dots b{width:6px;height:6px;border-radius:50%;background:var(--line);transition:background .3s} .dots b.on{background:var(--accent)}
+section{padding:88px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(30px,4vw,46px);letter-spacing:-.03em;line-height:1.08;font-weight:600;max-width:22ch;margin-top:14px}
+.lead{color:var(--muted);font-size:18px;max-width:58ch;margin-top:16px}
+/* data */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.stat{border-top:2px solid var(--ink);padding-top:14px}
+.stat b{display:block;font-size:clamp(36px,4.4vw,52px);letter-spacing:-.04em;font-weight:600;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:var(--muted)}
+.cmp{margin-top:48px;display:grid;gap:18px;max-width:760px}
+.cmp .r{display:grid;grid-template-columns:220px 1fr 56px;gap:16px;align-items:center;font-size:15px}
+.cmp .t{height:12px;border-radius:3px;background:var(--panel);overflow:hidden}
+.cmp .t i{display:block;height:100%;width:0;background:var(--muted);transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+.cmp .t i.hi{background:var(--accent)}
+.cmp .v{font-variant-numeric:tabular-nums;font-weight:600;text-align:right}
+.src{font-size:13px;color:var(--muted);margin-top:22px}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
+.step .k{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.step h3{font-size:20px;letter-spacing:-.015em;margin-top:10px}
+.step p{color:var(--muted);font-size:15px;margin-top:8px}
+/* linter */
+.lint{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+textarea{width:100%;min-height:340px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:14px/1.6 var(--mono);padding:16px}
+textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.presets{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.presets button{font:13px var(--font);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer}
+.out{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:20px;min-height:340px}
+.score{display:flex;align-items:baseline;gap:10px}
+.score b{font-size:64px;letter-spacing:-.05em;font-weight:700;font-variant-numeric:tabular-nums;transition:color .3s}
+.score span{color:var(--muted)}
+.meter{height:6px;background:var(--line);border-radius:3px;margin:10px 0 18px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.issues{list-style:none;padding:0;display:grid;gap:8px;font-size:14px;max-height:230px;overflow:auto}
+.issues li{display:grid;grid-template-columns:62px 72px 1fr;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);animation:in .3s both}
+.issues .kd{font-family:var(--mono);font-size:12px;color:var(--bad)}
+.issues .sl{font-family:var(--mono);font-size:12px;color:var(--muted)}
+@keyframes in{from{opacity:0;transform:translateX(-6px)}}
+/* decks */
+.decks{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+.deck{display:block;text-decoration:none;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);transition:transform .2s,box-shadow .2s}
+.deck:hover{transform:translateY(-3px);box-shadow:0 30px 60px -40px rgba(0,0,0,.4)}
+.deck{min-width:0}.stats>*,.steps>*{min-width:0}
+.deck iframe{position:absolute;top:0;left:0;width:1280px;height:720px;border:0;transform:scale(.4);transform-origin:0 0;pointer-events:none}
+.deck .fr{aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid var(--line);position:relative}
+.deck .m{padding:18px 20px}
+.deck .m b{display:block;font-size:17px} .deck .m span{font-size:14px;color:var(--muted)}
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:0 48px;margin-top:40px;counter-reset:r}
+.rules p{padding:18px 0;border-bottom:1px solid var(--line);font-size:17px;display:grid;grid-template-columns:40px 1fr}
+.rules p::before{counter-increment:r;content:counter(r,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:3px}
+footer{padding:48px 0 64px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.seen{opacity:1;transform:none}
+@media (max-width:860px){
+  .hero,.lint,.decks{grid-template-columns:1fr} .steps{grid-template-columns:1fr} .stats{grid-template-columns:1fr 1fr}
+  .rules{grid-template-columns:1fr} nav .links{display:none} .cmp .r{grid-template-columns:120px 1fr 44px;font-size:13px}
+  header{padding:56px 0 48px} .deck iframe{transform:scale(.27)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}h1 .u{background-size:100% 6px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#"><img src="logo.svg" alt="">Plinth</a>
+  <div class="links"><a href="#data" data-i="n1">Data</a><a href="#how" data-i="n2">How it works</a><a href="#try" data-i="n3">Try the linter</a><a href="#decks" data-i="n4">Examples</a></div>
+  <div class="tog" role="group" aria-label="Language"><button data-l="en" class="on">EN</button><button data-l="id">ID</button></div>
+  <button class="theme" id="theme" aria-label="Toggle theme">◐</button>
+</div></nav>
+
+<header><div class="wrap hero">
+  <div>
+    <div class="eyebrow" data-i="h0">A Claude skill for decks</div>
+    <h1 data-i="h1">Slides that make <span class="u">an argument</span></h1>
+    <p class="sub" data-i="h2">Plinth writes your headlines first, gives each slide one job, then checks every word for filler. Built for hackathon pitches, investor decks and talks.</p>
+    <div class="cta">
+      <a class="btn pri" href="#try" data-i="c1">Lint a deck now</a>
+      <a class="btn" href="https://github.com/bryankwandou/plinth" data-i="c2">Get the skill</a>
+    </div>
+    <div class="install"><code>git clone https://github.com/bryankwandou/plinth &amp;&amp; cp -r plinth/skill/plinth ~/.claude/skills/</code><button id="copy" data-i="cp">Copy</button></div>
+  </div>
+  <div class="stagebox" id="stage" aria-label="Example slides">
+    <div class="mini on"><div class="e">Base rate</div><h3 data-i="m1">One project in eighteen takes home a prize</h3><div class="n">5.4%</div></div>
+    <div class="mini"><div class="e">What does not matter</div><h3 data-i="m2">Winners write one-liners as long as everyone else</h3><div class="n">13</div><div class="s">median words, both groups</div></div>
+    <div class="mini"><div class="e">What does</div><h3 data-i="m3">Winners are far more likely to build in public</h3><div class="bars"><i class="hi" style="width:96%"></i><i style="width:80%"></i></div></div>
+    <div class="mini"><div class="e">Takeaway</div><h3 data-i="m4">Format is table stakes. The argument wins.</h3></div>
+    <div class="dots"><b class="on"></b><b></b><b></b><b></b></div>
+  </div>
+</div></header>
+
+<section id="data"><div class="wrap">
+  <div class="eyebrow reveal" data-i="d0">The research</div>
+  <h2 class="reveal" data-i="d1">We compared every Colosseum winner with the projects that did not place</h2>
+  <p class="lead reveal" data-i="d2">The things people polish most turned out to be identical between the two groups. The rules in Plinth come from what was left.</p>
+  <div class="stats">
+    <div class="stat reveal"><b data-count="5428">0</b><span data-i="s1">projects indexed</span></div>
+    <div class="stat reveal"><b data-count="293">0</b><span data-i="s2">prize winners</span></div>
+    <div class="stat reveal"><b data-count="5.4" data-suf="%">0</b><span data-i="s3">win rate</span></div>
+    <div class="stat reveal"><b data-count="3" data-suf=" min">0</b><span data-i="s4">pitch limit judges enforce</span></div>
+  </div>
+  <div class="cmp reveal" id="cmp">
+    <div class="r"><span data-i="b1">X account linked, winners</span><div class="t"><i class="hi" data-w="96"></i></div><span class="v">96%</span></div>
+    <div class="r"><span data-i="b2">X account linked, others</span><div class="t"><i data-w="80"></i></div><span class="v">80%</span></div>
+    <div class="r"><span data-i="b3">Hype words, winners</span><div class="t"><i class="hi" data-w="4"></i></div><span class="v">4%</span></div>
+    <div class="r"><span data-i="b4">Hype words, others</span><div class="t"><i data-w="4"></i></div><span class="v">4%</span></div>
+  </div>
+  <p class="src" data-i="src">Source: Colosseum Copilot API, 363-project sample over 15 category queries, pulled 25 September 2026. Judging guidance from blog.colosseum.com.</p>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="eyebrow reveal" data-i="w0">How it works</div>
+  <h2 class="reveal" data-i="w1">Headlines first, slides second, lint last</h2>
+  <div class="steps">
+    <div class="step reveal"><div class="k">01 · spine</div><h3 data-i="t1">Write the case as claims</h3><p data-i="p1">Every headline is a full sentence with a verb. Read top to bottom, the list alone should make your case.</p></div>
+    <div class="step reveal"><div class="k">02 · build</div><h3 data-i="t2">One job per slide</h3><p data-i="p2">A number, a chart, a screenshot, or three short points. One HTML file with speaker notes and print to PDF.</p></div>
+    <div class="step reveal"><div class="k">03 · lint</div><h3 data-i="t3">Check every word</h3><p data-i="p3">Filler, topic-label headlines, crowded slides and numbers without a source get flagged before anyone sees them.</p></div>
+  </div>
+</div></section>
+
+<section id="try"><div class="wrap">
+  <div class="eyebrow reveal" data-i="l0">Try it</div>
+  <h2 class="reveal" data-i="l1">Paste your slides and see what a judge will notice</h2>
+  <p class="lead reveal" data-i="l2">First line of each slide is the headline. Separate slides with a line of three dashes. Add "source:" under any number. Nothing leaves your browser.</p>
+  <div class="lint reveal">
+    <div>
+      <textarea id="src" spellcheck="false" aria-label="Slides"></textarea>
+      <div class="presets"><button data-p="bad" data-i="pb">Load a weak deck</button><button data-p="good" data-i="pg">Load the rewrite</button><button data-p="clear" data-i="pc">Clear</button></div>
+    </div>
+    <div class="out" aria-live="polite">
+      <div class="score"><b id="sc">0</b><span>/ 100</span></div>
+      <div class="meter"><i id="mt" style="width:0"></i></div>
+      <ul class="issues" id="iss"></ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="decks"><div class="wrap">
+  <div class="eyebrow reveal" data-i="k0">Examples</div>
+  <h2 class="reveal" data-i="k1">Two decks built with the skill, both scoring 100</h2>
+  <div class="decks">
+    <a class="deck reveal" href="decks/talk-5428-projects.html"><div class="fr"><iframe src="decks/talk-5428-projects.html" loading="lazy" tabindex="-1" title="Talk deck preview"></iframe></div><div class="m"><b data-i="e1">What 5,428 hackathon projects say about pitching</b><span data-i="e2">Talk · 9 slides · arrow keys to present</span></div></a>
+    <a class="deck reveal" href="decks/pitch-plinth.html"><div class="fr"><iframe src="decks/pitch-plinth.html" loading="lazy" tabindex="-1" title="Pitch deck preview"></iframe></div><div class="m"><b data-i="e3">Plinth, pitched with Plinth</b><span data-i="e4">Pitch · 8 slides · honest about zero traction</span></div></a>
+  </div>
+</div></section>
+
+<section id="rules"><div class="wrap">
+  <div class="eyebrow reveal" data-i="r0">The rules</div>
+  <h2 class="reveal" data-i="r1">Eight rules the skill will not break</h2>
+  <div class="rules reveal">
+    <p data-i="q1">A headline is a claim, never a topic label.</p>
+    <p data-i="q2">Twelve words or fewer per headline.</p>
+    <p data-i="q3">One piece of evidence per slide.</p>
+    <p data-i="q4">Every number carries its source.</p>
+    <p data-i="q5">One accent color, used where the eye should land.</p>
+    <p data-i="q6">No emoji, no exclamation marks, no gradient text.</p>
+    <p data-i="q7">Missing data is marked on the slide, never invented.</p>
+    <p data-i="q8">Under three minutes for a hackathon pitch.</p>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <a class="brand" href="#"><img src="logo.svg" alt="">Plinth</a>
+  <span data-i="f1">Made by Bryan Kwandou. MIT license.</span>
+  <a href="https://github.com/bryankwandou/plinth">GitHub</a>
+</div></footer>
+
+<script src="lint-core.js"></script>
+<script>
+const T={id:{n1:"Data",n2:"Cara kerja",n3:"Coba linter",n4:"Contoh",h0:"Skill Claude untuk slide",h1:'Slide yang punya <span class="u">argumen</span>',
+h2:"Plinth menulis judul slide lebih dulu, memberi tiap slide satu tugas, lalu memeriksa setiap kata dari basa-basi. Untuk pitch hackathon, deck investor, dan presentasi.",
+c1:"Cek deck sekarang",c2:"Ambil skill-nya",cp:"Salin",m1:"Hanya satu dari delapan belas proyek yang menang",m2:"Pemenang menulis one-liner sepanjang peserta lain",m3:"Pemenang jauh lebih sering membangun di depan publik",m4:"Format itu syarat minimum. Argumenlah yang menang.",
+d0:"Riset",d1:"Kami membandingkan semua pemenang Colosseum dengan proyek yang tidak menang",d2:"Hal yang paling sering dipoles ternyata sama persis di kedua kelompok. Aturan Plinth diambil dari yang tersisa.",
+s1:"proyek terindeks",s2:"pemenang hadiah",s3:"tingkat kemenangan",s4:"batas durasi pitch",b1:"Akun X ditautkan, pemenang",b2:"Akun X ditautkan, lainnya",b3:"Kata hype, pemenang",b4:"Kata hype, lainnya",
+src:"Sumber: API Colosseum Copilot, sampel 363 proyek dari 15 kueri kategori, diambil 25 September 2026. Panduan penilaian dari blog.colosseum.com.",
+w0:"Cara kerja",w1:"Judul dulu, slide kemudian, cek terakhir",t1:"Tulis argumennya sebagai klaim",p1:"Setiap judul adalah kalimat utuh dengan kata kerja. Dibaca dari atas ke bawah, daftar judul saja sudah harus meyakinkan.",
+t2:"Satu tugas per slide",p2:"Satu angka, satu grafik, satu tangkapan layar, atau tiga poin pendek. Satu file HTML dengan catatan pembicara dan cetak ke PDF.",t3:"Periksa setiap kata",p3:"Kata basa-basi, judul berupa label topik, slide yang penuh, dan angka tanpa sumber ditandai sebelum ada yang melihat.",
+l0:"Coba",l1:"Tempel slide Anda dan lihat apa yang akan dilihat juri",l2:'Baris pertama tiap slide adalah judul. Pisahkan slide dengan baris tiga tanda hubung. Tambahkan "source:" di bawah angka. Tidak ada data yang keluar dari browser Anda.',
+pb:"Muat deck yang lemah",pg:"Muat hasil tulis ulang",pc:"Kosongkan",k0:"Contoh",k1:"Dua deck yang dibuat dengan skill ini, keduanya skor 100",
+e1:"Apa kata 5.428 proyek hackathon soal pitching",e2:"Presentasi · 9 slide · tombol panah untuk presentasi",e3:"Plinth, di-pitch dengan Plinth",e4:"Pitch · 8 slide · jujur soal traksi nol",
+r0:"Aturan",r1:"Delapan aturan yang tidak akan dilanggar",q1:"Judul adalah klaim, bukan label topik.",q2:"Maksimal dua belas kata per judul.",q3:"Satu bukti per slide.",q4:"Setiap angka menyertakan sumbernya.",
+q5:"Satu warna aksen, dipakai di titik yang harus dilihat.",q6:"Tanpa emoji, tanpa tanda seru, tanpa teks gradien.",q7:"Data yang tidak ada ditandai di slide, tidak dikarang.",q8:"Di bawah tiga menit untuk pitch hackathon.",f1:"Dibuat oleh Bryan Kwandou. Lisensi MIT."}};
+const EN={};document.querySelectorAll('[data-i]').forEach(e=>EN[e.dataset.i]=e.innerHTML);T.en=EN;
+function setLang(l){document.documentElement.lang=l;document.querySelectorAll('[data-i]').forEach(e=>{const v=T[l][e.dataset.i];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll('.tog button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));try{localStorage.setItem('plinth-lang',l)}catch(e){}}
+document.querySelectorAll('.tog button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+try{const s=localStorage.getItem('plinth-lang');if(s)setLang(s);else if(/^id/i.test(navigator.language))setLang('id')}catch(e){}
+document.getElementById('theme').onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+document.getElementById('copy').onclick=e=>{navigator.clipboard.writeText(document.querySelector('.install code').textContent);e.target.textContent='✓';setTimeout(()=>e.target.textContent=T[document.documentElement.lang].cp,1400)};
+// hero slides
+(()=>{const m=[...document.querySelectorAll('.mini')],d=[...document.querySelectorAll('.dots b')];let k=0;
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ setInterval(()=>{m[k].classList.remove('on');d[k].classList.remove('on');k=(k+1)%m.length;m[k].classList.add('on');d[k].classList.add('on')},2800)})();
+// reveal + counters + bars
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('seen');io.unobserve(t);
+  t.querySelectorAll('[data-count]').forEach(c=>{const to=+c.dataset.count,dec=String(to).includes('.')?1:0,suf=c.dataset.suf||'',t0=performance.now();
+    const f=n=>{const p=Math.min(1,(n-t0)/1200),v=to*(1-Math.pow(1-p,3));c.textContent=v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})+suf;if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)});
+  t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w+'%')}),{threshold:.2});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+// linter
+const P={bad:`The Problem
+- Seamless onboarding for everyone
+- Unlock liquidity
+- Empower creators
+- Next-gen UX!
+---
+We are revolutionizing payments with cutting-edge AI
+Our market is $4T
+---
+Why Us
+A world-class team leveraging a robust stack`,
+good:`Card fees take 3% of every sale a Makassar warung makes
+source: Bank Indonesia MDR schedule, 2025
+---
+We settle in 400 ms for a flat Rp 200
+source: devnet test run, 50 transfers
+---
+Two founders who ran a warung payments desk for three years`,clear:''};
+const src=document.getElementById('src'),sc=document.getElementById('sc'),mt=document.getElementById('mt'),iss=document.getElementById('iss');
+function run(){const sl=PlinthLint.parseText(src.value);if(!sl.length){sc.textContent='0';mt.style.width='0';iss.innerHTML='';return}
+ const r=PlinthLint.lintSlides(sl);sc.textContent=r.score;sc.style.color=r.score>=90?'var(--good)':r.score<60?'var(--bad)':'var(--ink)';mt.style.width=r.score+'%';
+ iss.innerHTML=r.issues.length?r.issues.map(i=>`<li><span class="sl">slide ${i.slide}</span><span class="kd">${i.kind}</span><span></span></li>`).join(''):'<li style="grid-template-columns:1fr">No issues. Ship it.</li>';
+ [...iss.querySelectorAll('li span:last-child')].forEach((s,j)=>{if(r.issues[j])s.textContent=r.issues[j].msg})}
+let tm;src.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(run,120)});
+document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{src.value=P[b.dataset.p];run()});
+src.value=P.bad;run();
+</script>
+</body>
+</html>

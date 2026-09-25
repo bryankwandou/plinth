@@ -1,0 +1,5 @@
+Card fees take 3% of every sale a Makassar warung makes
+source: Bank Indonesia MDR schedule 2025
+---
+We settle in 400 ms for a flat Rp 200
+source: devnet test run, 50 transfers
