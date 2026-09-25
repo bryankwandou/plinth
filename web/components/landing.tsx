@@ -74,6 +74,9 @@ const EN: Record<string, string> = {
   q5: "One accent color, used where the eye should land.", q6: "No emoji, no exclamation marks, no gradient text.",
   q7: "Missing data is marked on the slide, never invented.", q8: "Under three minutes for a hackathon pitch.",
   f1: "Made by Bryan Kwandou. MIT license.",
+  f2: "Devnet receipts",
+  ok: "No issues. Ship it.",
+  k2: 'Editable PowerPoint, speaker notes kept: <a href="decks/talk-5428-projects.pptx" download>talk.pptx</a> · <a href="decks/pitch-plinth.pptx" download>pitch.pptx</a>. Both HTML decks are hashed on Solana devnet: <a href="anchor.html">check the receipts</a>. The skill ships 14 scenario spines, from a 3-minute hackathon video to a board pre-read, and lints copy in 17 languages.',
 };
 
 const PRESETS: Record<string, string> = {
@@ -340,7 +343,7 @@ function Linter({ t }: { t: (k: string) => string }) {
         <div className="relative">
           <ScrollArea className="h-[230px]">
             <ul className="issues">
-              {res && res.issues.length === 0 && <li style={{ gridTemplateColumns: "1fr" }}>No issues. Ship it.</li>}
+              {res && res.issues.length === 0 && <li style={{ gridTemplateColumns: "1fr" }}>{t("ok")}</li>}
               {res?.issues.map((it, j) => (
                 <li key={`${text.length}-${j}`} style={stagger(Math.min(j, 12))}>
                   <span className="sl">slide {it.slide}</span>
@@ -480,12 +483,7 @@ export default function Landing() {
             <DeckCard i={0} href="decks/talk-5428-projects.html" title="Talk deck preview" name={t("e1")} sub={t("e2")} />
             <DeckCard i={1} href="decks/pitch-plinth.html" title="Pitch deck preview" name={t("e3")} sub={t("e4")} />
           </div>
-          <p className="note reveal" style={stagger(3)}>
-            Editable PowerPoint, speaker notes kept: <a href="decks/talk-5428-projects.pptx" download>talk.pptx</a> ·{" "}
-            <a href="decks/pitch-plinth.pptx" download>pitch.pptx</a>. Both HTML decks are hashed on Solana devnet:{" "}
-            <a href="anchor.html">check the receipts</a>. The skill ships 14 scenario spines, from a 3-minute hackathon
-            video to a board pre-read, and lints copy in 17 languages.
-          </p>
+          <p className="note reveal" style={stagger(3)} {...h("k2")} />
         </div>
       </section>
 
@@ -537,7 +535,7 @@ export default function Landing() {
             Plinth
           </a>
           <span>{t("f1")}</span>
-          <Link003 href="anchor.html">Devnet receipts</Link003>
+          <Link003 href="anchor.html">{t("f2")}</Link003>
           <Link001 href="https://github.com/bryankwandou/plinth">GitHub</Link001>
         </div>
       </footer>
