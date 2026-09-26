@@ -21,6 +21,12 @@ Always read `references/craft.md` (layout and type) and `references/voice.md` (w
 
 Then open `references/scenarios.md` and take the spine for the specific occasion (hackathon video, demo day, seed meeting, accelerator, grant, sales, quarterly update, board, launch keynote, conference talk, lecture, thesis/skripsi defense, lightning talk, all-hands). If the deck is not in English, also read `references/languages.md` for register, number formats and headline length in that language.
 
+## Step 0.5 — Research before writing
+
+For any pitch, and any talk that makes a claim about the world, read `references/research.md` and do it. Search the web and fetch the pages yourself: surveys, government and regulator data, indices, market reports, on-chain dashboards. Aim for one sourced number per question a judge asks (is it real, how many people, why now, how big, who else). Record each in `research/<deck>-sources.md` with URL, date and a verbatim quote, and look for data that cuts against the pitch too.
+
+Never write a number from memory. If you have no tool to fetch pages, say so and mark those slides `[source needed]`.
+
 ## Step 1 — Write the spine before any slide
 
 Write the deck as headlines only, one line each, in a plain list. Read the list top to bottom. If it does not make the whole case on its own, the deck is not ready — fix the list, not the slides.
@@ -57,7 +63,9 @@ Run:
 node scripts/lint-deck.mjs path/to/deck.html
 ```
 
-It flags filler vocabulary, headline length, slide density, missing sources on numbers, emoji, and exclamation marks. A score below 90 means rewrite, not tweak. Rewrite flagged lines by saying the specific thing instead — never swap one stock phrase for its synonym.
+If the deck cites outside data, also run `node scripts/check-sources.mjs path/to/deck.html research/<deck>-sources.md`. It fetches every cited URL and confirms the quoted number is still on the page. Fix every FAIL before handing over.
+
+The linter flags filler vocabulary, headline length, slide density, missing sources on numbers, emoji, and exclamation marks. A score below 90 means rewrite, not tweak. Rewrite flagged lines by saying the specific thing instead — never swap one stock phrase for its synonym.
 
 ## Step 5 — Hand over
 

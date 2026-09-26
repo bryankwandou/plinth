@@ -1,0 +1,135 @@
+MARCH 2026
+AGRIFINTECH
+NUSAHARVEST PROTECTING FARMERS. PROTECTING FUNDERS
+
+
+---
+MARCH 2026
+The Problem
+34,82% petani mengalami keterbatasan modal
+Belum ada investasi sektor pangan yang tergolong aman
+47.94% Petani tergolong Miskin Ekstrem
+https://ugm.ac.id/id/berita/79-tahun-merdeka-4069-juta-petani-belum-sepenuhnya-sejahtera/ https://amartha.com/blog/tech/business/tidak-bisa-akses-kredit-di-bank-jadi-alasan-petani-indonesia-sulit-berkembang/ https://www.bps.go.id/en/pressrelease/2025/07/25/2518/--in-march-2025--the-percentage-of-the-poor-population-decreased-into-8-47-percent-.html https://goodstats.id/article/ini-sederet-masalah-yang-kerap-dihadapi-usaha-pertanian-perorangan-q3BE4
+
+
+---
+MARCH 2025
+NusaHarvest
+Infrastruktur keuangan pertanian yang menghubungkan investor global dengan petani Indonesia melalui lending dan asuransi panen
+berbasis data cuaca.
+
+
+---
+Team Member
+Hanya sekelompok rakyat yang peduli akan ketahanan pangan Indonesia
+
+MARCH 2026
+
+Raisha Al Fadhila Putri
+Digital Bussiness Student focus on Web3 Development.
+
+Vincentius Bryan Kwandou
+Experienced in building scalable digital solutions.
+
+Azmi Maulana
+Building adaptive and scalable infrastructure to reach all corners of Indonesia.
+
+Evander Franklin
+Ex Digital Agency CCO 4 Years experience in DeFi
+
+
+---
+MARCH 2026
+
+Solusi NusaHarvest
+
+Platform pinjaman dan asuransi terintegrasi
+Claim otomatis cair sesuai data BMKG
+
+Proteksi gagal bayar
+Penyaluran dana tercatat secara on-chain
+
+
+---
+MARCH 2026
+3 Layers Safety Net
+Lapisan perlindungan bagi investor
+20% TVL sebagai dana cadangan Asuransi Wajib Bagi Petani
+Penjaminan KUR (ASKRINDO)
+
+
+---
+MARCH 2026
+
+Revenue Stream
+
+Protocol Fee
+2.5% on every pool deposit / withdrawal
+
+Insurance Admin Fee
+Flat 15% of premium per policy
+
+On-chain Fund Yield
+Idle insurance fund deployed to low-risk DeFi
+
+Insurance Admin Fee
+6% bunga pinjaman -> 5% untuk investor, 1% untuk platform
+
+
+---
+MARCH 2026
+Market Opportunity
+
+571T
+
+Total kredit pertanian, peternakan, kehutanan, dan perikanan
+
+42,7T
+
+Total KUR pertanian
+
+10T
+
+Total kredit pertanian, peternakan, kehutanan, dan perikanan
+
+
+---
+MARCH 2026
+Roadmap
+
+Perluas ke 5 koperasi
+Q3-Q4
+
+Q1-Q2
+Pilot project di 1 koperasi
+
+Q4~
+Perluas jenis komoditas (Kopi & Kakao)
+
+
+---
+MARCH 2026
+This is not an investation This is InvesNATION
+https://nusaharvest.vercel.app/ https://canva.link/gb0w1lf3mop143k
+
+
+---
+PITCH DECK
+The Force Behind the Flow
+
+Guarantee & Distribution
+Askrindo (BUMN, IFG) Koperasi networks
+
+Data Infrastructure
+· BMKG · BAPPEBTI
+
+MARCH 2025
+
+Insurance Layer
+JASINDO
+
+Blockchain Infrastructure
+· Solana · Oracle: Chainlink
+
+
+---

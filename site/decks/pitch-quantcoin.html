@@ -70,19 +70,30 @@ aside.notes{display:none}
 </section>
 <section>
   <div class="eyebrow">Problem</div>
-  <h2>Every Solana balance rests on one signature a quantum computer can forge</h2>
-  <div class="row">
-    <div class="c7"><p>Shor's algorithm recovers an Ed25519 private key from its public key. Public keys are on-chain today, so a treasury meant to sit for twenty years can be harvested now and drained later.</p></div>
-    <div class="c5 frame mono specimen">owner: Ed25519 only<br>public key: on-chain<br>protection after Shor: none</div>
-  </div>
-  <p class="source">Source: QuantCoin whitepaper, section 2</p>
-  <aside class="notes">This is not about today's wallets being hacked tomorrow. It is about money meant to sit still for decades. Its public key is already public. The day the machine exists, that key is the only lock.</aside>
+  <h2>Effectively all SOL sits behind keys a quantum computer can break</h2>
+  <div class="row"><div class="c5"><div class="big">All SOL</div></div><div class="c7"><p>Citi counts over 65% of ETH as exposed. For Solana, where the address is the public key, it counts effectively the whole supply.</p></div></div>
+  <p class="source">Source: Citi Institute, Quantum Threat, January 2026 [E1]</p>
+  <aside class="notes">This is Citi's number, not mine. On Solana your address is your Ed25519 public key, so every balance has its key on-chain already. A treasury meant to sit for twenty years can be read today and drained the day the machine exists.</aside>
+</section>
+<section>
+  <div class="eyebrow">How close</div>
+  <h2>Google cut the machine needed to break these keys twentyfold</h2>
+  <div class="row"><div class="c5"><div class="big">~20x</div></div><div class="c7"><p>Under 500,000 physical qubits now solve the curve problem behind Ed25519, down from the previous best estimate.</p></div></div>
+  <p class="source">Source: Google Research, March 2026 [R2]</p>
+  <aside class="notes">Every new paper makes the attack cheaper. Experts surveyed by the Global Risk Institute put a code-breaking machine within ten years at 28 to 49 percent. Anza puts it at 3 to 5 percent within five. I build for the long end, not the short one.</aside>
+</section>
+<section>
+  <div class="eyebrow">Deadline</div>
+  <h2>NIST disallows EdDSA, Solana's signature family, after 2035</h2>
+  <div class="row"><div class="c5"><div class="big">2035</div></div><div class="c7"><p>The US, UK and EU all set 2035 as the date to finish moving off quantum-vulnerable cryptography.</p></div></div>
+  <p class="source">Source: NIST IR 8547, November 2024 [G1]; UK NCSC, March 2025 [G4]</p>
+  <aside class="notes">A vesting schedule signed today can still be running in 2035. Regulated custodians will have to answer for it before then.</aside>
 </section>
 <section>
   <div class="eyebrow">Why now</div>
   <h2>NIST standardized hash-based signatures in 2024</h2>
   <div class="row"><div class="c5"><div class="big">FIPS 205</div></div><div class="c7"><p>SLH-DSA rests only on a hash function. Grover's algorithm gives a square-root speedup against it, nothing more. The conservative choice now has a standard behind it.</p></div></div>
-  <p class="source">Source: NIST FIPS 205, August 2024</p>
+  <p class="source">Source: NIST, August 2024 [G3]</p>
   <aside class="notes">Hash-based signatures are the oldest and most conservative post-quantum family. Once NIST put its name on them, using the same idea on Solana stopped being exotic.</aside>
 </section>
 <section>
@@ -120,14 +131,22 @@ aside.notes{display:none}
   <aside class="notes">I will be straight about this. The signal is engineering, not users. The audit found a test that passed for the wrong reason and a client bug that could lock a vault. Both are fixed.</aside>
 </section>
 <section>
+  <div class="eyebrow">Competition</div>
+  <h2>Solana's own plan protects new wallets, not old balances</h2>
+  <ul>
+    <li>Solana Foundation: Falcon for new wallets, if quantum turns credible [L3]</li>
+    <li>Blueshift Winternitz vault: lamports only, single use [L1]</li>
+    <li>QuantCoin: any Token-2022 balance, today</li>
+  </ul>
+  <p class="source">Source: Solana Foundation, April 2026 [L3]; Blueshift on GitHub [L1]</p>
+  <aside class="notes">The Foundation says quantum is still years away and plans Falcon later. That is fair. But its plan starts when the threat is credible, and a treasury cannot move in a day. Blueshift proved the idea for SOL. QuantCoin extends it to tokens.</aside>
+</section>
+<section>
   <div class="eyebrow">Go-to-market</div>
   <h2>The first users are treasuries that plan to hold for years</h2>
-  <ul>
-    <li>DAO and foundation treasuries on Solana</li>
-    <li>Team and investor vesting that runs for years</li>
-    <li>Wallets that add one Codama-generated instruction</li>
-  </ul>
-  <aside class="notes">Retail wallets are not the start. The first users are people who already think in decades: treasuries and long vesting. The Codama client means a wallet can add vault support with one generated instruction. I have not signed any of these yet.</aside>
+  <div class="row"><div class="c5"><div class="big">$1.3B</div></div><div class="c7"><p>Held in Solana DAO treasuries in 2022, the last public count. Plus team vesting that runs for years.</p></div></div>
+  <p class="source">Source: Decrypt citing DeepDAO, March 2022 [L6]</p>
+  <aside class="notes">The figure is old and secondhand, and I say so. The point is that long-held treasuries exist. I have not signed any of them yet. Only 5 percent of organisations in ISACA's survey have a quantum strategy, so I expect to sell, not to be pulled.</aside>
 </section>
 <section>
   <div class="eyebrow">Team</div>

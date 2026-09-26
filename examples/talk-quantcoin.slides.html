@@ -10,7 +10,7 @@
   <div class="eyebrow">The question</div>
   <h2>If Ed25519 falls, which Solana balances are still safe?</h2>
   <p>Every wallet, exchange account and program authority signs with Ed25519. Shor's algorithm breaks it once a large enough quantum computer exists.</p>
-  <p class="source">Source: QuantCoin whitepaper, section 2</p>
+  <p class="source">Source: Citi Institute, January 2026 [E1]; NIST IR 8547 [G1]</p>
   <aside class="notes">Most people in this room hold something on Solana. The honest question is not whether this happens this year. It is what still stands if it happens while your money is still sitting there.</aside>
 </section>
 <section>
@@ -26,7 +26,7 @@
   <div class="eyebrow">Why hash-based</div>
   <h2>Hash signatures lose only half their bits to Grover</h2>
   <p>Grover's algorithm gives a square-root speedup against a hash, so a 192-bit digest keeps about 96 bits of post-quantum security. NIST standardized this family as SLH-DSA.</p>
-  <p class="source">Source: NIST FIPS 205, August 2024; QuantCoin whitepaper, section 3.3</p>
+  <p class="source">Source: NIST, August 2024 [G3]; QuantCoin whitepaper, section 3.3</p>
   <aside class="notes">Lattice schemes are faster and smaller, but newer. Hash-based signatures assume only that SHA-256 behaves like a hash. For money meant to sit for decades, the oldest assumption is the one I wanted.</aside>
 </section>
 <section>

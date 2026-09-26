@@ -54,6 +54,8 @@ Then ask Claude Code for a deck: "make a 3-minute hackathon pitch for my project
 | `references/review.md` | Scoring rubric for an existing deck |
 | `assets/deck-template.html` | Self-contained deck: arrow keys, `F` fullscreen, `N` notes, `P` print to PDF |
 | `scripts/lint-deck.mjs` | Linter CLI; `lint-core.js` is shared with the website |
+| `references/research.md` | Mandatory research step: sources ledger with URL, date and verbatim quote for every outside number |
+| `scripts/check-sources.mjs` | Fetches every cited URL and fails if the quoted number is no longer on the page |
 
 ## The research
 
