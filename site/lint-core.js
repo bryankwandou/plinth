@@ -93,8 +93,8 @@
       const nums = all.replace(/\b[A-Za-z]+-?\d+[A-Za-z0-9-]*\b/g, '').match(/(\$|Rp|USD|IDR)?\s?\d[\d.,]*\s?(%|x|k|m|b|bn|juta|miliar|triliun)?/gi) || [];
       const hasBigNum = nums.some(x => /%|x|k|m|b|\$|Rp|juta|miliar|triliun/i.test(x) || x.replace(/\D/g, '').length >= 3);
       if (hasBigNum && !s.source && !/source|sumber|fuente|fonte|quelle|bron|kaynak|出典|来源|출처|\[source needed\]/i.test(all)) add(n, 'evidence', 'Number with no source line.', 3);
-      // Honest gaps ([source needed], [nama], [budget needed]) are allowed, but a deck with them is not finished.
-      for (const m of (all + ' ' + (s.source || '')).matchAll(/\[(?:[^\]]*\b(?:needed|nama|name|tbd|todo|isi)\b[^\]]*)\]/gi)) add(n, 'unfinished', `Placeholder ${m[0]} still on the slide. Fill it before presenting.`, 2);
+      // A deck ships as a PDF nobody edits by hand: any placeholder is unfinished work, and lint-deck exits non-zero on it.
+      for (const m of (all + ' ' + (s.source || '')).matchAll(/\[(?:[^\]]*\b(?:needed|nama|name|tbd|todo|isi|placeholder|insert|xx+)\b[^\]]*)\]|\b(?:TBD|TODO|XXX|[Ll]orem ipsum)\b/g)) add(n, 'unfinished', `Placeholder ${m[0]} still on the slide. Research it, or rewrite the slide to say only what is known.`, 2);
     });
     const cost = issues.reduce((a, x) => a + x.cost, 0);
     const score = Math.max(0, Math.round(100 - cost * (10 / Math.max(slides.length, 5))));

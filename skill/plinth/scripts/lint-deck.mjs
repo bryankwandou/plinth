@@ -27,4 +27,7 @@ if (process.argv.includes('--json')) { console.log(JSON.stringify(r, null, 2)); 
 console.log(`${file}\n${r.slides} slides  score ${r.score}/100\n`);
 for (const i of r.issues) console.log(`  slide ${String(i.slide).padStart(2)}  ${i.kind.padEnd(9)} ${i.msg}`);
 if (!r.issues.length) console.log('  no issues');
-process.exit(r.score >= 90 ? 0 : 1);
+// A deck ships as a PDF or .pptx that nobody will edit by hand, so a placeholder is a hard stop at any score.
+const holes = r.issues.filter(i => i.kind === 'unfinished');
+if (holes.length) console.log(`\nNOT READY: ${holes.length} placeholder(s). Research each one or rewrite the slide so it states only what is known.`);
+process.exit(r.score >= 90 && !holes.length ? 0 : 1);

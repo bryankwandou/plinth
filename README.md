@@ -24,16 +24,16 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 
 `node skill/plinth/scripts/anchor.mjs deck.html` writes `plinth:v1 sha256=<file hash> score=<lint> slides=<n>` as an SPL Memo. Anyone can check a receipt against a file at https://plinthdeck.vercel.app/anchor.html. All eight example decks are recorded:
 
-| Deck | Transaction |
-|---|---|
-| Talk | [3zKAfdnA…](https://explorer.solana.com/tx/3zKAfdnABaiTUXKEpxggf1KXS5cqruViG8bmfpGc1sky7bqWQ7V5DYPQZDvAXvasChFHbegLeFEf3L3dH4NpPLEk?cluster=devnet) |
-| Pitch | [4kRccig1…](https://explorer.solana.com/tx/4kRccig13vDDptA4bPNWUkPh8HPBhkSxXfm6gPMJHmLzvr8GwVJMurf8446PHUH319usKtxsqvytYN1RieecZMve?cluster=devnet) |
-| QuantCoin pitch | [34JG9njc…](https://explorer.solana.com/tx/34JG9njcBGXeFooGygJRtZpgdc2k7DRkuMr2S3RbauBEyNuzM3FSNUqEUPCjqwtRjXtDx5Cu3rofjtqjT58F1xJu?cluster=devnet) |
-| QuantCoin talk | [42PwEP2n…](https://explorer.solana.com/tx/42PwEP2nMG8zuZxNvMdj6hgtiAxiRWPZ4gRwmnugTe5ipPbBejqTVkvMC4TrTbTVsVjLUr6QnWHxFNfPC6NmdDTw?cluster=devnet) |
-| NusaHarvest (revised, score 96: two `[source needed]` left for the team) | [3iRoPRx4…](https://explorer.solana.com/tx/3iRoPRx4Rq2UC4PVZTnBvrwEBs2dshcpoAADf1fS8A1XnAcDTNuCMWdTpZx75iptswrKoSk6WwpGKCMi67wa8FPk?cluster=devnet) |
-| Catatkas, Indonesian fintech (score 96: team names left blank) | [dqdVcybv…](https://explorer.solana.com/tx/dqdVcybv4yvCqRoRmWSbymy2xzXH5muPdGZ5NfPbBXsbVHXzjzRYNVYBwSAsbYRaTkkG2z7mdmoYnMiKXR5o9m1?cluster=devnet) |
-| TB grant, global health (score 93: applicant, sites, budget left blank) | [2diR1kq3…](https://explorer.solana.com/tx/2diR1kq3jmdP9UzSYVVLkQij9KEeK7dVUkqWQUTYwNxNPAQa8o4Rts1Gg2HwQFaFWvZ6qkr5GKtpaJoUjLmXM9p9?cluster=devnet) |
-| Mexico City subsidence, Spanish lecture | [382np7tv…](https://explorer.solana.com/tx/382np7tvUCmdDay5UwE5GRMrizbGdtLdos2zqzXop4dLxdZyBpS8uw3oSPDJWtqFWLw1jJobEcBF2Br3YGZJU64U?cluster=devnet) |
+| Deck | Lint | Transaction |
+|---|---|---|
+| Talk: What 5,428 hackathon projects say about pitching | score=100 | [3objcjBj…](https://explorer.solana.com/tx/3objcjBj8BsAxJwyTR6b2KUhRMWtuSoorpB7UJ7MPvEEWiZs7khgCnJUj2NDQfRf7WFtGJxUhCoAnT8c7hA6meEL?cluster=devnet) |
+| Pitch: Plinth, pitched with Plinth | score=100 | [2rb1U36L…](https://explorer.solana.com/tx/2rb1U36LyZ8k2W2uTgTEREPndiVPJNrg895oeZDF6zPDowE7zdS4icBv6xNRW4Nzr5f9gRWZFPu4vhppZkK1pVSW?cluster=devnet) |
+| Pitch: QuantCoin, 3-minute hackathon | score=100 | [3WnmwVxy…](https://explorer.solana.com/tx/3WnmwVxyGArTojjFRLxucav37Fo4AntZ3aaTMDLJAHfApywfNyXTrjsn7XsimJfGCYszr6rNLazMpXzjx3ctLBep?cluster=devnet) |
+| Talk: A token cannot make Solana quantum-safe, but a vault can | score=100 | [42PwEP2n…](https://explorer.solana.com/tx/42PwEP2nMG8zuZxNvMdj6hgtiAxiRWPZ4gRwmnugTe5ipPbBejqTVkvMC4TrTbTVsVjLUr6QnWHxFNfPC6NmdDTw?cluster=devnet) |
+| Pitch: NusaHarvest, reviewed: 63 before, 100 after | score=100 | [386rkB57…](https://explorer.solana.com/tx/386rkB57VwLgZEwHGLeBhEFV44iB3YJSiCU5auX1qG8EK1bSi6CBJyJRkm3143NKXqsfq5EuVpnzP3sJfJ6rSeGJ?cluster=devnet) |
+| Pitch (Bahasa Indonesia): Catatkas, WhatsApp bookkeeping for warung | score=100 | [2RMxikNL…](https://explorer.solana.com/tx/2RMxikNLPJRcD6YdqHTdKZdrqWAgpP8kajAPMMCTWGrjrTmSnPchzM5otoGvfp2jFN5cpHmzUbTDR5czyuBep3ka?cluster=devnet) |
+| Grant: SMS + health workers for TB treatment | score=100 | [53d8mP2D…](https://explorer.solana.com/tx/53d8mP2DSHz8XYCe7W9mcTPdGDJ6QQrqVR4A7K2mfztzaTk1ujPP64FbfzgeouwhVMJfw3uYWXyLNL3TEvbNc1Ax?cluster=devnet) |
+| Clase (Español): por qué se hunde la Ciudad de México | score=100 | [382np7tv…](https://explorer.solana.com/tx/382np7tvUCmdDay5UwE5GRMrizbGdtLdos2zqzXop4dLxdZyBpS8uw3oSPDJWtqFWLw1jJobEcBF2Br3YGZJU64U?cluster=devnet) |
 
 Tested with the real Phantom extension (v26.30.2, Testnet Mode, Solana Devnet): connect, sign and send, then check. Receipt [5SSrix23…](https://explorer.solana.com/tx/5SSrix23ZnyUTdCj5WSbskKs4DgWY9R3fNX5GdZToxUhTzzNHHms7eH447kxDF5D9uLjsx5FnmXEt5X5Vo2RbaVS?cluster=devnet) came back as a match ([screenshot](docs/evidence/phantom-e2e.png)). On devnet, Phantom shows "Failed to simulate" before you confirm. A plain 1-lamport transfer with no Plinth code in it gets the same warning ([screenshot](docs/evidence/phantom-plain-transfer-same-warning.png)), so the warning comes from Phantom's devnet simulation, not from the memo.
 

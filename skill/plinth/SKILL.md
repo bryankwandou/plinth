@@ -65,6 +65,13 @@ node scripts/lint-deck.mjs path/to/deck.html
 
 If the deck cites outside data, also run `node scripts/check-sources.mjs path/to/deck.html research/<deck>-sources.md`. It fetches every cited URL and confirms the quoted number is still on the page. Fix every FAIL before handing over.
 
+**No placeholder leaves your hands.** The deck ships as a PDF or .pptx that nobody will fix by hand, so `[source needed]`, `[name]`, `[budget needed]` and the like make the linter exit non-zero at any score. For each one, in this order:
+1. Research it (Step 0.5) and put the sourced number or fact in.
+2. If the fact is the user's own (team, budget, traction) and they gave it to you, use it.
+3. If it cannot be known, rewrite the slide to state only what is known ("No budget yet: line items are X, Y, Z"; "Sample deck, no team yet; the pilot needs these two roles"). Never invent a name, organisation or figure to fill the gap.
+
+The team's own numbers (prices, targets) get a source line such as `Source: team plan, not outside data`, and in the notes say "our own plan" next to them.
+
 The linter flags filler vocabulary, headline length, slide density, missing sources on numbers, emoji, and exclamation marks. A score below 90 means rewrite, not tweak. Rewrite flagged lines by saying the specific thing instead — never swap one stock phrase for its synonym.
 
 ## Step 5 — Hand over

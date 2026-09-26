@@ -20,7 +20,20 @@ catch {
 const [file, outArg] = process.argv.slice(2);
 if (!file) { console.error('usage: to-pptx.mjs <deck.html> [out.pptx]'); process.exit(2); }
 const raw = readFileSync(file, 'utf8');
-const out = outArg || file.replace(/(\.slides)?\.html?$/i, '') + '.pptx';
+// Nobody edits the exported file by hand, so refuse to export a deck that still has placeholders.
+{
+  const { spawnSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const lint = fileURLToPath(new URL('./lint-deck.mjs', import.meta.url));
+  const r = JSON.parse(spawnSync(process.execPath, [lint, file, '--json'], { encoding: 'utf8' }).stdout);
+  const holes = r.issues.filter(i => i.kind === 'unfinished');
+  if (holes.length && !process.argv.includes('--allow-placeholders')) {
+    for (const h of holes) console.error(`slide ${h.slide}: ${h.msg}`);
+    console.error('Not exported: fill every placeholder first (or pass --allow-placeholders for a draft).');
+    process.exit(1);
+  }
+}
+const out =outArg || file.replace(/(\.slides)?\.html?$/i, '') + '.pptx';
 
 // ---- theme: read the deck's own CSS tokens, fall back to the template defaults ----
 const tok = (name, def) => ((raw.match(new RegExp(`--${name}:\\s*([^;]+);`)) || [])[1] || def).trim();

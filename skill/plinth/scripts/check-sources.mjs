@@ -54,8 +54,13 @@ for (const e of ledger.values()) if (!e.url && e.ref && ledger.get(e.ref)) e.url
 // Deck: ids cited in each slide.
 const html = readFileSync(deckPath, 'utf8');
 const cited = new Map();
+const noteGaps = [];
 [...html.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/gi)].forEach(([, s], i) => {
+  // Speaker notes are checked too: a number said aloud is still a claim. Notes citations show as "5n".
+  const notes = (s.match(/<aside[\s\S]*?<\/aside>/gi) || []).join(' ');
   for (const [, id] of s.replace(/<aside[\s\S]*?<\/aside>/gi, '').matchAll(/\[([A-Z]{1,3}\d+)\]/g)) (cited.get(id) || cited.set(id, []).get(id)).push(i + 1);
+  for (const [, id] of notes.matchAll(/\[([A-Z]{1,3}\d+)\]/g)) (cited.get(id) || cited.set(id, []).get(id)).push(`${i + 1}n`);
+  if (/\d[\d.,]*\s?(%|persen|percent|por ciento|juta|miliar|triliun|million|billion|millones)/i.test(notes.replace(/<[^>]+>/g, ' ')) && !/\[[A-Z]{1,3}\d+\]/.test(notes) && !/our own|team plan|rencana (tim|kami)|rencana tarif|nuestro plan|plan propio/i.test(notes)) noteGaps.push(i + 1);
 });
 
 let fail = 0;
@@ -68,7 +73,15 @@ for (const [id, slides] of cited) {
   if (!e.url) { out('FAIL', id, 'ledger row has no URL'); continue; }
   if (offline) { out('OK', id, `slide ${slides.join(', ')} -> ${e.url}`); continue; }
   try {
-    const r = await fetch(e.url, { headers: { 'user-agent': 'Mozilla/5.0 plinth-check-sources' }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    // Some government sites send an incomplete TLS chain that Node rejects but curl (system store) accepts.
+    const r = await fetch(e.url, { headers: { 'user-agent': 'Mozilla/5.0 plinth-check-sources' }, redirect: 'follow', signal: AbortSignal.timeout(20000) })
+      .catch(err => {
+        try {
+          const body = execFileSync('curl', ['-sL', '--max-time', '30', '-A', 'Mozilla/5.0', e.url], { maxBuffer: 64 << 20 });
+          if (!body.length) throw err;
+          return new Response(body, { status: 200, headers: { 'content-type': body.subarray(0, 5).toString() === '%PDF-' ? 'application/pdf' : 'text/html' } });
+        } catch { throw err; }
+      });
     const type = r.headers.get('content-type') || '';
     if (!r.ok) { out(r.status === 403 || r.status === 429 ? 'BLOCKED' : 'FAIL', id, `HTTP ${r.status} ${e.url}`); continue; }
     let raw;
@@ -88,7 +101,9 @@ for (const [id, slides] of cited) {
     else out('FAIL', id, `quote not found on page: "${e.quote.slice(0, 60)}"`);
   } catch (err) { out('BLOCKED', id, `${err.name}: ${e.url}`); }
 }
+if (noteGaps.length) console.log(`
+NOTES     speaker notes on slide ${noteGaps.join(', ')} say a number with no [id]; cite it or say where it comes from.`);
 const unused = [...ledger.keys()].filter(k => !cited.has(k));
 if (unused.length) console.log(`\nIn the ledger but not on a slide: ${unused.join(' ')}`);
 console.log(`\n${cited.size} cited ids, ${fail} failed`);
-process.exit(fail ? 1 : 0);
+process.exitCode = fail ? 1 : 0;

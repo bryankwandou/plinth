@@ -96,3 +96,9 @@ test('source lines count in other languages', () => {
   assert.equal(r[0].source, 'Fuente: NASA JPL, 2025');
   assert.ok(!kinds(lintSlides(r)).includes('evidence'));
 });
+test('any placeholder makes the CLI refuse the deck', () => {
+  for (const b of ['Budget: TBD', 'Lead: [insert name]', 'lorem ipsum dolor']) assert.ok(kinds(lintSlides([{ headline: 'The pilot runs in one district first', body: b }])).includes('unfinished'), b);
+  let code = 0;
+  try { execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', '-'], { input: '' }); } catch (e) { code = e.status; }
+  assert.notEqual(code, undefined);
+});
