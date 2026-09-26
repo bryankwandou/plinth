@@ -369,3 +369,37 @@ for(var k in T){var v=T[k];if(!S[k])continue;
 S[k].k2=v[0]+' <a href="decks/talk-5428-projects.pptx" download>talk.pptx</a> · <a href="decks/pitch-plinth.pptx" download>pitch.pptx</a>. '+v[1]+' <a href="anchor.html">'+v[2]+'</a>. '+v[3];
 S[k].ok=v[4];S[k].f2=v[5];}
 })();
+/* Examples section, rewritten when it grew from two decks to eight: heading (k1) and note (k2). */
+(function(){
+var T={
+id:["Delapan deck di enam bidang dan tiga bahasa, setiap angka dicek ke sumbernya","Setiap deck di-hash di Solana devnet:","cek bukti"],
+ms:["Lapan dek dalam enam bidang dan tiga bahasa, setiap angka disemak dengan sumbernya","Setiap dek dicincang di Solana devnet:","semak resit"],
+vi:["Tám deck trong sáu lĩnh vực và ba ngôn ngữ, mọi con số đều được đối chiếu với nguồn","Mỗi deck đều được băm trên Solana devnet:","kiểm tra biên nhận"],
+th:["แปดเด็คในหกสาขาและสามภาษา ทุกตัวเลขตรวจกับแหล่งที่มาแล้ว","ทุกเด็คถูกบันทึกแฮชบน Solana devnet:","ตรวจใบรับ"],
+tl:["Walong deck sa anim na larangan at tatlong wika, bawat numero sinuri laban sa pinagmulan","Naka-hash ang bawat deck sa Solana devnet:","tingnan ang mga resibo"],
+"zh-CN":["八份演示稿，覆盖六个领域、三种语言，每个数字都核对过出处","每份演示稿的哈希都记录在 Solana devnet 上：","查看凭证"],
+"zh-TW":["八份簡報，涵蓋六個領域、三種語言，每個數字都核對過出處","每份簡報的雜湊都記錄在 Solana devnet 上：","查看憑證"],
+ja:["6分野・3言語で8つの資料。すべての数字を出典と照合済み","すべての資料のハッシュを Solana devnet に記録:","記録を確認"],
+ko:["여섯 분야, 세 언어로 만든 자료 여덟 개. 모든 숫자를 출처와 대조","모든 자료의 해시가 Solana devnet에 기록됨:","영수증 확인"],
+hi:["छह क्षेत्रों और तीन भाषाओं में आठ डेक, हर संख्या उसके स्रोत से जाँची गई","हर डेक का हैश Solana devnet पर दर्ज है:","रसीदें देखें"],
+ar:["ثمانية عروض في ستة مجالات وثلاث لغات، وكل رقم مُطابَق مع مصدره","بصمة كل عرض مسجلة على Solana devnet:","تحقق من الإيصالات"],
+tr:["Altı alanda ve üç dilde sekiz sunum, her sayı kaynağıyla karşılaştırıldı","Her sunumun özeti Solana devnet'e kayıtlı:","makbuzları kontrol et"],
+ru:["Восемь презентаций в шести областях на трёх языках, каждая цифра сверена с источником","Хеш каждой презентации записан в Solana devnet:","проверить квитанции"],
+uk:["Вісім презентацій у шести галузях трьома мовами, кожну цифру звірено з джерелом","Хеш кожної презентації записано в Solana devnet:","перевірити квитанції"],
+pl:["Osiem prezentacji w sześciu dziedzinach i trzech językach, każda liczba sprawdzona ze źródłem","Skrót każdej prezentacji jest zapisany w Solana devnet:","sprawdź potwierdzenia"],
+de:["Acht Decks aus sechs Bereichen in drei Sprachen, jede Zahl mit ihrer Quelle abgeglichen","Der Hash jedes Decks liegt auf Solana devnet:","Belege prüfen"],
+fr:["Huit decks, six domaines, trois langues, chaque chiffre vérifié à sa source","L'empreinte de chaque deck est inscrite sur Solana devnet :","vérifier les reçus"],
+es:["Ocho presentaciones en seis áreas y tres idiomas, cada cifra cotejada con su fuente","El hash de cada presentación está en Solana devnet:","ver los recibos"],
+"pt-BR":["Oito decks em seis áreas e três idiomas, cada número conferido com a fonte","O hash de cada deck está registrado na Solana devnet:","ver os recibos"],
+it:["Otto deck in sei ambiti e tre lingue, ogni numero verificato con la sua fonte","L'hash di ogni deck è registrato su Solana devnet:","verifica le ricevute"],
+nl:["Acht decks in zes vakgebieden en drie talen, elk getal gecontroleerd tegen de bron","De hash van elk deck staat op Solana devnet:","bekijk de bewijzen"]
+};
+var S=window.PLINTH_I18N.strings;
+for(var k in T){if(!S[k])continue;S[k].k1=T[k][0];S[k].k2=T[k][1]+' <a href="anchor.html">'+T[k][2]+'</a>';}
+})();
+/* Hero proof row. */
+(function(){
+var T={id:["deck dibuat","kutipan dicek online","tes lolos","bahasa"],ms:["dek dibina","petikan disemak dalam talian","ujian lulus","bahasa"],vi:["deck đã làm","trích dẫn kiểm tra trực tuyến","bài kiểm thử đạt","ngôn ngữ"],th:["เด็คที่สร้าง","คำอ้างอิงที่ตรวจออนไลน์","การทดสอบผ่าน","ภาษา"],tl:["deck na nagawa","sipi na sinuri online","test na pumasa","wika"],"zh-CN":["份演示稿","条引文在线核对","项测试通过","种语言"],"zh-TW":["份簡報","條引文線上核對","項測試通過","種語言"],ja:["資料","件の引用をオンライン照合","テスト合格","言語"],ko:["개 자료","개 인용 온라인 대조","테스트 통과","개 언어"],hi:["डेक बने","उद्धरण ऑनलाइन जाँचे","टेस्ट पास","भाषाएँ"],ar:["عروض","اقتباسات فُحصت عبر الإنترنت","اختبارات ناجحة","لغة"],tr:["sunum","çevrimiçi kontrol edilen alıntı","test geçti","dil"],ru:["презентаций","цитат проверено онлайн","тестов пройдено","языка"],uk:["презентацій","цитат перевірено онлайн","тестів пройдено","мови"],pl:["prezentacji","cytatów sprawdzonych online","testów zaliczonych","języki"],de:["Decks gebaut","Zitate online geprüft","Tests bestanden","Sprachen"],fr:["decks créés","citations vérifiées en ligne","tests réussis","langues"],es:["presentaciones","citas verificadas en línea","pruebas superadas","idiomas"],"pt-BR":["decks criados","citações conferidas online","testes aprovados","idiomas"],it:["deck creati","citazioni verificate online","test superati","lingue"],nl:["decks gemaakt","citaten online gecontroleerd","tests geslaagd","talen"]};
+var S=window.PLINTH_I18N.strings;
+for(var k in T){if(!S[k])continue;S[k].pf1=T[k][0];S[k].pf2=T[k][1];S[k].pf3=T[k][2];S[k].pf4=T[k][3];}
+})();

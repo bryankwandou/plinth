@@ -166,6 +166,19 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
 .vid video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
 .vidnote{font-size:13px;color:var(--muted);margin-top:14px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal,.mini>*,.hero>div:first-child>*{opacity:1;transform:none}.mini .bars i{transform:none}.progress{display:none}h1 .u{background-size:100% 6px}}
+.dgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+@media (max-width:900px){.dgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dcard{display:flex;flex-direction:column;gap:10px;padding:16px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:inherit;min-width:0;transition:border-color .2s,transform .2s}
+.dcard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.dcard .sc{margin-top:auto}
+.proofrow{display:flex;gap:28px;margin-top:28px;flex-wrap:wrap}
+.proofrow b{display:block;font:600 22px/1.1 var(--font,Inter);letter-spacing:-.01em}
+.proofrow span{font:12px var(--mono,monospace);color:var(--muted)}
+.dcard b{font-size:14px;line-height:1.35;font-weight:600}
+.dcard .sc{font:600 28px/1 var(--font,Inter);letter-spacing:-.02em}
+.dcard .sc small{font-size:13px;color:var(--muted);font-weight:500;margin-left:4px}
+.dcard .rc{font:12px var(--mono,monospace);color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.dcard{transition:none}}
 </style>
 </head>
 <body>
@@ -187,6 +200,7 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
       <a class="btn" href="https://github.com/bryankwandou/plinth" data-i="c2">Get the skill</a>
     </div>
     <div class="install"><code>git clone https://github.com/bryankwandou/plinth &amp;&amp; cp -r plinth/skill/plinth ~/.claude/skills/</code><button id="copy" data-i="cp">Copy</button></div>
+    <div class="proofrow"><div><b>8</b><span data-i="pf1">decks built</span></div><div><b>40</b><span data-i="pf2">quotes checked online</span></div><div><b>18/18</b><span data-i="pf3">tests pass</span></div><div><b>22</b><span data-i="pf4">languages</span></div></div>
   </div>
   <div class="stagebox" id="stage" aria-label="Example slides">
     <div class="mini on"><div class="e" data-i="x1">Base rate</div><h3 data-i="m1">One project in eighteen takes home a prize</h3><div class="n">5.4%</div></div>
@@ -245,12 +259,13 @@ nav .links a:hover::after,nav .links a:focus-visible::after{transform:scaleX(1);
 
 <section id="decks"><div class="wrap">
   <div class="eyebrow reveal" data-i="k0">Examples</div>
-  <h2 class="reveal" data-i="k1">Two decks built with the skill, both scoring 100</h2>
+  <h2 class="reveal" data-i="k1">Eight decks in six fields and three languages, every number checked against its source</h2>
   <div class="decks">
-    <a class="deck hl reveal" href="decks/talk-5428-projects.html"><div class="fr"><iframe src="decks/talk-5428-projects.html" loading="lazy" tabindex="-1" title="Talk deck preview"></iframe></div><div class="m"><b data-i="e1">What 5,428 hackathon projects say about pitching</b><span data-i="e2">Talk · 9 slides · arrow keys to present</span></div></a>
-    <a class="deck hl reveal" href="decks/pitch-plinth.html"><div class="fr"><iframe src="decks/pitch-plinth.html" loading="lazy" tabindex="-1" title="Pitch deck preview"></iframe></div><div class="m"><b data-i="e3">Plinth, pitched with Plinth</b><span data-i="e4">Pitch · 8 slides · honest about zero traction</span></div></a>
+    <a class="deck hl reveal" href="decks/pitch-quantcoin.html"><div class="fr"><iframe src="decks/pitch-quantcoin.html" loading="lazy" tabindex="-1" title="QuantCoin pitch preview"></iframe></div><div class="m"><b>QuantCoin, 3-minute hackathon pitch</b><span>Pitch · 13 slides · 8 sources: Citi, Google Research, NIST, UK NCSC</span></div></a>
+    <a class="deck hl reveal" href="decks/pitch-nusaharvest.html"><div class="fr"><iframe src="decks/pitch-nusaharvest.html" loading="lazy" tabindex="-1" title="NusaHarvest pitch preview"></iframe></div><div class="m"><b>NusaHarvest, reviewed: 63 before, 96 after</b><span>Review · a cited figure was not on its page; removed</span></div></a>
   </div>
-  <p class="vidnote reveal">Editable PowerPoint, speaker notes kept: <a href="decks/talk-5428-projects.pptx" download>talk.pptx</a> · <a href="decks/pitch-plinth.pptx" download>pitch.pptx</a>. Both HTML decks are hashed on Solana devnet: <a href="anchor.html">check the receipts</a>. The skill ships 14 scenario spines, from a 3-minute hackathon video to a board pre-read, and lints copy in 17 languages.</p>
+  <div class="dgrid" id="dgrid"></div>
+  <p class="vidnote reveal" data-i="k2">Every deck is hashed on Solana devnet: <a href="anchor.html">check the receipts</a></p>
 </div></section>
 
 <section id="video"><div class="wrap">
@@ -354,6 +369,15 @@ let cur=0,raf;function countTo(to){cancelAnimationFrame(raf);if(RM||to===cur){cu
 let tm;src.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(run,120)});
 document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{src.value=P[b.dataset.p];run()});
 src.value=P.bad;run();
+</script>
+<script>
+fetch('receipts.json').then(r=>r.json()).then(list=>{
+  const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+  document.getElementById('dgrid').innerHTML=list.map(p=>{
+    const sc=(p.memo.match(/score=(\d+)/)||[])[1], sl=(p.memo.match(/slides=(\d+)/)||[])[1];
+    return `<a class="dcard" href="${esc(p.deck)}"><b>${esc(p.title)}</b><span class="sc">${esc(sc)}<small>/100 · ${esc(sl)}</small></span><span class="rc">devnet ${esc(p.signature.slice(0,10))}…</span></a>`;
+  }).join('');
+}).catch(()=>{});
 </script>
 </body>
 </html>
