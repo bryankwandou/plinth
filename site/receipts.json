@@ -14,13 +14,37 @@
   {
     "title": "Pitch: QuantCoin, 3-minute hackathon",
     "deck": "decks/pitch-quantcoin.html",
-    "memo": "plinth:v1 sha256=e174bb24efb2fe7953596dd76d353a617f18dbaad93ad1c607d907fe835e1be9 score=100 slides=10",
-    "signature": "3p4BgyctpbyvffbKabsYbF6NT9sTJhc8vkxvKMXKUDzeT7wh5kL2deQ7seaBgrEMVf7JDPjGxyQ2fb8jvs3zkCud"
+    "memo": "plinth:v1 sha256=78e7ddf138e5fc59a1182f5f25cb05b546900a7c8bbfdf8050e465e52fa64c76 score=100 slides=13",
+    "signature": "34JG9njcBGXeFooGygJRtZpgdc2k7DRkuMr2S3RbauBEyNuzM3FSNUqEUPCjqwtRjXtDx5Cu3rofjtqjT58F1xJu"
   },
   {
     "title": "Talk: A token cannot make Solana quantum-safe, but a vault can",
     "deck": "decks/talk-quantcoin.html",
-    "memo": "plinth:v1 sha256=d86adf215b79ff168a6da15551fa00d568ca22d4401340e27f1dad8c87f06a79 score=100 slides=13",
-    "signature": "3bJkwEz1Hn4LEh4qjKMKPYsqFF4FVx5Bq7r7hypRgG6GDuMBuChAYTXoEE1qPqJD13kmBEi9AqrLnNSxMsUFZC26"
+    "memo": "plinth:v1 sha256=d908f094eb9f597d1f4f4bd58a66a0cdcceadaf1852612fac6abb885a0c847a4 score=100 slides=13",
+    "signature": "42PwEP2nMG8zuZxNvMdj6hgtiAxiRWPZ4gRwmnugTe5ipPbBejqTVkvMC4TrTbTVsVjLUr6QnWHxFNfPC6NmdDTw"
+  },
+  {
+    "title": "Pitch: NusaHarvest, reviewed and revised (2 gaps left)",
+    "deck": "decks/pitch-nusaharvest.html",
+    "memo": "plinth:v1 sha256=3364888d79539bf041e7a85b21a1b4492b9df70a362e095e059ffbb7fd546e63 score=96 slides=10",
+    "signature": "3iRoPRx4Rq2UC4PVZTnBvrwEBs2dshcpoAADf1fS8A1XnAcDTNuCMWdTpZx75iptswrKoSk6WwpGKCMi67wa8FPk"
+  },
+  {
+    "title": "Pitch (Bahasa Indonesia): Catatkas, WhatsApp bookkeeping for warung",
+    "deck": "decks/pitch-catatkas.html",
+    "memo": "plinth:v1 sha256=571cac9251f35e2d5faa6a7eb9d8cba84cfc36f27bd82778b47eaba6893972ba score=96 slides=11",
+    "signature": "dqdVcybv4yvCqRoRmWSbymy2xzXH5muPdGZ5NfPbBXsbVHXzjzRYNVYBwSAsbYRaTkkG2z7mdmoYnMiKXR5o9m1"
+  },
+  {
+    "title": "Grant: SMS + health workers for TB treatment",
+    "deck": "decks/pitch-tb-grant.html",
+    "memo": "plinth:v1 sha256=65c33730c23ab5f0f3619de170010abb81632405d5675e895f7e0ceb8548e98f score=93 slides=11",
+    "signature": "2diR1kq3jmdP9UzSYVVLkQij9KEeK7dVUkqWQUTYwNxNPAQa8o4Rts1Gg2HwQFaFWvZ6qkr5GKtpaJoUjLmXM9p9"
+  },
+  {
+    "title": "Clase (Español): por qué se hunde la Ciudad de México",
+    "deck": "decks/talk-cdmx-es.html",
+    "memo": "plinth:v1 sha256=357eaf7f048f29871a05e8ec166b4481cc27e07f7d2eba72a639b5a9ef0331cd score=100 slides=16",
+    "signature": "382np7tvUCmdDay5UwE5GRMrizbGdtLdos2zqzXop4dLxdZyBpS8uw3oSPDJWtqFWLw1jJobEcBF2Br3YGZJU64U"
   }
 ]

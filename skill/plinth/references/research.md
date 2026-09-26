@@ -24,6 +24,16 @@ node scripts/check-sources.mjs deck.html research/<deck>-sources.md
 
 It fails when a slide cites an id that is not in the ledger, when a ledger URL does not load, or when the quoted text is no longer on the page. Hand the ledger over with the deck; a judge can run the same command.
 
+Checker output: `OK` is a verified quote, `OK-2ND` a quote found on a SECONDARY source (say so aloud if asked), `PDF` a PDF it could not read, `BLOCKED` a page that refused the fetch. A deck with no `[id]` citations fails.
+
+- Numbers said only in speaker notes still need an `[id]` in the notes; the checker reads slides, so check those by hand.
+- An inline `[id]` in body text counts, but put a `Source:` line on any slide that shows a number.
+- If a page renders its text with scripts (PubMed, some dashboards) and the fetch comes back empty, cite a page that carries the same number in plain HTML, and name the original in the ledger.
+
+- Copy quotes from the raw page (`curl -sL url`), not from a tool that summarises pages; a summary is not a verbatim quote.
+- The team's own numbers (targets, prices, plans) get `Source: team plan, not outside data` so nobody mistakes them for research.
+- Placeholders like `[source needed]` or `[name]` are honest, and the linter takes points for each. A deck with them is not finished.
+
 ## What to look for, by question
 
 Judges and investors ask the same five questions. Find at least one sourced number for each.

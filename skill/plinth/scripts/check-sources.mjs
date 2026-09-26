@@ -13,7 +13,7 @@ function pdfText(buf) {
   try {
     const f = join(mkdtempSync(join(tmpdir(), 'plinth-')), 'src.pdf');
     writeFileSync(f, buf);
-    return execFileSync('pdftotext', ['-q', f, '-'], { maxBuffer: 64 << 20 }).toString();
+    return execFileSync('pdftotext', ['-q', '-enc', 'UTF-8', f, '-'], { maxBuffer: 64 << 20 }).toString('utf8');
   } catch { return null; }
 }
 
@@ -21,7 +21,15 @@ const [deckPath, ledgerPath] = process.argv.slice(2).filter(a => !a.startsWith('
 const offline = process.argv.includes('--offline');
 if (!deckPath || !ledgerPath) { console.error('usage: check-sources.mjs deck.html sources.md [--offline]'); process.exit(2); }
 
-const norm = s => s.toLowerCase().replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&#8217;|&rsquo;|[‘’]/g, "'")
+// Pages hide text behind HTML entities (&eacute;, &#243;) and JSON escapes ( ); decode both.
+const ACC = { acute: '́', grave: '̀', circ: '̂', uml: '̈', tilde: '̃', cedil: '̧', ring: '̊' };
+const decode = s => s
+  .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d))
+  .replace(/&([a-zA-Z])(acute|grave|circ|uml|tilde|cedil|ring);/g, (_, c, a) => c + ACC[a])
+  .normalize('NFC');
+const norm = s => decode(decode(s)).toLowerCase().replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&').replace(/&#8217;|&rsquo;|[‘’]/g, "'")
   .replace(/&#8220;|&#8221;|&ldquo;|&rdquo;|[“”]/g, '"').replace(/[–—]/g, '-').replace(/\s+/g, ' ').trim();
 
 // Ledger: markdown table rows whose first cell is an id (S1, T3, R12...). Columns are read by header name.
@@ -75,7 +83,7 @@ for (const [id, slides] of cited) {
     const pageFlat = flat(page);
     const parts = q.split(/\s*(?:\.\.\.|…)\s*/).map(p => p.replace(/^["']+|["']+$/g, '').trim()).filter(p => p.length > 3);
     if (!q) out('WARN', id, 'no quote in ledger');
-    else if (parts.length && parts.every(p => page.includes(p) || pageFlat.includes(flat(p)))) out('OK', id, `quote found, slide ${slides.join(', ')}`);
+    else if (parts.length && parts.every(p => page.includes(p) || pageFlat.includes(flat(p)))) out(/SECONDARY/i.test(e.status) ? 'OK-2ND' : 'OK', id, `quote found, slide ${slides.join(', ')}${/SECONDARY/i.test(e.status) ? ' (secondhand source)' : ''}`);
     else if (/SECONDARY/i.test(e.status)) out('WARN', id, `SECONDARY; quote not found verbatim at ${e.url}`);
     else out('FAIL', id, `quote not found on page: "${e.quote.slice(0, 60)}"`);
   } catch (err) { out('BLOCKED', id, `${err.name}: ${e.url}`); }

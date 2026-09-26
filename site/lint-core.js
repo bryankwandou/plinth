@@ -92,7 +92,9 @@
       // Names with digits glued to letters (Ed25519, SHA-256, Token-2022, H100) are identifiers, not data.
       const nums = all.replace(/\b[A-Za-z]+-?\d+[A-Za-z0-9-]*\b/g, '').match(/(\$|Rp|USD|IDR)?\s?\d[\d.,]*\s?(%|x|k|m|b|bn|juta|miliar|triliun)?/gi) || [];
       const hasBigNum = nums.some(x => /%|x|k|m|b|\$|Rp|juta|miliar|triliun/i.test(x) || x.replace(/\D/g, '').length >= 3);
-      if (hasBigNum && !s.source && !/source|sumber|\[source needed\]/i.test(all)) add(n, 'evidence', 'Number with no source line.', 3);
+      if (hasBigNum && !s.source && !/source|sumber|fuente|fonte|quelle|bron|kaynak|出典|来源|출처|\[source needed\]/i.test(all)) add(n, 'evidence', 'Number with no source line.', 3);
+      // Honest gaps ([source needed], [nama], [budget needed]) are allowed, but a deck with them is not finished.
+      for (const m of (all + ' ' + (s.source || '')).matchAll(/\[(?:[^\]]*\b(?:needed|nama|name|tbd|todo|isi)\b[^\]]*)\]/gi)) add(n, 'unfinished', `Placeholder ${m[0]} still on the slide. Fill it before presenting.`, 2);
     });
     const cost = issues.reduce((a, x) => a + x.cost, 0);
     const score = Math.max(0, Math.round(100 - cost * (10 / Math.max(slides.length, 5))));
@@ -104,7 +106,7 @@
     return text.split(/\n\s*---+\s*\n/).map(chunk => {
       const lines = chunk.trim().split('\n');
       const headline = (lines.shift() || '').replace(/^#+\s*/, '');
-      const src = lines.findIndex(l => /^\s*(source|sumber)\s*:/i.test(l));
+      const src = lines.findIndex(l => /^\s*(source|sumber|fuente|fonte|quelle|bron|kaynak|出典|来源|출처)\s*[:：]/i.test(l));
       const source = src >= 0 ? lines.splice(src, 1)[0] : '';
       return { headline, body: lines.join('\n'), source };
     }).filter(s => s.headline || s.body);

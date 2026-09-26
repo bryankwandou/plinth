@@ -86,3 +86,13 @@ test('technical names with digits are not data, real numbers still need a source
   assert.equal(ev('Vesting that runs past 2030'), true);
   assert.equal(ev('Cuts fees by 40%'), true);
 });
+test('placeholders keep a deck below 100', () => {
+  const k = b => kinds(lintSlides([{ headline: 'Four people who shipped DeFi before', body: b }]));
+  assert.ok(k('Team: [nama], [budget needed]').includes('unfinished'));
+  assert.ok(!k('Evander Franklin, four years in DeFi').includes('unfinished'));
+});
+test('source lines count in other languages', () => {
+  const r = parseText('La Ciudad de México se hunde 35 cm cada año\nMedido por radar\nFuente: NASA JPL, 2025');
+  assert.equal(r[0].source, 'Fuente: NASA JPL, 2025');
+  assert.ok(!kinds(lintSlides(r)).includes('evidence'));
+});

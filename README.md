@@ -22,14 +22,18 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 
 ## Solana devnet receipts
 
-`node skill/plinth/scripts/anchor.mjs deck.html` writes `plinth:v1 sha256=<file hash> score=<lint> slides=<n>` as an SPL Memo. Anyone can check a receipt against a file at https://plinthdeck.vercel.app/anchor.html. All four example decks are recorded:
+`node skill/plinth/scripts/anchor.mjs deck.html` writes `plinth:v1 sha256=<file hash> score=<lint> slides=<n>` as an SPL Memo. Anyone can check a receipt against a file at https://plinthdeck.vercel.app/anchor.html. All eight example decks are recorded:
 
 | Deck | Transaction |
 |---|---|
 | Talk | [3h8Gd39B…](https://explorer.solana.com/tx/3h8Gd39BZtKtYxPEDvLd9GxpTFdqR7BvTZoRUChrAGQTnDyF6mKR5AxiZEM5gZaKRtfn6zrNAxTYpqLqrN6ebwz7?cluster=devnet) |
 | Pitch | [3CxuH1wF…](https://explorer.solana.com/tx/3CxuH1wFzNMpbHUH7Z74jstEViSJbq8djaZcwUknCP4ttYeUyBcUZW8UA6mrWBNzw5zpVjQKSWe62JJ6hQFWcxoX?cluster=devnet) |
-| QuantCoin pitch | [3p4Bgyct…](https://explorer.solana.com/tx/3p4BgyctpbyvffbKabsYbF6NT9sTJhc8vkxvKMXKUDzeT7wh5kL2deQ7seaBgrEMVf7JDPjGxyQ2fb8jvs3zkCud?cluster=devnet) |
-| QuantCoin talk | [3bJkwEz1…](https://explorer.solana.com/tx/3bJkwEz1Hn4LEh4qjKMKPYsqFF4FVx5Bq7r7hypRgG6GDuMBuChAYTXoEE1qPqJD13kmBEi9AqrLnNSxMsUFZC26?cluster=devnet) |
+| QuantCoin pitch | [34JG9njc…](https://explorer.solana.com/tx/34JG9njcBGXeFooGygJRtZpgdc2k7DRkuMr2S3RbauBEyNuzM3FSNUqEUPCjqwtRjXtDx5Cu3rofjtqjT58F1xJu?cluster=devnet) |
+| QuantCoin talk | [42PwEP2n…](https://explorer.solana.com/tx/42PwEP2nMG8zuZxNvMdj6hgtiAxiRWPZ4gRwmnugTe5ipPbBejqTVkvMC4TrTbTVsVjLUr6QnWHxFNfPC6NmdDTw?cluster=devnet) |
+| NusaHarvest (revised, score 96: two `[source needed]` left for the team) | [3iRoPRx4…](https://explorer.solana.com/tx/3iRoPRx4Rq2UC4PVZTnBvrwEBs2dshcpoAADf1fS8A1XnAcDTNuCMWdTpZx75iptswrKoSk6WwpGKCMi67wa8FPk?cluster=devnet) |
+| Catatkas, Indonesian fintech (score 96: team names left blank) | [dqdVcybv…](https://explorer.solana.com/tx/dqdVcybv4yvCqRoRmWSbymy2xzXH5muPdGZ5NfPbBXsbVHXzjzRYNVYBwSAsbYRaTkkG2z7mdmoYnMiKXR5o9m1?cluster=devnet) |
+| TB grant, global health (score 93: applicant, sites, budget left blank) | [2diR1kq3…](https://explorer.solana.com/tx/2diR1kq3jmdP9UzSYVVLkQij9KEeK7dVUkqWQUTYwNxNPAQa8o4Rts1Gg2HwQFaFWvZ6qkr5GKtpaJoUjLmXM9p9?cluster=devnet) |
+| Mexico City subsidence, Spanish lecture | [382np7tv…](https://explorer.solana.com/tx/382np7tvUCmdDay5UwE5GRMrizbGdtLdos2zqzXop4dLxdZyBpS8uw3oSPDJWtqFWLw1jJobEcBF2Br3YGZJU64U?cluster=devnet) |
 
 Tested with the real Phantom extension (v26.30.2, Testnet Mode, Solana Devnet): connect, sign and send, then check. Receipt [5SSrix23…](https://explorer.solana.com/tx/5SSrix23ZnyUTdCj5WSbskKs4DgWY9R3fNX5GdZToxUhTzzNHHms7eH447kxDF5D9uLjsx5FnmXEt5X5Vo2RbaVS?cluster=devnet) came back as a match ([screenshot](docs/evidence/phantom-e2e.png)). On devnet, Phantom shows "Failed to simulate" before you confirm. A plain 1-lamport transfer with no Plinth code in it gets the same warning ([screenshot](docs/evidence/phantom-plain-transfer-same-warning.png)), so the warning comes from Phantom's devnet simulation, not from the memo.
 
@@ -80,6 +84,19 @@ It exits non-zero below 90, so it can gate CI.
 - [Pitch: Plinth, pitched with Plinth](https://plinthdeck.vercel.app/decks/pitch-plinth.html), 8 slides, lint 100
 - [Pitch: QuantCoin, 3-minute hackathon](https://plinthdeck.vercel.app/decks/pitch-quantcoin.html), 10 slides, lint 100
 - [Talk: A token cannot make Solana quantum-safe, but a vault can](https://plinthdeck.vercel.app/decks/talk-quantcoin.html), 13 slides, lint 100
+
+### Other fields, built by agents that had only the skill
+
+Each agent got a topic and the skill, nothing else. It had to research, cite, and pass both checks.
+
+| Deck | Field, language | Sources cited | check-sources |
+|---|---|---|---|
+| [Catatkas](https://plinthdeck.vercel.app/decks/pitch-catatkas.html) | Fintech, Bahasa Indonesia | 7 (OJK/BPS SNLIK 2024, APJII, Bank Indonesia) | 0 failed |
+| [TB grant](https://plinthdeck.vercel.app/decks/pitch-tb-grant.html) | Global health, English | 7 (WHO Global TB Report 2025, trials) | 0 failed |
+| [Mexico City is sinking](https://plinthdeck.vercel.app/decks/talk-cdmx-es.html) | Geoscience lecture, Spanish | 14 (NASA/JPL, CONAGUA, INEGI, Chaussard et al. 2021) | 0 failed |
+| [NusaHarvest, reviewed](https://plinthdeck.vercel.app/decks/pitch-nusaharvest.html) | Agri-fintech review, Indonesian | 2; original deck scored 63, a cited figure was not on its page | 0 failed |
+
+Every one names the data that cuts against it: BukuKas raised Rp1,14 triliun and still shut down; two SMS-reminder trials found no effect; Mexico City's sinking tracks clay thickness, not pumping rate; pests, not weather, are the farmers' top problem.
 
 ![Talk slide](docs/evidence/deck-talk-slide3.png)
 
