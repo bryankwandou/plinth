@@ -9,35 +9,44 @@
 <section>
   <div class="eyebrow">Masalah</div>
   <h2>Satu dari tiga usaha tani terhambat modal</h2>
-  <div class="row"><div class="c5"><div class="big">34,82%</div></div><div class="c7"><p>Usaha pertanian perorangan yang menyebut keterbatasan modal sebagai hambatan, dari Survei Ekonomi Pertanian 2024.</p></div></div>
-  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N1]</p>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Hama dan penyakit</span><div class="t" style="--b:55.03;--d:0"><i></i></div><span class="v">55,03%</span>
+    <span class="l">Keterbatasan modal</span><div class="t hi" style="--b:34.82;--d:1"><i></i></div><span class="v">34,82%</span>
+    <span></span><div class="axis"><span>0</span><span>usaha tani perorangan yang menyebut hambatan</span><span>100%</span></div><span></span>
+  </div></div><div class="c4"><p>Hama nomor satu, modal menyusul.</p></div></div>
+  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N1] [N2]</p>
   <aside class="notes">Angka ini dari survei BPS, bukan dari kami. Artinya sepertiga petani sudah tahu apa yang mereka butuhkan dan tidak mendapatkannya. Ada 40,69 juta orang bekerja di pertanian, menurut UGM [N3].</aside>
 </section>
 <section>
   <div class="eyebrow">Kenapa bank menolak</div>
   <h2>Hama dan cuaca membuat pinjaman petani terlihat terlalu berisiko</h2>
-  <div class="row"><div class="c5"><div class="big">55,03%</div></div><div class="c7"><p>Usaha tani yang masalah utamanya serangan hama dan penyakit. Satu musim gagal, cicilan macet.</p></div></div>
-  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N2]</p>
+  <table class="t rv">
+    <tr><th>Risiko</th><th>Penanggung</th><th>Cara klaim</th></tr>
+    <tr><td>Hama dan penyakit [N2]</td><td>AUTP Jasindo</td><td>Survei kerusakan</td></tr>
+    <tr class="hi"><td>Kekeringan dan banjir</td><td>Indeks curah hujan BMKG</td><td>Otomatis</td></tr>
+  </table>
+  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N2]; NusaHarvest, rencana produk</p>
   <aside class="notes">Kami sebut ini terang-terangan. Asuransi indeks cuaca tidak menanggung hama. Karena itu setiap pinjaman kami wajib dipasangkan dengan AUTP dari Jasindo yang menanggung hama, dan indeks BMKG untuk kekeringan dan banjir.</aside>
 </section>
 <section>
   <div class="eyebrow">Produk</div>
   <h2>Klaim cair tanpa survei lapangan saat curah hujan melewati ambang</h2>
-  <ul>
-    <li>Pinjaman modal tanam lewat koperasi</li>
-    <li>Asuransi panen dengan ambang curah hujan BMKG</li>
-    <li>Setiap penyaluran dan klaim tercatat di Solana</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Koperasi</b><span>Menyalurkan pinjaman modal tanam</span></div><em>→</em>
+    <div><b>Data BMKG</b><span>Oracle membaca curah hujan</span></div><em>→</em>
+    <div class="hi"><b>Ambang lewat</b><span>Klaim dibayar otomatis</span></div><em>→</em>
+    <div><b>Solana</b><span>Penyaluran dan klaim tercatat</span></div>
+  </div>
   <aside class="notes">Petani tidak perlu mengisi formulir klaim. Oracle membaca data BMKG, dan kalau ambang terlewati, klaim dibayar ke rekening pinjaman lebih dulu. Pemodal bisa melihat setiap transaksi di explorer.</aside>
 </section>
 <section>
   <div class="eyebrow">Perlindungan pemodal</div>
   <h2>Pemodal kehilangan uang hanya kalau tiga lapis habis</h2>
-  <ul>
-    <li>Asuransi panen wajib per pinjaman</li>
-    <li>Rencana: salurkan lewat koperasi penyalur KUR, yang dijamin perusahaan penjamin [N5]</li>
-    <li>Cadangan 20% dari dana pool</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>1. Asuransi</b><span>Wajib per pinjaman</span></div><em>→</em>
+    <div><b>2. Penjaminan</b><span>Rencana: lewat koperasi penyalur KUR [N5]</span></div><em>→</em>
+    <div class="hi"><b>3. Cadangan</b><span>20% dana pool, rencana</span></div>
+  </div>
   <p class="source">Source: Jamkrindo, Penjaminan KUR [N5]</p>
   <aside class="notes">Urutan ini penting. Asuransi membayar lebih dulu, lalu penjaminan, baru cadangan. Kami belum punya perjanjian dengan Askrindo atau Jamkrindo. Rencananya pinjaman disalurkan lewat koperasi yang layak KUR, karena KUR sudah dijamin perusahaan penjamin. Itu rencana, bukan kemitraan, dan kami akan bilang begitu kalau juri bertanya.</aside>
 </section>
@@ -58,11 +67,12 @@
 <section>
   <div class="eyebrow">Rencana</div>
   <h2>Satu koperasi di semester satu, lima di akhir tahun</h2>
-  <ul>
-    <li>Q1–Q2: pilot satu koperasi padi</li>
-    <li>Q3–Q4: lima koperasi</li>
-    <li>Berikutnya: kopi dan kakao</li>
-  </ul>
+  <div class="tl rv">
+    <div class="hi"><b>Q1–Q2</b><span>Pilot satu koperasi padi</span></div>
+    <div><b>Q3–Q4</b><span>Lima koperasi</span></div>
+    <div><b>Berikutnya</b><span>Kopi dan kakao</span></div>
+  </div>
+  <p class="source">Source: NusaHarvest, rencana tim</p>
   <aside class="notes">Ukuran sukses pilot: berapa pinjaman tersalur, tingkat pengembalian, dan satu klaim BMKG yang cair otomatis.</aside>
 </section>
 <section>

@@ -73,6 +73,7 @@ Not found in fetched form: Capgemini, DigiCert, Keyfactor, Entrust/Ponemon.
 | L4 | "over two years" | Age of Blueshift's Winternitz vault; cited by Google Quantum AI | Solana Foundation | same as L3 | 2026-04 | same as L3 | Winternitz vault has "been in place for over two years" | VERIFIED |
 | L5 | SIMD-0296, SIMD-0385, SIMD-0461 | Protocol changes needed for native PQ signatures (tx size, precompile) | Anza | see T4 | 2026-04-27 | see T4 | Named in Anza's checklist; SIMD-0296 raises max tx size from 1,232 to 4,096 bytes (search summary) | VERIFIED (SIMD numbers); SECONDARY (byte sizes) |
 | L6 | $1.3B | Value held in Solana-based DAO treasuries (DeepDAO) | Decrypt, citing DeepDAO | DAO Treasuries Top $8.2 Billion on Ethereum, $1.3B on Solana: DeepDAO | 2022-03-18 | https://decrypt.co/95470/dao-treasuries-ethereum-solana-deepdao | "with $1.3 billion held by DAOs built on Solana alone" | SECONDARY (Decrypt on DeepDAO; figure is from 2022) |
+| X1 | 1,400,000 | Maximum compute units one Solana transaction may use | Solana | Fees and compute (docs) | fetched 2026-09-26 | https://solana.com/docs/core/fees | "Max CU limit / transaction" ... "1,400,000" | VERIFIED |
 
 No credible figure was found for the total value of Solana tokens in vesting contracts.
 

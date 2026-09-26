@@ -1,3 +1,5 @@
 site/decks/*.html -text
 site/receipts.json -text
 examples/*.html -text
+examples/img/* -text
+site/decks/img/* -text

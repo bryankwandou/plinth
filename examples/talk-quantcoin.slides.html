@@ -9,17 +9,24 @@
 <section>
   <div class="eyebrow">The question</div>
   <h2>If Ed25519 falls, which Solana balances are still safe?</h2>
-  <p>Every wallet, exchange account and program authority signs with Ed25519. Shor's algorithm breaks it once a large enough quantum computer exists.</p>
-  <p class="source">Source: Citi Institute, January 2026 [E1]; NIST IR 8547 [G1]</p>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Bitcoin</span><div class="t" style="--b:25;--d:0"><i></i></div><span class="v">~25%</span>
+    <span class="l">Ethereum</span><div class="t" style="--b:65;--d:1"><i></i></div><span class="v">65%+</span>
+    <span class="l">Solana</span><div class="t hi" style="--b:100;--d:2"><i></i></div><span class="v">effectively all</span>
+    <span></span><div class="axis"><span>0</span><span>supply with exposed public keys</span><span>100%</span></div><span></span>
+  </div></div>
+  <div class="c4"><p>Every Solana address is an Ed25519 public key. Shor's algorithm breaks it once a large enough quantum computer exists.</p></div></div>
+  <p class="source">Source: Citi Institute, January 2026 [E1] [E2]; NIST IR 8547 [G1]</p>
   <aside class="notes">Most people in this room hold something on Solana. The honest question is not whether this happens this year. It is what still stands if it happens while your money is still sitting there.</aside>
 </section>
 <section>
   <div class="eyebrow">The answer</div>
   <h2>Only balances that also need a hash-based signature survive</h2>
-  <div class="row">
-    <div class="c6 frame mono specimen">normal wallet<br>Ed25519<br>after Shor: open</div>
-    <div class="c6 frame mono specimen">hybrid vault<br>Ed25519 + WOTS/SHA-256<br>after Shor: hash half holds</div>
-  </div>
+  <table class="t">
+    <tr><th>Where it sits</th><th>Signature</th><th>After Shor</th></tr>
+    <tr><td>Normal wallet</td><td>Ed25519</td><td>Open</td></tr>
+    <tr class="hi"><td>Hybrid vault</td><td>Ed25519 + WOTS/SHA-256</td><td>Hash half holds</td></tr>
+  </table>
   <aside class="notes">That is the whole finding. Everything after this slide is how we built the right-hand box, what it costs, and where it stops working.</aside>
 </section>
 <section>
@@ -32,11 +39,12 @@
 <section>
   <div class="eyebrow">Design</div>
   <h2>Winternitz keys sign once, so every spend empties the vault</h2>
-  <ul>
-    <li>Amount goes to the destination</li>
-    <li>The rest goes to the owner's next vault</li>
-    <li>The old vault's account is closed</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Sign once</b><span>Owner signs with Ed25519 and WOTS</span></div><em>→</em>
+    <div><b>Pay</b><span>Amount goes to the destination</span></div><em>→</em>
+    <div class="hi"><b>Move change</b><span>The rest goes to the owner's next vault</span></div><em>→</em>
+    <div><b>Close</b><span>The old vault's account is closed</span></div>
+  </div>
   <aside class="notes">A one-time signature leaks part of its key each time it signs. Signing twice would let someone forge. So the program never allows it: spend means drain, and the change moves to a fresh key.</aside>
 </section>
 <section>
@@ -48,8 +56,14 @@
 <section>
   <div class="eyebrow">Cost</div>
   <h2>A quantum-safe spend uses about 610,000 compute units</h2>
-  <div class="row"><div class="c5"><div class="big">610k CU</div></div><div class="c7"><p>Typical spend on devnet. Projected worst case is 1.09 million, under the 1.4 million limit. The transaction is 1,124 of 1,232 bytes.</p></div></div>
-  <p class="source">Source: QuantCoin README, measured on devnet 2026-09-23</p>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Typical spend</span><div class="t hi" style="--b:43.6;--d:0"><i></i></div><span class="v">610k</span>
+    <span class="l">Worst case</span><div class="t" style="--b:77.9;--d:1"><i></i></div><span class="v">1.09M</span>
+    <span class="l">Limit</span><div class="t" style="--b:100;--d:2"><i></i></div><span class="v">1.4M</span>
+    <span></span><div class="axis"><span>0</span><span>compute units per transaction</span><span>1.4M</span></div><span></span>
+  </div></div>
+  <div class="c4"><p>The transaction is 1,124 of 1,232 bytes. It fits, but only just.</p></div></div>
+  <p class="source">Source: QuantCoin README, measured on devnet 2026-09-23; Solana docs, compute limit [X1]</p>
   <aside class="notes">This is the price. Verifying a Winternitz signature means hashing a lot. It fits in one transaction, but only just, which is why this is for cold storage and not for buying coffee.</aside>
 </section>
 <section>

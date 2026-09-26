@@ -18,18 +18,27 @@
 <section>
   <div class="eyebrow">Why it matters</div>
   <h2>One in eighteen projects wins, and every one sends a pitch</h2>
-  <div class="row"><div class="c5"><div class="big">293</div></div><div class="c7"><p>winners out of 5,428 projects. The deck does not get you in; a clear argument inside it does.</p></div></div>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">All projects</span><div class="t" style="--b:100;--d:0"><i></i></div><span class="v">5,428</span>
+    <span class="l">Winners</span><div class="t hi" style="--b:5.4;--d:1"><i></i></div><span class="v">293</span>
+    <span></span><div class="axis"><span>0</span><span>Solana hackathon projects</span><span>5,428</span></div><span></span>
+  </div></div>
+  <div class="c4"><p>The deck does not get you in; a clear argument inside it does.</p></div></div>
   <p class="source">Source: Colosseum Copilot, pulled 2026-09-25 [P7]</p>
   <aside class="notes">Presence of a deck is universal, so it is not the differentiator. The argument is.</aside>
 </section>
 <section>
   <div class="eyebrow">Product</div>
   <h2>Headlines first, slides second, lint last</h2>
-  <ul>
-    <li>Writes the spine as claims and checks it reads as a case</li>
-    <li>Builds one self-contained HTML deck with speaker notes</li>
-    <li>Scores the copy for filler, density and unsourced numbers</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Research</b><span>Sources ledger</span></div><em>→</em>
+    <div class="hi"><b>Spine</b><span>Headlines as claims</span></div><em>→</em>
+    <div><b>Build</b><span>HTML, notes</span></div><em>→</em>
+    <div><b>Lint</b><span>Filler, density</span></div><em>→</em>
+    <div><b>Sources</b><span>Every number</span></div><em>→</em>
+    <div><b>Layout</b><span>No overflow</span></div><em>→</em>
+    <div><b>Export</b><span>PDF, PPTX</span></div>
+  </div>
   <aside class="notes">Three steps. The spine is the part people skip, and it is the part that matters most.</aside>
 </section>
 <section>
@@ -43,8 +52,14 @@
 </section>
 <section>
   <div class="eyebrow">How it works</div>
-  <h2>A skill file, four references, one template and a zero-dependency linter</h2>
-  <div class="row"><div class="c12 frame mono" style="grid-column:span 12">SKILL.md → pitch.md | talk.md | review.md  +  craft.md, voice.md<br>assets/deck-template.html → your deck (arrows, notes, print to PDF)<br>scripts/lint-core.js → CLI and browser</div></div>
+  <h2>A skill file, eight references, one template and a zero-dependency linter</h2>
+  <table class="t">
+    <tr><th>File</th><th>Job</th></tr>
+    <tr><td>SKILL.md</td><td>Routes to pitch.md, talk.md or review.md</td></tr>
+    <tr><td>references/</td><td>Craft, voice, research, languages, scenarios</td></tr>
+    <tr><td>assets/deck-template.html</td><td>Your deck: arrow keys, notes, print to PDF</td></tr>
+    <tr class="hi"><td>scripts/lint-core.js</td><td>Same linter in the CLI and the browser</td></tr>
+  </table>
   <aside class="notes">Everything is plain files. No server, no account. It runs anywhere Claude Code runs.</aside>
 </section>
 <section>
@@ -56,6 +71,7 @@
 <section>
   <div class="eyebrow">Ask</div>
   <h2>Try it on your next deck and send us the before score</h2>
-  <p class="lede">github.com/bryankwandou/plinth · plinthdeck.vercel.app</p>
+  <div class="row"><div class="c8"><img class="shot" alt="plinthdeck.vercel.app home page" src="img/plinth-site.png"><p class="cap">Live site: plinthdeck.vercel.app</p></div>
+  <div class="c4"><p class="lede">github.com/bryankwandou/plinth</p></div></div>
   <aside class="notes">That is the ask. Run it on a real deck, tell us what it missed.</aside>
 </section>

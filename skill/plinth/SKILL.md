@@ -25,7 +25,7 @@ Then open `references/scenarios.md` and take the spine for the specific occasion
 
 For any pitch, and any talk that makes a claim about the world, read `references/research.md` and do it. Search the web and fetch the pages yourself: surveys, government and regulator data, indices, market reports, on-chain dashboards. Aim for one sourced number per question a judge asks (is it real, how many people, why now, how big, who else). Record each in `research/<deck>-sources.md` with URL, date and a verbatim quote, and look for data that cuts against the pitch too.
 
-Never write a number from memory. If you have no tool to fetch pages, say so and mark those slides `[source needed]`.
+Never write a number from memory. If you have no tool to fetch pages, tell the user before building and ask them for the sources; a deck is not finished while any number is unsourced.
 
 ## Step 1 — Write the spine before any slide
 
@@ -41,11 +41,16 @@ Show the spine to the user when the stakes are high (investor, judged pitch). Fo
 ## Step 2 — Give each slide one job
 
 For each headline pick exactly one supporting element:
-- one number, set large, with its source line underneath
-- one chart that proves the headline (see `craft.md` → charts)
-- one screenshot or product frame, cropped to the part that matters
+- one chart that proves the headline: `.hbars` bars, or ranges with `--a` (start) and `--b` (end), when two or more sourced numbers can be compared
+- one table (`table.t`) when options are compared on the same attributes (competition, pricing tiers)
+- one timeline (`.tl`) for deadlines, milestones, regulation dates
+- one flow diagram (`.flow`) for how the product works; it needs no number
+- one screenshot or product frame (`img.shot` + `.cap`), cropped to the part that matters. A design mockup says "Design mockup, not yet built" in its caption
+- one number, set large (`.big`), with its source line underneath, only when there is nothing to compare it with
 - one short list, three items at most
 - one quote from a real user, with name and role
+
+A pitch or data talk needs at least three slides with a chart, table, timeline, diagram or image; the linter takes points off below that. Bars grow and `.rv` children rise in when the slide appears; the PDF and PPTX show the final state. Markup for every component is in `assets/deck-template.html` and `examples/pitch-quantcoin.slides.html`.
 
 Two elements = two slides. Empty space is fine; it is where the eye rests.
 
@@ -63,6 +68,13 @@ Run:
 node scripts/lint-deck.mjs path/to/deck.html
 ```
 
+Then check that nothing runs off a slide or overlaps (headless Chrome, 1280×720, every slide):
+
+```bash
+npm install puppeteer-core       # once
+node scripts/check-layout.mjs path/to/deck.html
+```
+
 If the deck cites outside data, also run `node scripts/check-sources.mjs path/to/deck.html research/<deck>-sources.md`. It fetches every cited URL and confirms the quoted number is still on the page. Fix every FAIL before handing over.
 
 **No placeholder leaves your hands.** The deck ships as a PDF or .pptx that nobody will fix by hand, so `[source needed]`, `[name]`, `[budget needed]` and the like make the linter exit non-zero at any score. For each one, in this order:
@@ -78,18 +90,19 @@ The linter flags filler vocabulary, headline length, slide density, missing sour
 
 Give the user: the HTML path, how to present (open in browser, `F` fullscreen, arrows, `P` print to PDF), the lint score, and anything you had to guess (a number with no source, a team bio you did not have). Guesses are listed, never hidden.
 
-Offer a PowerPoint copy when the user has to upload a .pptx, edit in PowerPoint/Keynote/Google Slides, or hand the deck to someone who does:
+Always hand over the PDF and the PowerPoint file too, because a judge or investor opens files, not a browser tab:
 
 ```bash
-npm install pptxgenjs            # once
+npm install pptxgenjs puppeteer-core   # once
 node scripts/to-pptx.mjs path/to/deck.html [out.pptx]
+"<chrome>" --headless=new --no-pdf-header-footer --print-to-pdf=out.pdf "file:///path/to/deck.html?print"
 ```
 
-The .pptx is editable (real text boxes, same fonts and colors, 16:9, speaker notes kept). Tell the user the fonts (Inter, JetBrains Mono) must be installed on the presenting machine, or PowerPoint will substitute and line breaks may shift. Custom inline layouts beyond the template's classes (eyebrow, h1/h2, p, lists, `.big`, `.stat`, `.quote`/`.who`, `.frame`, `.bar`, `.source`) come through as plain text; check those slides.
+The .pptx shows every slide exactly as the HTML renders it (charts, images, fonts), full-bleed 16:9, with speaker notes kept, so nothing shifts when Inter is missing on the presenting machine. It refuses to export while any placeholder remains. Use `--editable` only when the user must edit text in PowerPoint; that mode draws native text boxes and plain template classes, and charts come through as text.
 
 ## Non-negotiables
 
-- No invented data. A number without a source is marked `[source needed]` on the slide itself.
+- No invented data. A number without a source is researched or cut before export; it never ships as a placeholder.
 - No emoji, no exclamation marks, no gradient text, no stock-photo people.
 - Font sizes: headline ≥ 40px on a 1280×720 canvas, body ≥ 22px. Anything smaller means too many words.
 - 3 minutes of video pitch = 8–11 slides. 20-minute talk = 15–25. More slides with less on each beats the reverse.

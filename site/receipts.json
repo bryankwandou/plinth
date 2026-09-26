@@ -2,49 +2,49 @@
   {
     "title": "Talk: What 5,428 hackathon projects say about pitching",
     "deck": "decks/talk-5428-projects.html",
-    "memo": "plinth:v1 sha256=b0594c8c1733eec43276e3e776a12adffcf26392b0d53634ec70de4cdfcc0f02 score=100 slides=9",
-    "signature": "3objcjBj8BsAxJwyTR6b2KUhRMWtuSoorpB7UJ7MPvEEWiZs7khgCnJUj2NDQfRf7WFtGJxUhCoAnT8c7hA6meEL"
+    "memo": "plinth:v1 sha256=7d8cfef2cdf4ffe47b81544796b06cd3c28005a9ec172880ff918b95d06d3455 score=100 slides=9",
+    "signature": "3Enp7y1vFH2JvhTswn1Csg5YPxsjPCTLWGTG3w8Rs8ZLGFghDEq8M6NBXQMVNjyiaMfUz1fvq62i7Sb4zoHWnXE8"
   },
   {
     "title": "Pitch: Plinth, pitched with Plinth",
     "deck": "decks/pitch-plinth.html",
-    "memo": "plinth:v1 sha256=74a83dc3be27ddd11ea7650aa0fe9f1cbdc797cd42d07522744a15e73fc93a76 score=100 slides=8",
-    "signature": "2rb1U36LyZ8k2W2uTgTEREPndiVPJNrg895oeZDF6zPDowE7zdS4icBv6xNRW4Nzr5f9gRWZFPu4vhppZkK1pVSW"
+    "memo": "plinth:v1 sha256=0770b116e8b53460768887c6c2e21f76fa76466c58a2370b8482aecc1962b481 score=100 slides=8",
+    "signature": "3oASsG3RHtJWgGGh62TDmHrvgNGWL4BGrnwyJ5g5xYu8X4zxqXjoqminPbHtcW5GjFZ5PzosfGDieXrjDnwRZBAT"
   },
   {
     "title": "Pitch: QuantCoin, 3-minute hackathon",
     "deck": "decks/pitch-quantcoin.html",
-    "memo": "plinth:v1 sha256=9ad137a7c6ea08acb7631d00ec806302d1693f4b998a8abb541a17134719f391 score=100 slides=13",
-    "signature": "3WnmwVxyGArTojjFRLxucav37Fo4AntZ3aaTMDLJAHfApywfNyXTrjsn7XsimJfGCYszr6rNLazMpXzjx3ctLBep"
+    "memo": "plinth:v1 sha256=c4a2314b14a9a8208bd9d7506138858bffd6ce0b5e3e7d802628fe2e4b696ea2 score=100 slides=13",
+    "signature": "77Cyhh4ky8kYonA73DXHiD2W1VZ7Q7uNmaip1xkLa9EkccGYe4kT41day84WqPnzRuxebbMAvqqFwoaLp6ftWFG"
   },
   {
     "title": "Talk: A token cannot make Solana quantum-safe, but a vault can",
     "deck": "decks/talk-quantcoin.html",
-    "memo": "plinth:v1 sha256=d908f094eb9f597d1f4f4bd58a66a0cdcceadaf1852612fac6abb885a0c847a4 score=100 slides=13",
-    "signature": "42PwEP2nMG8zuZxNvMdj6hgtiAxiRWPZ4gRwmnugTe5ipPbBejqTVkvMC4TrTbTVsVjLUr6QnWHxFNfPC6NmdDTw"
+    "memo": "plinth:v1 sha256=4ae60ff5ec963c2c503c5a26e8de08754c8152323330533e92c39f3cf74aeec8 score=100 slides=13",
+    "signature": "3HsCF7NV2bhfzQH3qPP3rpQwhVNVSNZG5hKjRxFvRPRa2RDMwwN4UFuNmj7jHLugR9QfDWZH8fxZaJYtsymegjhc"
   },
   {
     "title": "Pitch: NusaHarvest, reviewed: 63 before, 100 after",
     "deck": "decks/pitch-nusaharvest.html",
-    "memo": "plinth:v1 sha256=deb3826118bf83730671ead35fdc680b108c114e1604b8ca6270ae6346d581f2 score=100 slides=10",
-    "signature": "386rkB57VwLgZEwHGLeBhEFV44iB3YJSiCU5auX1qG8EK1bSi6CBJyJRkm3143NKXqsfq5EuVpnzP3sJfJ6rSeGJ"
+    "memo": "plinth:v1 sha256=9125ea93f887d255425af064b10362aa23097ec112e5b9f71c0dcbf49f053ba8 score=100 slides=10",
+    "signature": "3AgEC2j1mzEHCNXJJvCquys24uRNVsQ1JFYqueAdXsu69VMikrf7n7Yp94TDb7v8UAHWR7K7B6CgfTb2kf5HGnDf"
   },
   {
     "title": "Pitch (Bahasa Indonesia): Catatkas, WhatsApp bookkeeping for warung",
     "deck": "decks/pitch-catatkas.html",
-    "memo": "plinth:v1 sha256=87063b6b99a26ad32be675721471a6e6de965d5b7ecfe9c44b884083fa82274f score=100 slides=11",
-    "signature": "2RMxikNLPJRcD6YdqHTdKZdrqWAgpP8kajAPMMCTWGrjrTmSnPchzM5otoGvfp2jFN5cpHmzUbTDR5czyuBep3ka"
+    "memo": "plinth:v1 sha256=15839bafab3c7e8df56805f5791669ce7742edc1356c543e7a6d1792558002e4 score=100 slides=11",
+    "signature": "4bH1WPc7uH4HgnEKt259mh2cwgnDUwzi8X7gWnctPcrbNgCBsP4Wr8giPwBx1fMiSbqu2JEdwXr2qwgYcio99yNa"
   },
   {
     "title": "Grant: SMS + health workers for TB treatment",
     "deck": "decks/pitch-tb-grant.html",
-    "memo": "plinth:v1 sha256=04bcb75c14cce4a40c6680a4b05e93176d775ad4ce5ab5dec781ac7b382764d4 score=100 slides=11",
-    "signature": "53d8mP2DSHz8XYCe7W9mcTPdGDJ6QQrqVR4A7K2mfztzaTk1ujPP64FbfzgeouwhVMJfw3uYWXyLNL3TEvbNc1Ax"
+    "memo": "plinth:v1 sha256=d064f48034acbf7dc66d9cbcd5557cf5e4161458f7aacf7ddfa2e879a06e9370 score=100 slides=11",
+    "signature": "5JVic882CBomU75RCUvGM1xxM4VmWTUPiDbCN6NDBeQfjL5kfs8MDje7WtZuTA3CzDjzmCtxpoQq478k5DuTMfQs"
   },
   {
     "title": "Clase (Español): por qué se hunde la Ciudad de México",
     "deck": "decks/talk-cdmx-es.html",
-    "memo": "plinth:v1 sha256=357eaf7f048f29871a05e8ec166b4481cc27e07f7d2eba72a639b5a9ef0331cd score=100 slides=16",
-    "signature": "382np7tvUCmdDay5UwE5GRMrizbGdtLdos2zqzXop4dLxdZyBpS8uw3oSPDJWtqFWLw1jJobEcBF2Br3YGZJU64U"
+    "memo": "plinth:v1 sha256=6a9f4ab1a3e8f7b53963bebedc66b647a53be1f080f15dd56cbd774d7801ada7 score=100 slides=16",
+    "signature": "38miq5NrVhHTWUKoype5iUKSfJ29H1jmyH6q6foNCuTN12sVrgWtquTPsWMZ8knxXpbpX88DpfK7oKpUho4icJ25"
   }
 ]

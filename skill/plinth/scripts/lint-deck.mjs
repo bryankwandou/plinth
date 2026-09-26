@@ -23,6 +23,15 @@ if (/<section[\s>]/i.test(raw)) {
 } else slides = parseText(raw);
 
 const r = lintSlides(slides);
+// A deck of text blocks reads as AI-made. Data belongs in a chart, table or timeline the eye can compare.
+if (/<section[\s>]/i.test(raw) && slides.length >= 6) {
+  const visual = [...raw.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/gi)]
+    .filter(([, s]) => /class="[^"]*\b(hbars|tl|flow|shot|frame|stat)\b|<table|<svg|<img/i.test(s.replace(/<aside[\s\S]*?<\/aside>/gi, ''))).length;
+  if (visual < 3) {
+    r.issues.push({ slide: 0, kind: 'visual', msg: `Only ${visual} slide(s) show a chart, table, timeline, diagram or image. Chart at least three of the sourced numbers.`, cost: 6 });
+    r.score = Math.max(0, r.score - Math.round(6 * 10 / Math.max(slides.length, 5)) * (3 - visual));
+  }
+}
 if (process.argv.includes('--json')) { console.log(JSON.stringify(r, null, 2)); process.exit(0); }
 console.log(`${file}\n${r.slides} slides  score ${r.score}/100\n`);
 for (const i of r.issues) console.log(`  slide ${String(i.slide).padStart(2)}  ${i.kind.padEnd(9)} ${i.msg}`);

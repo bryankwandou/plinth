@@ -21,11 +21,11 @@
 <section>
   <div class="eyebrow">What does not separate winners</div>
   <h2>Winners write their one-liners exactly as long as everyone else</h2>
-  <div class="row">
-    <div class="c4 stat"><b>13</b><span>median words, winners</span></div>
-    <div class="c4 stat"><b>13</b><span>median words, non-winners</span></div>
-    <div class="c4 stat"><b>4%</b><span>use hype words, in both groups</span></div>
-  </div>
+  <table class="t">
+    <tr><th>One-liner</th><th>Winners (180)</th><th>Non-winners (183)</th></tr>
+    <tr><td>Median length</td><td>13 words</td><td>13 words</td></tr>
+    <tr><td>Uses hype words</td><td>4%</td><td>4%</td></tr>
+  </table>
   <p class="source">Source: 363-project sample over 15 category queries (180 winners, 183 non-winners), Colosseum Copilot</p>
   <aside class="notes">I expected shorter, punchier one-liners from winners. The median is identical, thirteen words. And the buzzword rate is the same four percent. So polishing the tagline is not where the prize comes from.</aside>
 </section>
@@ -33,10 +33,11 @@
   <div class="eyebrow">What does</div>
   <h2>Winners are far more likely to be building in public</h2>
   <div class="row">
-    <div class="c8" style="display:grid;gap:22px">
-      <div><p style="font-size:18px;color:var(--muted)">Winners with a linked X account</p><div style="display:flex;align-items:center;gap:16px"><div class="bar hi" style="width:96%"></div><b style="font-size:28px">96%</b></div></div>
-      <div><p style="font-size:18px;color:var(--muted)">Non-winners</p><div style="display:flex;align-items:center;gap:16px"><div class="bar" style="width:80%"></div><b style="font-size:28px">80%</b></div></div>
-    </div>
+    <div class="c8"><div class="hbars">
+      <span class="l">Winners</span><div class="t hi" style="--b:96;--d:0"><i></i></div><span class="v">96%</span>
+      <span class="l">Non-winners</span><div class="t" style="--b:80;--d:1"><i></i></div><span class="v">80%</span>
+      <span></span><div class="axis"><span>0</span><span>projects with a linked X account</span><span>100%</span></div><span></span>
+    </div></div>
     <div class="c4"><p>The one visible gap in the sample. Colosseum's own guide names it too: build in public, get beta testers early.</p></div>
   </div>
   <p class="source">Source: same sample; "How to Win a Colosseum Hackathon", blog.colosseum.com [P1]</p>
@@ -45,11 +46,11 @@
 <section>
   <div class="eyebrow">What judges ask for</div>
   <h2>Six things, under three minutes</h2>
-  <ul>
-    <li>Who you are and why you started</li>
-    <li>What it is, who it is for, and a working demo</li>
-    <li>The market it opens and how you reach the first users</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Team</b><span>Who you are and why you started</span></div><em>→</em>
+    <div class="hi"><b>Product</b><span>What it is, who it is for, a working demo</span></div><em>→</em>
+    <div><b>Market</b><span>What it opens and how you reach first users</span></div>
+  </div>
   <p class="source">Source: "How to Win a Colosseum Hackathon" and "Perfecting Your Hackathon Submission", blog.colosseum.com [P2] [P3] [P5]</p>
   <aside class="notes">Colosseum publishes the checklist: team background, product, why you started, market, how you get first users, and the demo. I grouped them into three pairs. Running over three minutes is on their list of top mistakes [P5].</aside>
 </section>
@@ -73,11 +74,12 @@
 <section>
   <div class="eyebrow">Takeaway</div>
   <h2>Spend the last week on the story, not the edit</h2>
-  <ul>
-    <li>Write the headlines first; they should make the case alone</li>
-    <li>One claim per slide, one piece of evidence under it</li>
-    <li>Post progress in public from day one</li>
-  </ul>
+  <div class="tl rv">
+    <div><b>Day 1</b><span>Open a project X account and post progress [P1]</span></div>
+    <div><b>Weeks 1–4</b><span>Engineering sprint [P4]</span></div>
+    <div class="hi"><b>Week 5</b><span>Headlines first, then one claim and one piece of evidence per slide</span></div>
+  </div>
+  <p class="source">Source: "How to Win a Colosseum Hackathon", blog.colosseum.com [P1] [P4]</p>
   <aside class="notes">Colosseum suggests roughly four weeks of engineering and one on the presentation [P4]. Use that week to get the spine right, then build slides around it.</aside>
 </section>
 <section class="center">

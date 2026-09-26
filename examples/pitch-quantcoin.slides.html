@@ -1,6 +1,7 @@
 <title>QuantCoin pitch</title>
 <section class="center">
-  <div class="fill center">
+  <div class="fill center rv">
+    <svg width="88" height="88" viewBox="0 0 512 512" style="margin:0 auto 28px"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
     <h1>QuantCoin keeps long-held Solana tokens safe from a quantum computer</h1>
     <p class="lede">A Token-2022 token with a hybrid vault · Bryan Kwandou · devnet, pre-audit</p>
   </div>
@@ -9,82 +10,111 @@
 <section>
   <div class="eyebrow">Problem</div>
   <h2>Effectively all SOL sits behind keys a quantum computer can break</h2>
-  <div class="row"><div class="c5"><div class="big">All SOL</div></div><div class="c7"><p>Citi counts over 65% of ETH as exposed. For Solana, where the address is the public key, it counts effectively the whole supply.</p></div></div>
-  <p class="source">Source: Citi Institute, Quantum Threat, January 2026 [E1]</p>
-  <aside class="notes">This is Citi's number, not mine. On Solana your address is your Ed25519 public key, so every balance has its key on-chain already. A treasury meant to sit for twenty years can be read today and drained the day the machine exists.</aside>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Bitcoin</span><div class="t" style="--b:25;--d:0"><i></i></div><span class="v">~25%</span>
+    <span class="l">Ethereum</span><div class="t" style="--b:65;--d:1"><i></i></div><span class="v">65%+</span>
+    <span class="l">Solana</span><div class="t hi" style="--b:100;--d:2"><i></i></div><span class="v">all</span>
+    <span></span><div class="axis"><span>0</span><span>share of supply with its public key exposed</span><span>100%</span></div><span></span>
+  </div></div><div class="c4"><p>On Solana the address is the public key.</p></div></div>
+  <p class="source">Source: Citi Institute, Quantum Threat, January 2026 [E1] [E2]</p>
+  <aside class="notes">These are Citi's numbers, not mine. Bitcoin hides most keys behind a hash until you spend. On Solana your address is your Ed25519 public key, so every balance has its key on-chain already. A treasury meant to sit for twenty years can be read today and drained the day the machine exists.</aside>
 </section>
 <section>
   <div class="eyebrow">How close</div>
-  <h2>Google cut the machine needed to break these keys twentyfold</h2>
-  <div class="row"><div class="c5"><div class="big">~20x</div></div><div class="c7"><p>Under 500,000 physical qubits now solve the curve problem behind Ed25519, down from the previous best estimate.</p></div></div>
-  <p class="source">Source: Google Research, March 2026 [R2]</p>
-  <aside class="notes">Every new paper makes the attack cheaper. Experts surveyed by the Global Risk Institute put a code-breaking machine within ten years at 28 to 49 percent [T1]. Anza puts it at 3 to 5 percent within five [T4]. I build for the long end, not the short one.</aside>
+  <h2>Experts put a code-breaking machine past even odds within 15 years</h2>
+  <div class="hbars" style="margin-top:44px">
+    <span class="l">Anza, within 5 years</span><div class="t" style="--a:3;--b:5;--d:0"><i></i></div><span class="v">3–5%</span>
+    <span class="l">Citi, by 2034</span><div class="t" style="--a:19;--b:34;--d:1"><i></i></div><span class="v">19–34%</span>
+    <span class="l">GRI experts, 10 years</span><div class="t" style="--a:28;--b:49;--d:2"><i></i></div><span class="v">28–49%</span>
+    <span class="l">GRI experts, 15 years</span><div class="t hi" style="--a:51;--b:70;--d:3"><i></i></div><span class="v">51–70%</span>
+    <span class="l">Citi, by 2044</span><div class="t hi" style="--a:60;--b:82;--d:4"><i></i></div><span class="v">60–82%</span>
+    <span></span><div class="axis"><span>0%</span><span>estimated probability, low to high</span><span>100%</span></div><span></span>
+  </div>
+  <p class="source">Source: Anza, April 2026 [T4]; Citi Institute, January 2026 [T3]; Global Risk Institute, 2025 report [T1]</p>
+  <aside class="notes">Even the most cautious estimate, Anza's, is not zero. Google also cut the qubits needed to break these keys about twentyfold this year [R2]. A vesting schedule signed today runs inside these windows.</aside>
 </section>
 <section>
   <div class="eyebrow">Deadline</div>
-  <h2>NIST disallows EdDSA, Solana's signature family, after 2035</h2>
-  <div class="row"><div class="c5"><div class="big">2035</div></div><div class="c7"><p>The US, UK and EU all set 2035 as the date to finish moving off quantum-vulnerable cryptography.</p></div></div>
-  <p class="source">Source: NIST IR 8547, November 2024 [G1]; UK NCSC, March 2025 [G4]</p>
-  <aside class="notes">A vesting schedule signed today can still be running in 2035. Regulated custodians will have to answer for it before then.</aside>
+  <h2>Regulators want quantum-vulnerable signatures gone by 2035</h2>
+  <div class="tl rv">
+    <div><b>2024</b><span>NIST publishes FIPS 205, hash-based signatures [G3]</span></div>
+    <div><b>2028</b><span>UK: discovery and migration plan done [G4]</span></div>
+    <div><b>2030</b><span>NIST deprecates 112-bit ECDSA and RSA [G1]</span></div>
+    <div><b>2031</b><span>UK: priority systems migrated [G4]</span></div>
+    <div class="hi"><b>2035</b><span>NIST disallows EdDSA, Solana's signature family [G1]</span></div>
+  </div>
+  <p class="source">Source: NIST IR 8547, November 2024 [G1]; NIST, August 2024 [G3]; UK NCSC, March 2025 [G4]</p>
+  <aside class="notes">The US and UK both land on 2035. The hash-based signature QuantCoin uses already has a NIST standard behind it since 2024, so the conservative choice is also the standard one. Custodians will have to answer for this long before 2035.</aside>
 </section>
 <section>
-  <div class="eyebrow">Why now</div>
-  <h2>NIST standardized hash-based signatures in 2024</h2>
-  <div class="row"><div class="c5"><div class="big">FIPS 205</div></div><div class="c7"><p>SLH-DSA rests only on a hash function. Grover's algorithm gives a square-root speedup against it, nothing more. The conservative choice now has a standard behind it.</p></div></div>
-  <p class="source">Source: NIST, August 2024 [G3]</p>
-  <aside class="notes">Hash-based signatures are the oldest and most conservative post-quantum family. Once NIST put its name on them, using the same idea on Solana stopped being exotic.</aside>
+  <div class="eyebrow">Readiness</div>
+  <h2>Most security teams worry, almost none have a plan</h2>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Worried about quantum</span><div class="t" style="--b:62;--d:0"><i></i></div><span class="v">62%</span>
+    <span class="l">Have a defined strategy</span><div class="t hi" style="--b:5;--d:1"><i></i></div><span class="v">5%</span>
+    <span></span><div class="axis"><span>0</span><span>ISACA poll, 2,600+ professionals</span><span>100%</span></div><span></span>
+  </div></div><div class="c4"><p>That gap is who we sell to.</p></div></div>
+  <p class="source">Source: ISACA Quantum Pulse Poll, April 2025 [S1]</p>
+  <aside class="notes">Sixty-two percent are worried, five percent have a strategy [S1]. Nobody is going to pull us in; we will have to sell. The gap between worry and action is the opening.</aside>
 </section>
 <section>
   <div class="eyebrow">Product</div>
   <h2>A vault opens only when both signatures check out</h2>
-  <ul>
-    <li>Ed25519 from the owner, as in any Solana wallet</li>
-    <li>A Winternitz one-time signature over SHA-256</li>
-    <li>Every spend empties the vault, so no key signs twice</li>
-  </ul>
-  <aside class="notes">An attacker has to break both. Before quantum computers exist, Ed25519 also covers any bug in the newer Winternitz code. After, the hash half still holds. Everyday transfers stay plain Token-2022, so wallets need nothing new.</aside>
+  <div class="flow rv">
+    <div><b>Ed25519</b><span>Owner's normal wallet signature</span></div><em>+</em>
+    <div><b>Winternitz</b><span>One-time hash signature over SHA-256</span></div><em>→</em>
+    <div class="hi"><b>Vault program</b><span>Checks both, or refuses</span></div><em>→</em>
+    <div><b>Spend</b><span>Pays out, refunds the rest to a fresh vault</span></div>
+  </div>
+  <p class="lede" style="margin-top:48px">An attacker has to break both.</p>
+  <aside class="notes">An attacker has to break both. Before quantum computers exist, Ed25519 also covers any bug in the newer Winternitz code. After, the hash half still holds. Every spend empties the vault, so no one-time key signs twice. Everyday transfers stay plain Token-2022, so wallets need nothing new.</aside>
 </section>
 <section>
   <div class="eyebrow">Demo</div>
   <h2>One devnet spend moved 22 trillion QC between vaults</h2>
   <div class="row">
     <div class="c6 frame mono specimen">spend Np26Uxfw…<br>sent       1,000,000 QC<br>refunded   21,999,999,000,000 QC<br>old vault  closed<br>compute    610,076 CU</div>
-    <div class="c6"><p>The TypeScript client signed, the Rust program verified. The two WOTS implementations agree byte for byte.</p></div>
+    <div class="c6"><div class="hbars">
+      <span class="l">Used</span><div class="t hi" style="--b:43.6;--d:0"><i></i></div><span class="v">610k</span>
+      <span class="l">Limit</span><div class="t" style="--b:100;--d:1"><i></i></div><span class="v">1.4M</span>
+      <span></span><div class="axis"><span>compute units per transaction</span></div><span></span>
+    </div></div>
   </div>
-  <p class="source">Source: QuantCoin README, devnet run 2026-09-23</p>
-  <aside class="notes">This is the whole supply moving. One million out to a destination, the rest into the owner's next vault, and the old vault closed. It used about six hundred thousand compute units, well under the limit.</aside>
+  <p class="source">Source: QuantCoin README, devnet run 2026-09-23; Solana docs, compute limit [X1]</p>
+  <aside class="notes">This is the whole supply moving. One million out to a destination, the rest into the owner's next vault, and the old vault closed. It used about six hundred ten thousand compute units, well under the one point four million limit per transaction. The TypeScript client and the Rust program agree byte for byte.</aside>
+</section>
+<section>
+  <div class="eyebrow">App design</div>
+  <h2>Holders see one balance and two keys</h2>
+  <div class="row"><div class="c8"><img class="shot" alt="Quantum Safe desktop vault screen, design mockup" src="img/qc-vaults.png"><p class="cap">Design mockup, not yet built. The vault program and CLI client run on devnet today.</p></div>
+  <div class="c4"><p>Losing either key locks the vault, so the app puts the backup up front.</p></div></div>
+  <aside class="notes">This is the design for the holder app, and I want to be clear it is a design, not a shipped app. What runs today is the program and the command-line client. The screen shows the two keys and the encrypted backup, because a lost hash key means locked funds.</aside>
 </section>
 <section>
   <div class="eyebrow">How it works</div>
   <h2>The program stores nothing and fits in 6,872 bytes</h2>
-  <div class="row"><div class="c5"><div class="big">6,872 B</div></div><div class="c7"><p>Pinocchio, one instruction. The vault address is derived from the Winternitz key and the owner. The signed message binds every account, so a relayer cannot redirect funds.</p></div></div>
+  <div class="row"><div class="c5"><div class="big">6,872 B</div></div><div class="c7"><p>Pinocchio, one instruction. The vault address commits to both keys. The signed message binds every account, so a relayer cannot redirect funds.</p></div></div>
   <p class="source">Source: QuantCoin README, measured numbers</p>
-  <aside class="notes">No state means nothing to corrupt. The address itself commits to the keys. Program, vault, mint, destination, refund and amount are all inside the signed message.</aside>
-</section>
-<section>
-  <div class="eyebrow">Traction</div>
-  <h2>Twelve tests pass and an internal audit found no way in</h2>
-  <div class="row"><div class="c5"><div class="big">12/12</div></div><div class="c7"><p>Tests run against real Token-2022 and assert exact error codes. The internal audit fixed two issues and left five documented. There are no users yet.</p></div></div>
-  <p class="source">Source: QuantCoin audit/AUDIT.md</p>
-  <aside class="notes">I will be straight about this. The signal is engineering, not users. The audit found a test that passed for the wrong reason and a client bug that could lock a vault. Both are fixed.</aside>
+  <aside class="notes">No state means nothing to corrupt. The address itself commits to the keys. Program, vault, mint, destination, refund and amount are all inside the signed message. Twelve tests pass against real Token-2022, and an internal audit fixed two issues and documented five more.</aside>
 </section>
 <section>
   <div class="eyebrow">Competition</div>
   <h2>Solana's own plan protects new wallets, not old balances</h2>
-  <ul>
-    <li>Solana Foundation: Falcon for new wallets, if quantum turns credible [L3]</li>
-    <li>Blueshift Winternitz vault: lamports only, single use [L1]</li>
-    <li>QuantCoin: any Token-2022 balance, today</li>
-  </ul>
+  <table class="t rv">
+    <tr><th></th><th>Protects</th><th>Available</th><th>Needs a protocol change</th></tr>
+    <tr><td>Solana Foundation plan [L3]</td><td>New wallets</td><td>If quantum turns credible</td><td>Yes</td></tr>
+    <tr><td>Blueshift Winternitz vault [L1]</td><td>SOL only</td><td>Now</td><td>No</td></tr>
+    <tr class="hi"><td>QuantCoin</td><td>Any Token-2022 balance</td><td>Devnet now</td><td>No</td></tr>
+  </table>
   <p class="source">Source: Solana Foundation, April 2026 [L3]; Blueshift on GitHub [L1]</p>
-  <aside class="notes">The Foundation says quantum is still years away and plans Falcon later. That is fair. But its plan starts when the threat is credible, and a treasury cannot move in a day. Blueshift proved the idea for SOL. QuantCoin extends it to tokens.</aside>
+  <aside class="notes">The Foundation says quantum is still years away and plans Falcon for new wallets later. That is fair. But its plan starts when the threat is credible, and a treasury cannot move in a day. Blueshift proved the idea for SOL. QuantCoin extends it to tokens.</aside>
 </section>
 <section>
   <div class="eyebrow">Go-to-market</div>
   <h2>The first users are treasuries that plan to hold for years</h2>
-  <div class="row"><div class="c5"><div class="big">$1.3B</div></div><div class="c7"><p>Held in Solana DAO treasuries in 2022, the last public count. Plus team vesting that runs for years.</p></div></div>
+  <div class="row"><div class="c5"><div class="big">$1.3B</div></div><div class="c7"><p>Held in Solana DAO treasuries in 2022, the last public count. Team vesting adds balances locked for years.</p></div></div>
   <p class="source">Source: Decrypt citing DeepDAO, March 2022 [L6]</p>
-  <aside class="notes">The figure is old and secondhand, and I say so. The point is that long-held treasuries exist. I have not signed any of them yet. Only 5 percent of organisations in ISACA's survey have a quantum strategy [S1], so I expect to sell, not to be pulled.</aside>
+  <aside class="notes">The figure is old and secondhand, and I say so. The point is that long-held treasuries exist. I have not signed any of them yet. There are no users today; the signal so far is engineering.</aside>
 </section>
 <section>
   <div class="eyebrow">Team</div>

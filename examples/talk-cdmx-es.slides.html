@@ -26,8 +26,14 @@
 <section>
   <div class="eyebrow">Concepto 1 · Medición</div>
   <h2>Partes de la ciudad bajaron hasta 35 cm por año</h2>
-  <div class="row"><div class="c5"><div class="big">35 cm</div></div><div class="c7"><p>Por año, en las décadas de 1990 y 2000. Un ingeniero documentó el hundimiento por primera vez en 1925.</p></div></div>
-  <p class="source">Fuente: NASA/JPL, abril de 2026 [M1] [M4]</p>
+  <div class="tl rv">
+    <div><b>1910</b><span>Se inaugura el Ángel [M3]</span></div>
+    <div><b>1925</b><span>Primer registro del hundimiento [M4]</span></div>
+    <div><b>1950</b><span>Tasas casi constantes desde entonces [M5]</span></div>
+    <div class="hi"><b>1990–2000</b><span>Hasta 35 cm por año [M1]</span></div>
+    <div><b>2025</b><span>NISAR mide más de 2 cm por mes [M2]</span></div>
+  </div>
+  <p class="source">Fuente: NASA/JPL, abril de 2026 [M1] [M2] [M3] [M4]; Chaussard et al., 2021 [M5]</p>
   <aside class="notes">Treinta y cinco centímetros al año es más o menos lo que mide su antebrazo. No es un fenómeno nuevo: tiene un siglo de registro. Lo nuevo es que ahora lo medimos desde el espacio, con precisión milimétrica y sobre toda la ciudad a la vez.</aside>
 </section>
 <section>
@@ -59,9 +65,10 @@
 <section>
   <div class="eyebrow">Concepto 2 · Balance hídrico</div>
   <h2>Del acuífero se bombeaba casi el doble de lo que se recargaba</h2>
-  <div class="row">
-    <div class="c6 frame mono specimen">entradas<br>279.0 Mm³/año</div>
-    <div class="c6 frame mono specimen">bombeo<br>507.4 Mm³/año</div>
+  <div class="hbars" style="margin-top:44px">
+    <span class="l">Recarga</span><div class="t" style="--b:46.5;--d:0"><i></i></div><span class="v">279.0</span>
+    <span class="l">Bombeo</span><div class="t hi" style="--b:84.56;--d:1"><i></i></div><span class="v">507.4</span>
+    <span></span><div class="axis"><span>0</span><span>millones de m³ por año, acuífero 0901</span><span>600</span></div><span></span>
   </div>
   <p class="source">Fuente: CONAGUA, disponibilidad del acuífero 0901, 2002 [M9] [M10]</p>
   <aside class="notes">Este es el cálculo que quiero que sepan hacer. Entradas menos salidas igual a cambio de almacenamiento. Si sale más de lo que entra, el agua que falta viene de vaciar poros. El dato de bombeo es del censo de 1990; lo usamos porque es el balance publicado con todos sus términos.</aside>
@@ -76,7 +83,12 @@
 <section>
   <div class="eyebrow">Concepto 3 · Mecanismo</div>
   <h2>Al perder agua, la arcilla se compacta y no recupera volumen</h2>
-  <p>InSAR y GPS casi no muestran deformación elástica. El hundimiento es prácticamente irreversible.</p>
+  <div class="flow rv">
+    <div><b>Bombeo</b><span>Baja la presión en los poros</span></div><em>→</em>
+    <div><b>Drenaje</b><span>La arcilla pierde agua</span></div><em>→</em>
+    <div class="hi"><b>Compactación</b><span>Las partículas se juntan</span></div><em>→</em>
+    <div><b>Sin rebote</b><span>InSAR y GPS casi sin deformación elástica</span></div>
+  </div>
   <p class="source">Fuente: Chaussard et al., JGR Solid Earth, 2021 [M7]</p>
   <aside class="notes">Piensen en una esponja de arcilla. Cuando baja la presión del agua en los poros, las partículas se reacomodan y se juntan. Si luego sube el agua, no se separan de nuevo. Por eso recargar el acuífero no levanta la ciudad.</aside>
 </section>
@@ -102,11 +114,12 @@
 <section>
   <div class="eyebrow">Síntesis</div>
   <h2>Déficit, compactación y arcilla desigual explican el hundimiento</h2>
-  <div class="row">
-    <div class="c4 frame mono specimen">bombeo &gt; recarga<br>baja la presión</div>
-    <div class="c4 frame mono specimen">la arcilla drena<br>y se compacta</div>
-    <div class="c4 frame mono specimen">espesor distinto<br>hundimiento distinto</div>
+  <div class="flow rv">
+    <div><b>Déficit</b><span>Bombeo mayor que recarga</span></div><em>→</em>
+    <div class="hi"><b>Compactación</b><span>La arcilla drena y no rebota</span></div><em>→</em>
+    <div><b>Patrón</b><span>Espesor distinto, hundimiento distinto</span></div>
   </div>
+  <p class="lede" style="margin-top:48px">El déficit es la causa. La compactación es el mecanismo.</p>
   <aside class="notes">Lean la cadena de izquierda a derecha. El déficit es la causa. La compactación es el mecanismo. El espesor de la arcilla explica el patrón en el mapa y por qué el Metro se dobla.</aside>
 </section>
 <section class="center">

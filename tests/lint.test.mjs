@@ -2,6 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 const { lintSlides, parseText } = createRequire(import.meta.url)('../skill/plinth/scripts/lint-core.js');
 const kinds = r => r.issues.map(i => i.kind);
 
@@ -101,4 +104,11 @@ test('any placeholder makes the CLI refuse the deck', () => {
   let code = 0;
   try { execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', '-'], { input: '' }); } catch (e) { code = e.status; }
   assert.notEqual(code, undefined);
+});
+test('an all-text HTML deck loses points for having no charts', () => {
+  const s = n => `<section><h2>Claim number ${n} holds up here</h2><p>Plain words only.</p></section>`;
+  const f = join(tmpdir(), 'plinth-textonly.html');
+  writeFileSync(f, Array.from({ length: 7 }, (_, i) => s(i + 1)).join(''));
+  let out = ''; try { execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', f], { encoding: 'utf8' }); } catch (e) { out = e.stdout; }
+  assert.match(out, /visual/);
 });

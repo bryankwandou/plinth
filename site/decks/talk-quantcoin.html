@@ -31,7 +31,7 @@ li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;b
 .fill{flex:1;display:flex;flex-direction:column;justify-content:center}
 .center{align-items:center;text-align:center} .center h1,.center h2,.center p{margin-inline:auto}
 .big{white-space:nowrap;font-size:180px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent);font-feature-settings:"tnum"}
-.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px}
+.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px;max-width:none}
 .row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:40px;flex:1;align-items:center}
 .row>*{min-width:0}
 .c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c4{grid-column:span 4}.c8{grid-column:span 8}
@@ -49,14 +49,53 @@ aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
 #notes.show{display:block}
-#hint{position:fixed;right:16px;top:12px;font:12px var(--font);color:#777}
+/* Hint sits in the dark margin, never on the slide, and fades after a few seconds. */
+#hint{position:fixed;right:16px;bottom:10px;font:12px var(--font);color:#777;transition:opacity .6s;pointer-events:none}
+#hint.gone{opacity:0}
+/* ---- charts and visuals: data lives in the markup, CSS draws it, entrance plays when the slide shows ---- */
+.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:14px 18px;align-items:center;margin-top:8px}
+.hbars .l{font-size:20px;color:var(--ink);white-space:nowrap}
+.hbars .t{position:relative;height:30px;background:var(--panel);border-radius:4px}
+.hbars .t i{position:absolute;top:0;bottom:0;left:calc(var(--a,0)*1%);width:0;background:var(--line);border-radius:4px;transition:width .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*120ms + .2s)}
+.hbars .hi i{background:var(--accent)}
+.hbars .v{font-size:20px;font-weight:600;font-feature-settings:"tnum";white-space:nowrap}
+section.on .hbars .t i,.print .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)}
+.axis{grid-column:2;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+table.t{border-collapse:collapse;width:100%;margin-top:28px;font-size:20px}
+table.t th{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 16px 12px 0;border-bottom:2px solid var(--ink)}
+table.t td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.t tr.hi td{color:var(--accent);font-weight:600}
+.tl{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;margin-top:56px;padding-top:34px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.tl>div{position:relative;padding-right:16px}
+.tl>div::before{content:"";position:absolute;top:-31px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
+.tl>div.hi::before{background:var(--accent);border-color:var(--accent)}
+.tl b{display:block;font-size:30px;letter-spacing:-.02em;font-feature-settings:"tnum"}
+.tl .hi b{color:var(--accent)}
+.tl span{display:block;font-size:17px;line-height:1.35;color:var(--muted);margin-top:6px}
+.flow{display:flex;align-items:stretch;gap:0;margin-top:44px}
+.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:20px 22px}
+.flow>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:28px;color:var(--muted)}
+.flow b{display:block;font-size:22px;margin-bottom:6px}
+.flow span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.cap{font-size:14px;color:var(--muted);margin-top:10px}
+/* entrance: children of .rv rise in one after another */
+.rv>*{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+section.on .rv>*,.print .rv>*{opacity:1;transform:none}
+section.on .rv>:nth-child(2){transition-delay:.12s}section.on .rv>:nth-child(3){transition-delay:.24s}
+section.on .rv>:nth-child(4){transition-delay:.36s}section.on .rv>:nth-child(5){transition-delay:.48s}
+section.on .rv>:nth-child(6){transition-delay:.6s}section.on .rv>:nth-child(7){transition-delay:.72s}
+section.on .rv>:nth-child(n+8){transition-delay:.84s}
 @media print{
   @page{size:1280px 720px;margin:0}
   html,body{background:none} .stage{position:static;display:block} .deck{transform:none!important;position:static;margin:0;width:auto;height:auto}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
-@media (prefers-reduced-motion:reduce){section{transition:none}}
+@media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
+@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*{transition:none}}
 </style>
 </head>
 <body>
@@ -71,17 +110,24 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">The question</div>
   <h2>If Ed25519 falls, which Solana balances are still safe?</h2>
-  <p>Every wallet, exchange account and program authority signs with Ed25519. Shor's algorithm breaks it once a large enough quantum computer exists.</p>
-  <p class="source">Source: Citi Institute, January 2026 [E1]; NIST IR 8547 [G1]</p>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Bitcoin</span><div class="t" style="--b:25;--d:0"><i></i></div><span class="v">~25%</span>
+    <span class="l">Ethereum</span><div class="t" style="--b:65;--d:1"><i></i></div><span class="v">65%+</span>
+    <span class="l">Solana</span><div class="t hi" style="--b:100;--d:2"><i></i></div><span class="v">effectively all</span>
+    <span></span><div class="axis"><span>0</span><span>supply with exposed public keys</span><span>100%</span></div><span></span>
+  </div></div>
+  <div class="c4"><p>Every Solana address is an Ed25519 public key. Shor's algorithm breaks it once a large enough quantum computer exists.</p></div></div>
+  <p class="source">Source: Citi Institute, January 2026 [E1] [E2]; NIST IR 8547 [G1]</p>
   <aside class="notes">Most people in this room hold something on Solana. The honest question is not whether this happens this year. It is what still stands if it happens while your money is still sitting there.</aside>
 </section>
 <section>
   <div class="eyebrow">The answer</div>
   <h2>Only balances that also need a hash-based signature survive</h2>
-  <div class="row">
-    <div class="c6 frame mono specimen">normal wallet<br>Ed25519<br>after Shor: open</div>
-    <div class="c6 frame mono specimen">hybrid vault<br>Ed25519 + WOTS/SHA-256<br>after Shor: hash half holds</div>
-  </div>
+  <table class="t">
+    <tr><th>Where it sits</th><th>Signature</th><th>After Shor</th></tr>
+    <tr><td>Normal wallet</td><td>Ed25519</td><td>Open</td></tr>
+    <tr class="hi"><td>Hybrid vault</td><td>Ed25519 + WOTS/SHA-256</td><td>Hash half holds</td></tr>
+  </table>
   <aside class="notes">That is the whole finding. Everything after this slide is how we built the right-hand box, what it costs, and where it stops working.</aside>
 </section>
 <section>
@@ -94,11 +140,12 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Design</div>
   <h2>Winternitz keys sign once, so every spend empties the vault</h2>
-  <ul>
-    <li>Amount goes to the destination</li>
-    <li>The rest goes to the owner's next vault</li>
-    <li>The old vault's account is closed</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Sign once</b><span>Owner signs with Ed25519 and WOTS</span></div><em>→</em>
+    <div><b>Pay</b><span>Amount goes to the destination</span></div><em>→</em>
+    <div class="hi"><b>Move change</b><span>The rest goes to the owner's next vault</span></div><em>→</em>
+    <div><b>Close</b><span>The old vault's account is closed</span></div>
+  </div>
   <aside class="notes">A one-time signature leaks part of its key each time it signs. Signing twice would let someone forge. So the program never allows it: spend means drain, and the change moves to a fresh key.</aside>
 </section>
 <section>
@@ -110,8 +157,14 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Cost</div>
   <h2>A quantum-safe spend uses about 610,000 compute units</h2>
-  <div class="row"><div class="c5"><div class="big">610k CU</div></div><div class="c7"><p>Typical spend on devnet. Projected worst case is 1.09 million, under the 1.4 million limit. The transaction is 1,124 of 1,232 bytes.</p></div></div>
-  <p class="source">Source: QuantCoin README, measured on devnet 2026-09-23</p>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Typical spend</span><div class="t hi" style="--b:43.6;--d:0"><i></i></div><span class="v">610k</span>
+    <span class="l">Worst case</span><div class="t" style="--b:77.9;--d:1"><i></i></div><span class="v">1.09M</span>
+    <span class="l">Limit</span><div class="t" style="--b:100;--d:2"><i></i></div><span class="v">1.4M</span>
+    <span></span><div class="axis"><span>0</span><span>compute units per transaction</span><span>1.4M</span></div><span></span>
+  </div></div>
+  <div class="c4"><p>The transaction is 1,124 of 1,232 bytes. It fits, but only just.</p></div></div>
+  <p class="source">Source: QuantCoin README, measured on devnet 2026-09-23; Solana docs, compute limit [X1]</p>
   <aside class="notes">This is the price. Verifying a Winternitz signature means hashing a lot. It fits in one transaction, but only just, which is why this is for cold storage and not for buying coffee.</aside>
 </section>
 <section>
@@ -167,13 +220,18 @@ aside.notes{display:none}
 (()=>{
   const deck=document.getElementById('deck'),S=[...deck.querySelectorAll('section')],bar=document.getElementById('progress'),nb=document.getElementById('notes');
   let i=Math.min(S.length-1,Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
-  const fit=()=>{const k=Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
+  const fit=()=>{const k=document.body.classList.contains('print')?Math.min(innerWidth/1280,innerHeight/720):Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
   const show=n=>{i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
     bar.style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));
     const a=S[i].querySelector('aside.notes');nb.textContent=a?a.textContent.trim():'';};
   // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
   const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
   fitBig();document.fonts&&document.fonts.ready.then(fitBig);
+  // ?print shows every slide in its final state, for PDF and PPTX export.
+  if(/[?&]print\b/.test(location.search))document.body.classList.add('print');
+  setTimeout(()=>document.getElementById('hint').classList.add('gone'),4000);
+  // Hovering a bar shows its label and value, so a judge can read exact numbers off the chart.
+  deck.querySelectorAll('.hbars .t').forEach(t=>{const l=t.previousElementSibling,v=t.nextElementSibling;if(l&&v)t.title=l.textContent+': '+v.textContent});
   addEventListener('resize',fit);fit();show(i);
   addEventListener('keydown',e=>{
     if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}

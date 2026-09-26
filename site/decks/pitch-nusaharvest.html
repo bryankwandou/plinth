@@ -31,7 +31,7 @@ li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;b
 .fill{flex:1;display:flex;flex-direction:column;justify-content:center}
 .center{align-items:center;text-align:center} .center h1,.center h2,.center p{margin-inline:auto}
 .big{white-space:nowrap;font-size:180px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent);font-feature-settings:"tnum"}
-.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px}
+.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px;max-width:none}
 .row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:40px;flex:1;align-items:center}
 .row>*{min-width:0}
 .c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c4{grid-column:span 4}.c8{grid-column:span 8}
@@ -49,14 +49,53 @@ aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
 #notes.show{display:block}
-#hint{position:fixed;right:16px;top:12px;font:12px var(--font);color:#777}
+/* Hint sits in the dark margin, never on the slide, and fades after a few seconds. */
+#hint{position:fixed;right:16px;bottom:10px;font:12px var(--font);color:#777;transition:opacity .6s;pointer-events:none}
+#hint.gone{opacity:0}
+/* ---- charts and visuals: data lives in the markup, CSS draws it, entrance plays when the slide shows ---- */
+.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:14px 18px;align-items:center;margin-top:8px}
+.hbars .l{font-size:20px;color:var(--ink);white-space:nowrap}
+.hbars .t{position:relative;height:30px;background:var(--panel);border-radius:4px}
+.hbars .t i{position:absolute;top:0;bottom:0;left:calc(var(--a,0)*1%);width:0;background:var(--line);border-radius:4px;transition:width .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*120ms + .2s)}
+.hbars .hi i{background:var(--accent)}
+.hbars .v{font-size:20px;font-weight:600;font-feature-settings:"tnum";white-space:nowrap}
+section.on .hbars .t i,.print .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)}
+.axis{grid-column:2;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+table.t{border-collapse:collapse;width:100%;margin-top:28px;font-size:20px}
+table.t th{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 16px 12px 0;border-bottom:2px solid var(--ink)}
+table.t td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.t tr.hi td{color:var(--accent);font-weight:600}
+.tl{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;margin-top:56px;padding-top:34px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.tl>div{position:relative;padding-right:16px}
+.tl>div::before{content:"";position:absolute;top:-31px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
+.tl>div.hi::before{background:var(--accent);border-color:var(--accent)}
+.tl b{display:block;font-size:30px;letter-spacing:-.02em;font-feature-settings:"tnum"}
+.tl .hi b{color:var(--accent)}
+.tl span{display:block;font-size:17px;line-height:1.35;color:var(--muted);margin-top:6px}
+.flow{display:flex;align-items:stretch;gap:0;margin-top:44px}
+.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:20px 22px}
+.flow>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:28px;color:var(--muted)}
+.flow b{display:block;font-size:22px;margin-bottom:6px}
+.flow span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.cap{font-size:14px;color:var(--muted);margin-top:10px}
+/* entrance: children of .rv rise in one after another */
+.rv>*{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+section.on .rv>*,.print .rv>*{opacity:1;transform:none}
+section.on .rv>:nth-child(2){transition-delay:.12s}section.on .rv>:nth-child(3){transition-delay:.24s}
+section.on .rv>:nth-child(4){transition-delay:.36s}section.on .rv>:nth-child(5){transition-delay:.48s}
+section.on .rv>:nth-child(6){transition-delay:.6s}section.on .rv>:nth-child(7){transition-delay:.72s}
+section.on .rv>:nth-child(n+8){transition-delay:.84s}
 @media print{
   @page{size:1280px 720px;margin:0}
   html,body{background:none} .stage{position:static;display:block} .deck{transform:none!important;position:static;margin:0;width:auto;height:auto}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
-@media (prefers-reduced-motion:reduce){section{transition:none}}
+@media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
+@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*{transition:none}}
 </style>
 </head>
 <body>
@@ -71,35 +110,44 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Masalah</div>
   <h2>Satu dari tiga usaha tani terhambat modal</h2>
-  <div class="row"><div class="c5"><div class="big">34,82%</div></div><div class="c7"><p>Usaha pertanian perorangan yang menyebut keterbatasan modal sebagai hambatan, dari Survei Ekonomi Pertanian 2024.</p></div></div>
-  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N1]</p>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Hama dan penyakit</span><div class="t" style="--b:55.03;--d:0"><i></i></div><span class="v">55,03%</span>
+    <span class="l">Keterbatasan modal</span><div class="t hi" style="--b:34.82;--d:1"><i></i></div><span class="v">34,82%</span>
+    <span></span><div class="axis"><span>0</span><span>usaha tani perorangan yang menyebut hambatan</span><span>100%</span></div><span></span>
+  </div></div><div class="c4"><p>Hama nomor satu, modal menyusul.</p></div></div>
+  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N1] [N2]</p>
   <aside class="notes">Angka ini dari survei BPS, bukan dari kami. Artinya sepertiga petani sudah tahu apa yang mereka butuhkan dan tidak mendapatkannya. Ada 40,69 juta orang bekerja di pertanian, menurut UGM [N3].</aside>
 </section>
 <section>
   <div class="eyebrow">Kenapa bank menolak</div>
   <h2>Hama dan cuaca membuat pinjaman petani terlihat terlalu berisiko</h2>
-  <div class="row"><div class="c5"><div class="big">55,03%</div></div><div class="c7"><p>Usaha tani yang masalah utamanya serangan hama dan penyakit. Satu musim gagal, cicilan macet.</p></div></div>
-  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N2]</p>
+  <table class="t rv">
+    <tr><th>Risiko</th><th>Penanggung</th><th>Cara klaim</th></tr>
+    <tr><td>Hama dan penyakit [N2]</td><td>AUTP Jasindo</td><td>Survei kerusakan</td></tr>
+    <tr class="hi"><td>Kekeringan dan banjir</td><td>Indeks curah hujan BMKG</td><td>Otomatis</td></tr>
+  </table>
+  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N2]; NusaHarvest, rencana produk</p>
   <aside class="notes">Kami sebut ini terang-terangan. Asuransi indeks cuaca tidak menanggung hama. Karena itu setiap pinjaman kami wajib dipasangkan dengan AUTP dari Jasindo yang menanggung hama, dan indeks BMKG untuk kekeringan dan banjir.</aside>
 </section>
 <section>
   <div class="eyebrow">Produk</div>
   <h2>Klaim cair tanpa survei lapangan saat curah hujan melewati ambang</h2>
-  <ul>
-    <li>Pinjaman modal tanam lewat koperasi</li>
-    <li>Asuransi panen dengan ambang curah hujan BMKG</li>
-    <li>Setiap penyaluran dan klaim tercatat di Solana</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Koperasi</b><span>Menyalurkan pinjaman modal tanam</span></div><em>→</em>
+    <div><b>Data BMKG</b><span>Oracle membaca curah hujan</span></div><em>→</em>
+    <div class="hi"><b>Ambang lewat</b><span>Klaim dibayar otomatis</span></div><em>→</em>
+    <div><b>Solana</b><span>Penyaluran dan klaim tercatat</span></div>
+  </div>
   <aside class="notes">Petani tidak perlu mengisi formulir klaim. Oracle membaca data BMKG, dan kalau ambang terlewati, klaim dibayar ke rekening pinjaman lebih dulu. Pemodal bisa melihat setiap transaksi di explorer.</aside>
 </section>
 <section>
   <div class="eyebrow">Perlindungan pemodal</div>
   <h2>Pemodal kehilangan uang hanya kalau tiga lapis habis</h2>
-  <ul>
-    <li>Asuransi panen wajib per pinjaman</li>
-    <li>Rencana: salurkan lewat koperasi penyalur KUR, yang dijamin perusahaan penjamin [N5]</li>
-    <li>Cadangan 20% dari dana pool</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>1. Asuransi</b><span>Wajib per pinjaman</span></div><em>→</em>
+    <div><b>2. Penjaminan</b><span>Rencana: lewat koperasi penyalur KUR [N5]</span></div><em>→</em>
+    <div class="hi"><b>3. Cadangan</b><span>20% dana pool, rencana</span></div>
+  </div>
   <p class="source">Source: Jamkrindo, Penjaminan KUR [N5]</p>
   <aside class="notes">Urutan ini penting. Asuransi membayar lebih dulu, lalu penjaminan, baru cadangan. Kami belum punya perjanjian dengan Askrindo atau Jamkrindo. Rencananya pinjaman disalurkan lewat koperasi yang layak KUR, karena KUR sudah dijamin perusahaan penjamin. Itu rencana, bukan kemitraan, dan kami akan bilang begitu kalau juri bertanya.</aside>
 </section>
@@ -120,11 +168,12 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Rencana</div>
   <h2>Satu koperasi di semester satu, lima di akhir tahun</h2>
-  <ul>
-    <li>Q1–Q2: pilot satu koperasi padi</li>
-    <li>Q3–Q4: lima koperasi</li>
-    <li>Berikutnya: kopi dan kakao</li>
-  </ul>
+  <div class="tl rv">
+    <div class="hi"><b>Q1–Q2</b><span>Pilot satu koperasi padi</span></div>
+    <div><b>Q3–Q4</b><span>Lima koperasi</span></div>
+    <div><b>Berikutnya</b><span>Kopi dan kakao</span></div>
+  </div>
+  <p class="source">Source: NusaHarvest, rencana tim</p>
   <aside class="notes">Ukuran sukses pilot: berapa pinjaman tersalur, tingkat pengembalian, dan satu klaim BMKG yang cair otomatis.</aside>
 </section>
 <section>
@@ -152,13 +201,18 @@ aside.notes{display:none}
 (()=>{
   const deck=document.getElementById('deck'),S=[...deck.querySelectorAll('section')],bar=document.getElementById('progress'),nb=document.getElementById('notes');
   let i=Math.min(S.length-1,Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
-  const fit=()=>{const k=Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
+  const fit=()=>{const k=document.body.classList.contains('print')?Math.min(innerWidth/1280,innerHeight/720):Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
   const show=n=>{i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
     bar.style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));
     const a=S[i].querySelector('aside.notes');nb.textContent=a?a.textContent.trim():'';};
   // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
   const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
   fitBig();document.fonts&&document.fonts.ready.then(fitBig);
+  // ?print shows every slide in its final state, for PDF and PPTX export.
+  if(/[?&]print\b/.test(location.search))document.body.classList.add('print');
+  setTimeout(()=>document.getElementById('hint').classList.add('gone'),4000);
+  // Hovering a bar shows its label and value, so a judge can read exact numbers off the chart.
+  deck.querySelectorAll('.hbars .t').forEach(t=>{const l=t.previousElementSibling,v=t.nextElementSibling;if(l&&v)t.title=l.textContent+': '+v.textContent});
   addEventListener('resize',fit);fit();show(i);
   addEventListener('keydown',e=>{
     if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}

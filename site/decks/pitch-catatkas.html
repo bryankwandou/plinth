@@ -31,7 +31,7 @@ li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;b
 .fill{flex:1;display:flex;flex-direction:column;justify-content:center}
 .center{align-items:center;text-align:center} .center h1,.center h2,.center p{margin-inline:auto}
 .big{white-space:nowrap;font-size:180px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--accent);font-feature-settings:"tnum"}
-.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px}
+.source{margin-top:auto;font-size:14px;color:var(--muted);padding-top:16px;max-width:none}
 .row{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;margin-top:40px;flex:1;align-items:center}
 .row>*{min-width:0}
 .c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c4{grid-column:span 4}.c8{grid-column:span 8}
@@ -49,14 +49,53 @@ aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
 #notes.show{display:block}
-#hint{position:fixed;right:16px;top:12px;font:12px var(--font);color:#777}
+/* Hint sits in the dark margin, never on the slide, and fades after a few seconds. */
+#hint{position:fixed;right:16px;bottom:10px;font:12px var(--font);color:#777;transition:opacity .6s;pointer-events:none}
+#hint.gone{opacity:0}
+/* ---- charts and visuals: data lives in the markup, CSS draws it, entrance plays when the slide shows ---- */
+.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:14px 18px;align-items:center;margin-top:8px}
+.hbars .l{font-size:20px;color:var(--ink);white-space:nowrap}
+.hbars .t{position:relative;height:30px;background:var(--panel);border-radius:4px}
+.hbars .t i{position:absolute;top:0;bottom:0;left:calc(var(--a,0)*1%);width:0;background:var(--line);border-radius:4px;transition:width .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*120ms + .2s)}
+.hbars .hi i{background:var(--accent)}
+.hbars .v{font-size:20px;font-weight:600;font-feature-settings:"tnum";white-space:nowrap}
+section.on .hbars .t i,.print .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)}
+.axis{grid-column:2;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+table.t{border-collapse:collapse;width:100%;margin-top:28px;font-size:20px}
+table.t th{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 16px 12px 0;border-bottom:2px solid var(--ink)}
+table.t td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.t tr.hi td{color:var(--accent);font-weight:600}
+.tl{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;margin-top:56px;padding-top:34px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.tl>div{position:relative;padding-right:16px}
+.tl>div::before{content:"";position:absolute;top:-31px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
+.tl>div.hi::before{background:var(--accent);border-color:var(--accent)}
+.tl b{display:block;font-size:30px;letter-spacing:-.02em;font-feature-settings:"tnum"}
+.tl .hi b{color:var(--accent)}
+.tl span{display:block;font-size:17px;line-height:1.35;color:var(--muted);margin-top:6px}
+.flow{display:flex;align-items:stretch;gap:0;margin-top:44px}
+.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:20px 22px}
+.flow>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:28px;color:var(--muted)}
+.flow b{display:block;font-size:22px;margin-bottom:6px}
+.flow span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.cap{font-size:14px;color:var(--muted);margin-top:10px}
+/* entrance: children of .rv rise in one after another */
+.rv>*{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+section.on .rv>*,.print .rv>*{opacity:1;transform:none}
+section.on .rv>:nth-child(2){transition-delay:.12s}section.on .rv>:nth-child(3){transition-delay:.24s}
+section.on .rv>:nth-child(4){transition-delay:.36s}section.on .rv>:nth-child(5){transition-delay:.48s}
+section.on .rv>:nth-child(6){transition-delay:.6s}section.on .rv>:nth-child(7){transition-delay:.72s}
+section.on .rv>:nth-child(n+8){transition-delay:.84s}
 @media print{
   @page{size:1280px 720px;margin:0}
   html,body{background:none} .stage{position:static;display:block} .deck{transform:none!important;position:static;margin:0;width:auto;height:auto}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
-@media (prefers-reduced-motion:reduce){section{transition:none}}
+@media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
+@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*{transition:none}}
 </style>
 </head>
 <body>
@@ -78,14 +117,23 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Siapa</div>
   <h2>Di desa, literasi keuangan sepuluh poin di bawah kota</h2>
-  <div class="row"><div class="c5"><div class="big">59,25%</div></div><div class="c7"><p>Indeks literasi keuangan perdesaan, dibanding 69,71% di perkotaan. Nasional 65,43%.</p></div></div>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Perdesaan</span><div class="t hi" style="--b:59.25;--d:0"><i></i></div><span class="v">59,25%</span>
+    <span class="l">Nasional</span><div class="t" style="--b:65.43;--d:1"><i></i></div><span class="v">65,43%</span>
+    <span class="l">Perkotaan</span><div class="t" style="--b:69.71;--d:2"><i></i></div><span class="v">69,71%</span>
+    <span></span><div class="axis"><span>0</span><span>indeks literasi keuangan 2024</span><span>100%</span></div><span></span>
+  </div></div><div class="c4"><p>Desa paling jauh dari aplikasi akuntansi.</p></div></div>
   <p class="source">Sumber: OJK dan BPS, SNLIK 2024 [C2] [C1]</p>
   <aside class="notes">Survei nasional OJK dan BPS tahun 2024. Literasi naik, jadi masalahnya bukan pemilik warung tidak bisa berhitung. Masalahnya pencatatan butuh kebiasaan dan alat terpisah. Warung di desa paling jauh dari aplikasi akuntansi, tapi paling dekat dengan WhatsApp.</aside>
 </section>
 <section>
   <div class="eyebrow">Kenapa sekarang</div>
   <h2>Hampir empat dari lima orang Indonesia sudah online</h2>
-  <div class="row"><div class="c5"><div class="big">79,5%</div></div><div class="c7"><p>Penetrasi internet 2024, naik dari 78,19%. Pemilik warung sudah memegang ponsel dan sudah memakai chat setiap hari.</p></div></div>
+  <div class="row"><div class="c8"><div class="hbars">
+    <span class="l">Survei sebelumnya</span><div class="t" style="--b:78.19;--d:0"><i></i></div><span class="v">78,19%</span>
+    <span class="l">2024</span><div class="t hi" style="--b:79.5;--d:1"><i></i></div><span class="v">79,5%</span>
+    <span></span><div class="axis"><span>0</span><span>penetrasi internet, usia 13+</span><span>100%</span></div><span></span>
+  </div></div><div class="c4"><p>Pemilik warung sudah memakai chat setiap hari.</p></div></div>
   <p class="source">Sumber: APJII, Survei Penetrasi Internet 2024 [C3]</p>
   <aside class="notes">Yang berubah bukan teknologinya, tapi siapa yang sudah memegangnya. Model bahasa sekarang bisa membaca "jual gula dua kilo tiga puluh enam ribu" dan foto nota yang miring. Dua tahun lalu itu butuh formulir. Sekarang cukup chat.</aside>
 </section>
@@ -102,17 +150,21 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Demo</div>
   <h2>Dari chat ke laporan harian dalam tiga langkah</h2>
-  <ul>
-    <li>Kirim transaksi sebagai teks, pesan suara, atau foto nota</li>
-    <li>Bot membalas dengan kategori dan jumlah untuk dikoreksi</li>
-    <li>Ketik "laporan" untuk laba minggu ini</li>
-  </ul>
+  <div class="flow rv">
+    <div><b>Kirim</b><span>Teks, pesan suara, atau foto nota</span></div><em>→</em>
+    <div><b>Koreksi</b><span>Bot membalas kategori dan jumlah</span></div><em>→</em>
+    <div class="hi"><b>Laporan</b><span>Ketik "laporan" untuk laba minggu ini</span></div>
+  </div>
   <aside class="notes">Di video demo kami tunjukkan tiga hal itu dari ponsel sungguhan. Koreksi penting: kalau bot salah membaca nota, pemilik cukup membalas "bukan, 41 ribu", dan baris itu diperbaiki.</aside>
 </section>
 <section>
   <div class="eyebrow">Yang gagal sebelumnya</div>
   <h2>BukuKas punya dana triliunan dan tetap tutup</h2>
-  <div class="row"><div class="c5"><div class="big">Rp1,14 triliun</div></div><div class="c7"><p>Seri C Januari 2022. Aplikasinya berhenti dipakai 26 Mei 2023. Kami tidak meminta pemilik warung memasang aplikasi lagi.</p></div></div>
+  <div class="tl rv">
+    <div><b>Jan 2022</b><span>Lummo meraih Seri C Rp1,14 triliun [C8]</span></div>
+    <div class="hi"><b>26 Mei 2023</b><span>BukuKas berhenti dipakai [C7]</span></div>
+    <div><b>Catatkas</b><span>Tanpa aplikasi baru, cukup chat</span></div>
+  </div>
   <p class="source">Sumber: youngster.id, Mei 2023 [C8] [C7]</p>
   <aside class="notes">Ini data yang melawan kami, dan juri pasti tahu. BukuKas menarik jutaan bisnis lalu tutup. Pelajaran kami: aplikasi terpisah butuh kebiasaan baru, dan uang tidak menjamin pemakaian. Catatkas hidup di chat yang sudah dibuka ratusan kali sehari. Kami juga belum membuktikan orang mau membayar. Itu yang kami uji pertama.</aside>
 </section>
@@ -126,11 +178,11 @@ aside.notes{display:none}
 <section>
   <div class="eyebrow">Pengguna pertama</div>
   <h2>Seratus warung pertama datang dari satu pasar dan satu grup</h2>
-  <ul>
-    <li>Pasar dekat tim: datangi 30 warung, pasang langsung di ponsel</li>
-    <li>Grup WhatsApp paguyuban pedagang: satu warung ajak lima</li>
-    <li>Target: 100 warung aktif dalam 8 minggu</li>
-  </ul>
+  <div class="tl rv">
+    <div><b>Minggu 1–2</b><span>Datangi 30 warung di pasar dekat tim</span></div>
+    <div><b>Minggu 3–6</b><span>Grup paguyuban: satu warung ajak lima</span></div>
+    <div class="hi"><b>Minggu 8</b><span>Target 100 warung aktif</span></div>
+  </div>
   <p class="source">Sumber: rencana tim, bukan data luar</p>
   <aside class="notes">Belum ada pengguna. Kami tidak mau menulis angka traksi yang tidak ada. Rencana delapan minggu ini yang akan kami laporkan balik ke juri: berapa yang masih mencatat setelah minggu kedua, dan berapa yang mau membayar.</aside>
 </section>
@@ -159,13 +211,18 @@ aside.notes{display:none}
 (()=>{
   const deck=document.getElementById('deck'),S=[...deck.querySelectorAll('section')],bar=document.getElementById('progress'),nb=document.getElementById('notes');
   let i=Math.min(S.length-1,Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
-  const fit=()=>{const k=Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
+  const fit=()=>{const k=document.body.classList.contains('print')?Math.min(innerWidth/1280,innerHeight/720):Math.min(innerWidth/1280,innerHeight/720)*.96;deck.style.transform=`scale(${k})`};
   const show=n=>{i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
     bar.style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));
     const a=S[i].querySelector('aside.notes');nb.textContent=a?a.textContent.trim():'';};
   // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
   const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
   fitBig();document.fonts&&document.fonts.ready.then(fitBig);
+  // ?print shows every slide in its final state, for PDF and PPTX export.
+  if(/[?&]print\b/.test(location.search))document.body.classList.add('print');
+  setTimeout(()=>document.getElementById('hint').classList.add('gone'),4000);
+  // Hovering a bar shows its label and value, so a judge can read exact numbers off the chart.
+  deck.querySelectorAll('.hbars .t').forEach(t=>{const l=t.previousElementSibling,v=t.nextElementSibling;if(l&&v)t.title=l.textContent+': '+v.textContent});
   addEventListener('resize',fit);fit();show(i);
   addEventListener('keydown',e=>{
     if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}

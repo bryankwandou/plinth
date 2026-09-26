@@ -33,7 +33,49 @@ const raw = readFileSync(file, 'utf8');
     process.exit(1);
   }
 }
-const out =outArg || file.replace(/(\.slides)?\.html?$/i, '') + '.pptx';
+const out = (outArg && !outArg.startsWith('--') ? outArg : null) || file.replace(/(\.slides)?\.html?$/i, '') + '.pptx';
+
+// Default: each slide is rendered by Chrome exactly as the HTML shows it (charts, tables, images, fonts)
+// and placed full-bleed, with speaker notes kept. --editable builds native text boxes instead.
+if (!process.argv.includes('--editable')) {
+  const puppeteer = (await import('puppeteer-core').catch(() => null))?.default;
+  const { existsSync, writeFileSync, unlinkSync } = await import('node:fs');
+  const { dirname, join } = await import('node:path');
+  const { pathToFileURL, fileURLToPath } = await import('node:url');
+  const CHROME = [process.env.CHROME, 'C:/Program Files/Google/Chrome/Application/chrome.exe', '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/usr/bin/google-chrome', '/usr/bin/chromium'].find(p => p && existsSync(p));
+  if (puppeteer && CHROME) {
+    // A slides fragment (no <html>) is wrapped in the template first, next to the source so relative images resolve.
+    let page = file, tmp = null;
+    if (!/<html[\s>]/i.test(raw)) {
+      const tpl = readFileSync(fileURLToPath(new URL('../assets/deck-template.html', import.meta.url)), 'utf8');
+      const title = (raw.match(/<title>(.*?)<\/title>/) || [, 'Deck'])[1];
+      tmp = page = join(dirname(resolve(file)), `.render-${process.pid}.html`);
+      writeFileSync(tmp, tpl.replace(/<title>.*?<\/title>/, `<title>${title}</title>`).replace(/<!--SLIDES-->[\s\S]*<!--\/SLIDES-->/, () => raw.replace(/<title>.*?<\/title>\s*/, '')));
+    }
+    try {
+      const b = await puppeteer.launch({ executablePath: CHROME, headless: 'new' });
+      const p = await b.newPage(); await p.setViewport({ width: 1280, height: 720, deviceScaleFactor: 1.5 });
+      await p.goto(pathToFileURL(resolve(page)).href + '?print', { waitUntil: 'networkidle0' });
+      await p.evaluate(() => document.fonts.ready);
+      const n = await p.evaluate(() => { document.getElementById('hint')?.remove(); document.getElementById('progress')?.remove(); return document.querySelectorAll('section').length; });
+      const pptx = new PptxGenJS(); pptx.layout = 'LAYOUT_WIDE';
+      pptx.title = (raw.match(/<title>([\s\S]*?)<\/title>/i) || [, 'Deck'])[1];
+      for (let k = 0; k < n; k++) {
+        const png = await p.evaluate(k => { const S = [...document.querySelectorAll('section')]; S.forEach((s, j) => s.classList.toggle('on', j === k));
+          return S[k].querySelector('aside.notes')?.textContent.trim() || ''; }, k);
+        await new Promise(r => setTimeout(r, 1300)); // let entrance animations finish
+        const img = await p.screenshot({ clip: { x: 0, y: 0, width: 1280, height: 720 }, encoding: 'base64' });
+        const s = pptx.addSlide(); s.addImage({ data: 'image/png;base64,' + img, x: 0, y: 0, w: 13.333, h: 7.5 });
+        if (png) s.addNotes(png);
+      }
+      await b.close();
+      await pptx.writeFile({ fileName: out });
+      console.log(`wrote ${out}  (${n} slides rendered exactly as the HTML, notes kept)`);
+    } finally { if (tmp) try { unlinkSync(tmp); } catch {} }
+    process.exit(0);
+  }
+  console.error('Chrome or puppeteer-core not found: falling back to editable text boxes (npm install puppeteer-core for exact slides).');
+}
 
 // ---- theme: read the deck's own CSS tokens, fall back to the template defaults ----
 const tok = (name, def) => ((raw.match(new RegExp(`--${name}:\\s*([^;]+);`)) || [])[1] || def).trim();
