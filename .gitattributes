@@ -1,0 +1,3 @@
+site/decks/*.html -text
+site/receipts.json -text
+examples/*.html -text
