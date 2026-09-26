@@ -112,12 +112,28 @@ function dropzone(zone, input, onFile) {
 const show = (el, html) => { el.innerHTML = html; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); };
 
 async function rpc(method, params) {
-  const r = await fetch(RPC, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) });
+  const r = await fetch(RPC, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }), signal: AbortSignal.timeout(20000) });
   const j = await r.json(); if (j.error) throw new Error(j.error.message); return j.result;
 }
+// Public devnet RPC often drops getTransaction for older slots. The signatures index
+// keeps the memo text, so fall back to it for receipts signed by a known recorder.
+const RECORDERS = ['AUo5JFnRhLtD6PJaWDj98M2ZmHWbLPcrKiR2QPY95AG7'];
+async function memoFromIndex(sig) {
+  for (const addr of RECORDERS) {
+    let before;
+    for (let page = 0; page < 5; page++) {
+      const list = await rpc('getSignaturesForAddress', [addr, { limit: 1000, before }]);
+      const hit = list.find(x => x.signature === sig);
+      if (hit) return { memo: (hit.memo || '').replace(/^\[\d+\]\s*/, ''), signer: addr, time: hit.blockTime };
+      if (list.length < 1000) break; before = list.at(-1).signature;
+    }
+  }
+  return null;
+}
 async function readMemo(sig) {
-  const tx = await rpc('getTransaction', [sig, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0, commitment: 'confirmed' }]);
-  if (!tx) throw new Error('Transaction not found on devnet');
+  let tx = null;
+  for (let i = 0; i < 2 && !tx; i++) tx = await rpc('getTransaction', [sig, { encoding: 'jsonParsed', maxSupportedTransactionVersion: 0, commitment: 'confirmed' }]).catch(() => null);
+  if (!tx) { const hit = await memoFromIndex(sig); if (hit) return hit; throw new Error('Transaction not found on devnet'); }
   const ix = tx.transaction.message.instructions.find(i => i.programId === MEMO);
   if (!ix) throw new Error('No memo in this transaction');
   const signer = tx.transaction.message.accountKeys.find(k => k.signer)?.pubkey;
