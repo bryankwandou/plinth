@@ -26,8 +26,8 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 
 | Deck | Transaction |
 |---|---|
-| Talk | [3h8Gd39B…](https://explorer.solana.com/tx/3h8Gd39BZtKtYxPEDvLd9GxpTFdqR7BvTZoRUChrAGQTnDyF6mKR5AxiZEM5gZaKRtfn6zrNAxTYpqLqrN6ebwz7?cluster=devnet) |
-| Pitch | [3CxuH1wF…](https://explorer.solana.com/tx/3CxuH1wFzNMpbHUH7Z74jstEViSJbq8djaZcwUknCP4ttYeUyBcUZW8UA6mrWBNzw5zpVjQKSWe62JJ6hQFWcxoX?cluster=devnet) |
+| Talk | [3zKAfdnA…](https://explorer.solana.com/tx/3zKAfdnABaiTUXKEpxggf1KXS5cqruViG8bmfpGc1sky7bqWQ7V5DYPQZDvAXvasChFHbegLeFEf3L3dH4NpPLEk?cluster=devnet) |
+| Pitch | [4kRccig1…](https://explorer.solana.com/tx/4kRccig13vDDptA4bPNWUkPh8HPBhkSxXfm6gPMJHmLzvr8GwVJMurf8446PHUH319usKtxsqvytYN1RieecZMve?cluster=devnet) |
 | QuantCoin pitch | [34JG9njc…](https://explorer.solana.com/tx/34JG9njcBGXeFooGygJRtZpgdc2k7DRkuMr2S3RbauBEyNuzM3FSNUqEUPCjqwtRjXtDx5Cu3rofjtqjT58F1xJu?cluster=devnet) |
 | QuantCoin talk | [42PwEP2n…](https://explorer.solana.com/tx/42PwEP2nMG8zuZxNvMdj6hgtiAxiRWPZ4gRwmnugTe5ipPbBejqTVkvMC4TrTbTVsVjLUr6QnWHxFNfPC6NmdDTw?cluster=devnet) |
 | NusaHarvest (revised, score 96: two `[source needed]` left for the team) | [3iRoPRx4…](https://explorer.solana.com/tx/3iRoPRx4Rq2UC4PVZTnBvrwEBs2dshcpoAADf1fS8A1XnAcDTNuCMWdTpZx75iptswrKoSk6WwpGKCMi67wa8FPk?cluster=devnet) |
