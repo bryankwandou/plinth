@@ -45,6 +45,8 @@ li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;b
 .stat span{font-size:18px;color:var(--muted)}
 .bar{height:14px;border-radius:3px;background:var(--line)} .bar.hi{background:var(--accent)}
 /* Brand frame on every slide, as funded decks do: mark + name left, page right. Filled in by the script. */
+/* The deck's mark is a source to clone, never shown itself (the hidden attribute does not apply to SVG). */
+#brandmark{display:none}
 .foot{position:absolute;left:64px;right:64px;bottom:20px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
 .foot .bm{width:20px;height:20px;display:flex}.foot .bm svg{width:100%;height:100%}.foot .pg{margin-left:auto;font-feature-settings:"tnum"}
 .foot::before{content:"";position:absolute;left:0;right:0;top:-10px;height:2px;background:linear-gradient(90deg,var(--accent) 0 64px,var(--line) 64px)}

@@ -84,6 +84,19 @@ for (const f of process.argv.slice(2)) {
     });
     return out;
   });
+  // The PDF is what gets sent. In print, every slide is one 1280x720 page and nothing else takes up a page.
+  await p.emulateMediaType('print');
+  const pr = await p.evaluate(() => {
+    const S = [...document.querySelectorAll('section')], out = [];
+    const y0 = S[0].getBoundingClientRect().top + scrollY;
+    if (y0 > 2) out.push(`print: ${Math.round(y0)}px of content before slide 1 (it becomes extra PDF pages)`);
+    S.forEach((s, k) => { const r = s.getBoundingClientRect();
+      if (Math.abs(r.height - 720) > 1 || Math.abs(r.width - 1280) > 1) out.push(`print: slide ${k + 1} is ${Math.round(r.width)}x${Math.round(r.height)}, not 1280x720`); });
+    const pages = Math.round(document.documentElement.scrollHeight / 720);
+    if (pages !== S.length) out.push(`print: ${pages} pages for ${S.length} slides`);
+    return out;
+  });
+  problems.push(...pr);
   console.log(`${f}: ${problems.length ? problems.length + ' layout problem(s)' : 'layout OK'}`);
   for (const x of problems) console.log('  ' + x);
   bad += problems.length; await p.close();

@@ -26,14 +26,14 @@ A blunt roast, competitor table, Business Model Canvas and SWOT: [docs/AUDIT.md]
 
 | Deck | Lint | Transaction |
 |---|---|---|
-| Talk: What 5,428 hackathon projects say about pitching | score=100 | [4AxRC4jB…](https://explorer.solana.com/tx/4AxRC4jB8teonTGW4YvUZBHnAPq3Ue82bvafUnyM6uxV48xCpTdh6FveB5Aw2FEWRbfN52ar72xureHUD135rBa4?cluster=devnet) |
-| Pitch: Plinth, pitched with Plinth | score=100 | [3yK4bPyN…](https://explorer.solana.com/tx/3yK4bPyNwdLaewpwvYWchx1f9tm8JpqRTTQzSf2h4w6pHaESUG95BoxoxAY1q5CF435LmEic9MXomqgGvv9WPQfi?cluster=devnet) |
-| Pitch: QuantCoin, 3-minute hackathon | score=100 | [4Zr1m1Y8…](https://explorer.solana.com/tx/4Zr1m1Y8xCALiTbBkYcpGPi8tWXLjfxvtUhPmMwcHXHNyFWck1VBZBnLBUqZuC3igBbdmPd8muB943g6wjoqkE6W?cluster=devnet) |
-| Talk: A token cannot make Solana quantum-safe, but a vault can | score=100 | [3Ri7QNNJ…](https://explorer.solana.com/tx/3Ri7QNNJ7MyRoqhdn3gk7UCp4k4MVL25w7r7nkYfoRUWnt6eju5uqQ8SCc5pDEe6mPyhFE6SdQzP2D1oruPPpeNa?cluster=devnet) |
-| Pitch: NusaHarvest, reviewed: 63 before, 100 after | score=100 | [3VWVcWnd…](https://explorer.solana.com/tx/3VWVcWndDKLo5J4Ep1nphfqBZBuzwQ95vfNxCuPLo5NpPWPr6BC82XNE4cN9j5dQRjmDDY6jPx2thALzuvxeaaN?cluster=devnet) |
-| Pitch (Bahasa Indonesia): Catatkas, WhatsApp bookkeeping for warung | score=100 | [39XzyQZA…](https://explorer.solana.com/tx/39XzyQZAQzH3E2ThiWurSASzTpTWkbF41fkDWvUpGeD2cXzSKD78wtJ4zY8XeE6v8Cm3QmNbdhWcXebxKAGdHni3?cluster=devnet) |
-| Grant: SMS + health workers for TB treatment | score=100 | [5hDUfb3X…](https://explorer.solana.com/tx/5hDUfb3XpTMz7f74K2Cp7ZUbNu9FBkJ24vk313waTADDaaFiPn4xKR9dutAsdmU4c1nSpWR6aVZhnH4AvAvMoRFm?cluster=devnet) |
-| Clase (Español): por qué se hunde la Ciudad de México | score=100 | [4d36Y9Eu…](https://explorer.solana.com/tx/4d36Y9EuzWRUjpdZpqi7JSo7Ke9knmaWESPGGxq83jhqTQJ4pwZrpkDJw3629XAvgYxJ8UehuMXJRTuECbpSjGGB?cluster=devnet) |
+| Talk: What 5,428 hackathon projects say about pitching | score=100 | [4ZuxquyP…](https://explorer.solana.com/tx/4ZuxquyPJTCuHA2VQJMVqhFYoCta4EFXsESpDDTe1HHna9jEU2Mc2YPBJ2YWP3DxCojDDdJBfB3WyKJ2VDs5sSn7?cluster=devnet) |
+| Pitch: Plinth, pitched with Plinth | score=100 | [4S8SMzoo…](https://explorer.solana.com/tx/4S8SMzoofmQpWZ4ahFDAvR8BM3SNJ4jBxbtZ18wigzPTbY3DHGbW9dfpBQmV4RoTVDF1h4Xem7q6ZuokDfvjgkWF?cluster=devnet) |
+| Pitch: QuantCoin, 3-minute hackathon | score=100 | [48w3tErN…](https://explorer.solana.com/tx/48w3tErNULBSRXkVhx5hpLpzAVwFQF8EscpSMEBUiMygCPKsmo7x74zUzc8gpuEwJrwzUmc8HN3i4jy7mtRuXBbz?cluster=devnet) |
+| Talk: A token cannot make Solana quantum-safe, but a vault can | score=100 | [3G8CBgyq…](https://explorer.solana.com/tx/3G8CBgyqJDMVSF2Mdh4rjS64nLW5JeB3J3fG6aBnFsxeMy1JHgrYaebhf3WGxUk4bgoijM5qnQ7nJMvvxdQ1dDg6?cluster=devnet) |
+| Pitch: NusaHarvest, reviewed: 63 before, 100 after | score=100 | [4Xt1AGeS…](https://explorer.solana.com/tx/4Xt1AGeSahbEUjDqJ61jptTMvZQb3k3md3sudnXG8U91wgp4Svsbj4eDneybYHDh9JJX4XVqL75r761AJQ6pTypU?cluster=devnet) |
+| Pitch (Bahasa Indonesia): Catatkas, WhatsApp bookkeeping for warung | score=100 | [3byN7TYb…](https://explorer.solana.com/tx/3byN7TYbiQJ1DVqPLMyT2Q342hXg8HFZd3ZS1TxidQkMZxvUsZAMrpSbEL11KfH1FcyoswbSdYxS4qU41CrhSUVU?cluster=devnet) |
+| Grant: SMS + health workers for TB treatment | score=100 | [4BVr2RpM…](https://explorer.solana.com/tx/4BVr2RpM7sX3CfLurNDuMqJ7DAEATDZwMHf9y29Ur19xphrnwGJTfHigaFiSeQS9eCgH2of6HAEFFWifYPz4GPpX?cluster=devnet) |
+| Clase (Español): por qué se hunde la Ciudad de México | score=100 | [5crXAQps…](https://explorer.solana.com/tx/5crXAQpsLKMfLLqDkiSUP4Pai3PS5LdXcHvkHXHifCCzWeLagpt88nWLNfJYmH6RdXjZ2rJSSeprKvHbNjry5wtV?cluster=devnet) |
 
 Tested with the real Phantom extension (v26.30.2, Testnet Mode, Solana Devnet): connect, sign and send, then check. Receipt [5SSrix23…](https://explorer.solana.com/tx/5SSrix23ZnyUTdCj5WSbskKs4DgWY9R3fNX5GdZToxUhTzzNHHms7eH447kxDF5D9uLjsx5FnmXEt5X5Vo2RbaVS?cluster=devnet) came back as a match ([screenshot](docs/evidence/phantom-e2e.png)). On devnet, Phantom shows "Failed to simulate" before you confirm. A plain 1-lamport transfer with no Plinth code in it gets the same warning ([screenshot](docs/evidence/phantom-plain-transfer-same-warning.png)), so the warning comes from Phantom's devnet simulation, not from the memo.
 
