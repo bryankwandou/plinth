@@ -56,16 +56,90 @@ section.brand .logo{width:96px;height:96px;margin-bottom:36px;border-radius:24px
 section.brand::after{content:"";position:absolute;right:-160px;top:-160px;width:560px;height:560px;border-radius:50%;border:80px solid rgba(255,255,255,.08);pointer-events:none}
 /* Line icons from the sprite below: <svg class="ico"><use href="#i-chat"/></svg> */
 .ico{width:30px;height:30px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.flow .ico{display:block;margin-bottom:12px;width:34px;height:34px}
-.tl .ico{display:block;margin-bottom:8px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:20px;margin-top:40px}
-.cards>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+.flow .ico{display:block;margin-bottom:18px;width:44px;height:44px}
+.tl .ico{display:block;margin-bottom:10px;width:36px;height:36px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:22px;margin-top:40px}
+.cards>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 28px;min-height:230px}
 .cards>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
-.cards .ico{width:40px;height:40px;margin-bottom:16px}
-.cards b{display:block;font-size:24px;letter-spacing:-.01em;margin-bottom:8px}.cards span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.cards .ico{width:48px;height:48px;margin-bottom:22px}
+.cards b{display:block;font-size:26px;letter-spacing:-.01em;margin-bottom:10px}.cards span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 /* The picture sits in the middle of the space under the headline, not stuck to it with a void below. */
-section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split{margin-top:auto!important;margin-bottom:auto}
-.tl b{font-size:34px}.tl span{font-size:19px}
+section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso{margin-top:auto!important;margin-bottom:auto}
+/* The key phrase of a headline in the brand colour, as GoTo and Grab do: <h2>Loans <em>tripled</em> in a year</h2> */
+h1 em,h2 em{font-style:normal;color:var(--accent)}
+section.brand h1 em,section.brand h2 em,section.photo h1 em,section.photo h2 em{color:inherit;text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:10px}
+/* Half-bleed picture running to the slide edge (Grab and GoTo covers, Airbnb's product slide).
+   <section class="media"> ... <figure class="pic"><img src alt><figcaption class="credit">Foto: name, licence</figcaption></figure> */
+section.media{padding-right:calc(44% + 56px)}
+section.media>.pic{position:absolute;top:0;right:0;bottom:0;width:44%;margin:0;overflow:hidden;background:var(--panel)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic.screen{background:#0d0f13;display:flex;align-items:center;padding:40px 28px}.pic.screen img{height:auto;object-fit:contain;border-radius:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.credit{position:absolute;right:10px;bottom:8px;font-size:11px;line-height:1.3;color:#fff;background:rgba(0,0,0,.55);padding:3px 8px;border-radius:4px;max-width:92%}
+section.media .foot{right:calc(44% + 32px)}
+section.media h1{font-size:58px}section.media h2{font-size:44px}
+section.media::after{display:none}
+/* Full-bleed photograph with the headline over a dark fade. */
+section.photo{color:#fff;--ink:#fff;--muted:rgba(255,255,255,.85);--line:rgba(255,255,255,.35);--panel:rgba(0,0,0,.35);justify-content:flex-end;background:#111}
+section.photo>.bg{position:absolute;inset:0;margin:0}
+section.photo>.bg img{width:100%;height:100%;object-fit:cover;display:block}
+section.photo>.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 20%,rgba(0,0,0,.8))}
+section.photo>:not(.bg):not(.foot){position:relative;z-index:1}
+section.photo .credit{top:10px;bottom:auto;z-index:2}
+section.photo .foot::before{background:rgba(255,255,255,.35)}
+.foot{z-index:2}
+/* Column chart: periods or options side by side, value above, label below, one column in the accent.
+   <div class="cols" style="--max:100"><div style="--v:78"><b>78%</b><i></i><span>2023</span></div>...</div> */
+.cols{display:flex;align-items:flex-end;gap:36px;height:330px;margin-bottom:44px;border-bottom:2px solid var(--ink);padding:0 24px}
+.cols>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative;min-width:0}
+.cols i{display:block;width:100%;max-width:150px;height:0;background:color-mix(in srgb,var(--muted) 35%,var(--bg));border-radius:6px 6px 0 0;transition:height .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*150ms + .2s)}
+.cols .hi i{background:var(--accent)}
+.cols b{font-size:28px;font-weight:700;margin-bottom:10px;font-feature-settings:"tnum";white-space:nowrap}
+.cols .hi b{color:var(--accent)}
+.cols span{position:absolute;top:100%;margin-top:12px;font-size:19px;color:var(--muted);white-space:nowrap}
+section.on .cols i,.print .cols i{height:calc(var(--v) / var(--max,100) * (100% - 52px))}
+/* Donut for one share of a whole ("77% still write it by hand"). <div class="donut" style="--p:77"><div><b>77%</b><span>label</span></div></div> */
+@property --pp{syntax:'<number>';inherits:false;initial-value:0}
+.donut{--pp:0;position:relative;width:320px;height:320px;border-radius:50%;flex:none;display:grid;place-items:center;text-align:center;
+  background:conic-gradient(var(--accent) calc(var(--pp)*1%),color-mix(in srgb,var(--muted) 22%,var(--bg)) 0);transition:--pp 1.3s cubic-bezier(.2,.7,.2,1) .2s}
+.donut::before{content:"";position:absolute;inset:46px;border-radius:50%;background:var(--bg)}
+.donut>*{position:relative}
+.donut b{display:block;font-size:68px;font-weight:700;letter-spacing:-.035em;color:var(--accent);line-height:1;font-feature-settings:"tnum"}
+.donut span{display:block;font-size:18px;color:var(--muted);max-width:160px;margin:8px auto 0;line-height:1.3}
+section.on .donut,.print .donut{--pp:var(--p)}
+.donut.lo{background:conic-gradient(color-mix(in srgb,var(--muted) 70%,var(--bg)) calc(var(--pp)*1%),color-mix(in srgb,var(--muted) 22%,var(--bg)) 0)}.donut.lo b{color:var(--ink)}
+/* Isotype: one icon per unit, the counted ones in the accent ("three in four"). <div class="iso" data-of="4" data-hi="3" data-icon="store"></div> */
+.iso{display:flex;flex-wrap:wrap;gap:20px;align-content:center}
+.iso svg{width:var(--s,110px);height:var(--s,110px);stroke:color-mix(in srgb,var(--muted) 40%,var(--bg));fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
+.iso svg.hi{stroke:var(--accent);stroke-width:1.7}
+section.on .iso svg,.print .iso svg{opacity:1;transform:none}
+/* Key numbers in a row, as in GoTo's "Key Results". <div class="kpis"><div class="hi"><b>39,3 jt</b><span>label</span></div>...</div> */
+.kpis{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:36px}
+.kpis>div{border-top:3px solid var(--line);padding-top:20px}
+.kpis>div.hi{border-color:var(--accent)}
+.kpis b{display:block;font-size:72px;font-weight:700;letter-spacing:-.04em;line-height:1;font-feature-settings:"tnum";white-space:nowrap}
+.kpis .hi b{color:var(--accent)}
+.kpis span{display:block;font-size:20px;line-height:1.35;color:var(--muted);margin-top:12px}
+/* Stacked bar: how one whole splits (6% interest = 5% to lenders + 1% to the platform). Width = --w. */
+.stack{display:flex;gap:6px;height:150px}
+.stack>div{flex:var(--w) 1 0;min-width:0;border-radius:10px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;padding:0 26px;
+  clip-path:inset(0 100% 0 0);transition:clip-path .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*250ms + .2s)}
+.stack>div.hi{background:var(--accent);border-color:var(--accent);color:#fff}
+.stack b{font-size:52px;font-weight:700;letter-spacing:-.03em;line-height:1;font-feature-settings:"tnum"}
+.stack span{font-size:19px;margin-top:8px;opacity:.85}
+section.on .stack>div,.print .stack>div{clip-path:inset(0)}
+.scale{display:flex;justify-content:space-between;font-size:18px;color:var(--muted);margin-top:12px}
+/* Layers: who takes a loss first, top to bottom; the last layer is the one being protected. */
+.layers{display:grid;gap:10px}
+.layers>div{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:22px;padding:18px 28px;border-radius:12px;background:var(--accent);color:#fff}
+.layers>div:nth-child(2){background:color-mix(in srgb,var(--accent) 82%,#000)}.layers>div:nth-child(3){background:color-mix(in srgb,var(--accent) 64%,#000)}
+.layers>div.base{background:var(--panel);color:var(--ink);border:2px dashed var(--muted)}
+.layers .ico{stroke:currentColor;width:44px;height:44px}
+.layers b{font-size:26px}.layers span{font-size:19px;opacity:.85}.layers em{font-style:normal;font-size:19px;opacity:.9;text-align:right}
+/* Several phone screens in a row, one per step of the product. */
+.phones{display:flex;gap:44px;justify-content:center;align-items:flex-start}
+.phones figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.phones .phone{width:210px;height:300px}
+.phones figcaption{font-size:22px;font-weight:600;text-align:center}.phones figcaption span{display:block;font-weight:400;color:var(--muted);font-size:18px;margin-top:2px}
 aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
@@ -74,12 +148,13 @@ aside.notes{display:none}
 #hint{position:fixed;right:16px;bottom:10px;font:12px var(--font);color:#777;transition:opacity .6s;pointer-events:none}
 #hint.gone{opacity:0}
 /* ---- charts and visuals: data lives in the markup, CSS draws it, entrance plays when the slide shows ---- */
-.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:14px 18px;align-items:center;margin-top:8px}
-.hbars .l{font-size:20px;color:var(--ink);white-space:nowrap}
-.hbars .t{position:relative;height:30px;background:var(--panel);border-radius:4px}
+.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:22px 20px;align-items:center;margin-top:8px}
+.hbars .l{font-size:22px;color:var(--ink);white-space:nowrap}
+.hbars .t{position:relative;height:46px;background:var(--panel);border-radius:6px}
 .hbars .t i{position:absolute;top:0;bottom:0;left:calc(var(--a,0)*1%);width:0;background:var(--line);border-radius:4px;transition:width .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*120ms + .2s)}
 .hbars .hi i{background:var(--accent)}
-.hbars .v{font-size:20px;font-weight:600;font-feature-settings:"tnum";white-space:nowrap}
+.hbars .v{font-size:24px;font-weight:700;font-feature-settings:"tnum";white-space:nowrap}
+.hbars .hi+.v{color:var(--accent)}
 section.on .hbars .t i,.print .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)}
 .axis{grid-column:2;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
 table.t{border-collapse:collapse;width:100%;margin-top:28px;font-size:20px}
@@ -91,15 +166,15 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .tl>div{position:relative;padding-right:16px}
 .tl>div::before{content:"";position:absolute;top:-31px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
 .tl>div.hi::before{background:var(--accent);border-color:var(--accent)}
-.tl b{display:block;font-size:30px;letter-spacing:-.02em;font-feature-settings:"tnum"}
+.tl b{display:block;font-size:34px;letter-spacing:-.02em;font-feature-settings:"tnum"}
 .tl .hi b{color:var(--accent)}
-.tl span{display:block;font-size:17px;line-height:1.35;color:var(--muted);margin-top:6px}
+.tl span{display:block;font-size:19px;line-height:1.35;color:var(--muted);margin-top:8px}
 .flow{display:flex;align-items:stretch;gap:0;margin-top:44px}
-.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:20px 22px}
+.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:28px 24px;min-height:220px}
 .flow>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
-.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:28px;color:var(--muted)}
-.flow b{display:block;font-size:22px;margin-bottom:6px}
-.flow span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:30px;color:var(--muted)}
+.flow b{display:block;font-size:26px;margin-bottom:8px}
+.flow span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 .shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
 .cap{font-size:14px;color:var(--muted);margin-top:10px}
 /* Product illustration: a phone showing the real message flow. Caption says whether it is built or a mockup. */
@@ -125,7 +200,7 @@ section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone 
 .quad .dot{position:absolute;transform:translateY(50%);display:flex;align-items:center;gap:8px;font-size:16px;white-space:nowrap}
 .quad .dot::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--muted)}
 .quad .dot.hi{color:var(--accent);font-weight:700}.quad .dot.hi::before{background:var(--accent);width:18px;height:18px}
-.split{display:flex;gap:56px;align-items:center;flex:1;min-height:0}.split>div:not(.phone):not(.rings):not(.quad){flex:1;min-width:0}
+.split{display:flex;gap:56px;align-items:center;flex:1;min-height:0}.split>div:not(.phone):not(.rings):not(.quad):not(.donut){flex:1;min-width:0}
 /* entrance: children of .rv rise in one after another */
 .rv>*{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 section.on .rv>*,.print .rv>*{opacity:1;transform:none}
@@ -140,7 +215,9 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   #progress,#notes,#hint{display:none}
 }
 @media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
-@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*{transition:none}}
+@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*,.cols i,.donut,.stack>div,.iso svg{transition:none}}
+/* PDF and PPTX capture the final frame: nothing may still be moving. */
+.print *,.print *::before{transition:none!important}
 </style>
 </head>
 <body>
@@ -173,26 +250,32 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <symbol id="i-down" viewBox="0 0 24 24"><path d="M3 6l7 7 4-4 7 7"/><path d="M15 16h6v-6"/></symbol>
   <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L3 10.5l7 2.5 2.5 7z"/><path d="M10 13l11-10"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 20l-2 2M15 20l2 2M8.5 13.5h.01M15.5 13.5h.01"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-45 12 12)"/><path d="M8.6 8.6l6.8 6.8"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.6"/><path d="M8 21v-6H6.5v-4.5A2.5 2.5 0 0 1 9 8h6a2.5 2.5 0 0 1 2.5 2.5V15H16v6"/></symbol>
 </svg>
 <div class="stage"><div class="deck" id="deck">
 <style>:root{--accent:#2F5BEA;--brand:#2F5BEA}</style>
 <svg id="brandmark" hidden viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#2F5BEA"/><g transform="translate(8 8)" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 16h12M9 12h6M11 4h2v8h-2z"/></g></svg>
-<section class="brand">
+<section class="brand media">
   <div class="logo"></div>
   <div class="fill">
     <div class="eyebrow">Plinth research note · September 2026</div>
     <h1>What 5,428 hackathon projects say about pitching</h1>
     <p class="lede">Colosseum Copilot data, Renaissance to Cypherpunk</p>
-    <p class="source" style="margin-top:28px">Source: Colosseum Copilot project index, pulled 2026-09-25 [P7]</p>
   </div>
+  <p class="source">Source: Colosseum Copilot project index, pulled 2026-09-25 [P7]</p>
+  <figure class="pic screen"><img src="img/colosseum-howtowin.jpg" alt="blog.colosseum.com: How to Win a Colosseum Hackathon"><figcaption class="credit">blog.colosseum.com, "How to Win a Colosseum Hackathon" [P1]</figcaption></figure>
   <aside class="notes">I pulled every Solana hackathon project Colosseum has indexed and compared the winners with everyone else. The short version: the things people polish are not the things that win.</aside>
 </section>
 <section>
   <div class="eyebrow">Base rate</div>
   <h2>Only one project in eighteen takes home a prize</h2>
-  <div class="row">
-    <div class="c5"><div class="big">5.4%</div></div>
-    <div class="c7"><p>293 winners out of 5,428 submissions across four global hackathons. Judges watch hundreds of three-minute videos per track.</p></div>
+  <div class="split">
+    <div class="iso" data-of="18" data-hi="1" data-icon="flag" style="--s:72px"></div>
+    <div><div class="kpis"><div class="hi"><b>5.4%</b><span>293 winners out of 5,428 submissions, four global hackathons</span></div></div>
+    <p class="lede">Judges watch hundreds of three-minute videos per track.</p></div>
   </div>
   <p class="source">Source: Colosseum Copilot /compare, winnersOnly cohort vs all projects, pulled 2026-09-25 [P7]</p>
   <aside class="notes">Start with the odds. About five percent. Which means the judge watching your video has already seen dozens that look like it, and decides in the first minute whether to keep watching.</aside>
@@ -200,11 +283,16 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">What does not separate winners</div>
   <h2>Winners write their one-liners exactly as long as everyone else</h2>
-  <table class="t">
-    <tr><th>One-liner</th><th>Winners (180)</th><th>Non-winners (183)</th></tr>
-    <tr><td>Median length</td><td>13 words</td><td>13 words</td></tr>
-    <tr><td>Uses hype words</td><td>4%</td><td>4%</td></tr>
-  </table>
+  <div class="row">
+    <div class="c6"><p class="lede" style="margin:0 0 12px">Median one-liner length, words</p><div class="cols" style="--max:16;height:260px">
+      <div class="hi" style="--v:13;--d:0"><b>13</b><i></i><span>Winners</span></div>
+      <div style="--v:13;--d:1"><b>13</b><i></i><span>Others</span></div>
+    </div></div>
+    <div class="c6"><p class="lede" style="margin:0 0 12px">One-liners using hype words</p><div class="cols" style="--max:16;height:260px">
+      <div class="hi" style="--v:4;--d:2"><b>4%</b><i></i><span>Winners</span></div>
+      <div style="--v:4;--d:3"><b>4%</b><i></i><span>Others</span></div>
+    </div></div>
+  </div>
   <p class="source">Source: 363-project sample over 15 category queries (180 winners, 183 non-winners), Colosseum Copilot</p>
   <aside class="notes">I expected shorter, punchier one-liners from winners. The median is identical, thirteen words. And the buzzword rate is the same four percent. So polishing the tagline is not where the prize comes from.</aside>
 </section>
@@ -212,12 +300,11 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <div class="eyebrow">What does</div>
   <h2>Winners are far more likely to be building in public</h2>
   <div class="row">
-    <div class="c8"><div class="hbars">
-      <span class="l">Winners</span><div class="t hi" style="--b:96;--d:0"><i></i></div><span class="v">96%</span>
-      <span class="l">Non-winners</span><div class="t" style="--b:80;--d:1"><i></i></div><span class="v">80%</span>
-      <span></span><div class="axis"><span>0</span><span>projects with a linked X account</span><span>100%</span></div><span></span>
+    <div class="c6"><div class="cols" style="--max:100">
+      <div class="hi" style="--v:96;--d:0"><b>96%</b><i></i><span>Winners</span></div>
+      <div style="--v:80;--d:1"><b>80%</b><i></i><span>Others</span></div>
     </div></div>
-    <div class="c4"><p>The one visible gap in the sample. Colosseum's own guide names it too: build in public, get beta testers early.</p></div>
+    <div class="c6"><p>Projects with a linked X account. The one visible gap in the sample.</p><p class="lede">Colosseum's own guide names it too: build in public, get beta testers early.</p></div>
   </div>
   <p class="source">Source: same sample; "How to Win a Colosseum Hackathon", blog.colosseum.com [P1]</p>
   <aside class="notes">The one gap that did show up is presence. Ninety-six percent of winners link an account where they post progress, versus eighty percent of the rest. It is a proxy, not proof, but it lines up with what Colosseum tells people directly.</aside>
@@ -233,11 +320,12 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <p class="source">Source: "How to Win a Colosseum Hackathon" and "Perfecting Your Hackathon Submission", blog.colosseum.com [P2] [P3] [P5]</p>
   <aside class="notes">Colosseum publishes the checklist: team background, product, why you started, market, how you get first users, and the demo. I grouped them into three pairs. Running over three minutes is on their list of top mistakes [P5].</aside>
 </section>
-<section class="center">
-  <div class="fill center">
+<section class="media">
+  <div class="fill">
     <p class="quote">"A clear and well-structured narrative is more valuable than professional video editing."</p>
     <p class="who">Colosseum, Perfecting Your Hackathon Submission [P6]</p>
   </div>
+  <figure class="pic screen"><img src="img/colosseum-perfecting.jpg" alt="blog.colosseum.com: Perfecting Your Hackathon Submission"><figcaption class="credit">blog.colosseum.com, 8 May 2025 [P6]</figcaption></figure>
   <aside class="notes">This is the line I would put above every desk during submission week. A voiceover over clean slides is enough. The story has to be right.</aside>
 </section>
 <section>
@@ -253,9 +341,9 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Takeaway</div>
   <h2>Spend the last week on the story, not the edit</h2>
-  <div class="tl rv">
-    <div><svg class="ico"><use href="#i-flag"/></svg><b>Day 1</b><span>Open a project X account and post progress [P1]</span></div>
-    <div><svg class="ico"><use href="#i-users"/></svg><b>Weeks 1–4</b><span>Engineering sprint [P4]</span></div>
+  <div class="flow rv">
+    <div><svg class="ico"><use href="#i-flag"/></svg><b>Day 1</b><span>Open a project X account and post progress [P1]</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-code"/></svg><b>Weeks 1–4</b><span>Engineering sprint [P4]</span></div><em>→</em>
     <div class="hi"><svg class="ico"><use href="#i-send"/></svg><b>Week 5</b><span>Headlines first, then one claim and one piece of evidence per slide</span></div>
   </div>
   <p class="source">Source: "How to Win a Colosseum Hackathon", blog.colosseum.com [P1] [P4]</p>
@@ -288,6 +376,9 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
   const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
   fitBig();document.fonts&&document.fonts.ready.then(fitBig);
+  // Isotype: data-of icons, the first data-hi in the accent, appearing one after another.
+  deck.querySelectorAll('.iso[data-of]').forEach(el=>{const n=+el.dataset.of,h=+el.dataset.hi||0,step=Math.min(.12,1.4/n);
+    el.innerHTML=Array.from({length:n},(_,k)=>`<svg class="${k<h?'hi':''}" style="transition-delay:${(.2+k*step).toFixed(2)}s"><use href="#i-${el.dataset.icon||'person'}"/></svg>`).join('')});
   // Brand frame: the deck's mark (<svg id="brandmark">, optional) + title + page number on every slide.
   const bm=document.getElementById('brandmark'),name=document.title;
   const mark=()=>{const c=bm.cloneNode(true);c.removeAttribute('id');c.removeAttribute('hidden');return c};

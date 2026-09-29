@@ -115,3 +115,11 @@ Does not support:
 - A unique position on Solana. Anza and Firedancer have picked Falcon, have a three-phase migration plan, and are sketching zero-knowledge proofs that tie new post-quantum keys to existing addresses (L3, T4). If that ships, an opt-in vault loses much of its purpose. The honest case for QuantCoin is protection today for balances that cannot wait for a network upgrade, with a stated exit once native PQ signatures arrive.
 - A market figure for this product. PQC market forecasts (M1) cover enterprise software, not on-chain vaults. The treasury figures are dated (2022, 2023) and secondhand (L6, D1).
 - Demand. QuantCoin is on devnet, unaudited, with no users. Surveys show concern (62%) but little action (5%) (S1). This is a gap between worry and action, not proof that anyone will pay.
+
+## Added 2026-09-29
+
+| ID | Number | What | Where | Quote / evidence | Status |
+|---|---|---|---|---|---|
+| Q-ATK | 13 of 13 | Live devnet attacks, each refused with the expected error code | github.com/bryankwandou/QUANTCOIN/blob/main/audit/devnet-attack-run-v2.txt (commit 48572e7) | 13 entries with `blocked: true`, 0 with `blocked: false`; each has its transaction signature | VERIFIED (counted in the file) |
+| Q-SIZE | 7,464 bytes | Vault program binary after the M-1 fix | commit 48572e7 message; target/deploy/qc_vault.so is 7,464 bytes | "spend assigns the vault PDA to the program ... 7,464 B" | VERIFIED. The README table still says 6,872 bytes, the first build |
+| Q-MINT | 22,000,000,000,000 | Fixed supply of the QC Token-2022 mint on devnet | explorer.solana.com/address/BUoNsFbNU5hxYK5rRoiHkFqonaoaNL836Wo5QgrukAK8?cluster=devnet | Explorer: "Fixed Supply 22,000,000,000,000" | VERIFIED (screenshot img/qc-explorer-mint.jpg) |

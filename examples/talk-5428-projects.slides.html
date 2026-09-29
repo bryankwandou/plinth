@@ -1,22 +1,24 @@
 <title>5,428 projects</title>
 <style>:root{--accent:#2F5BEA;--brand:#2F5BEA}</style>
 <svg id="brandmark" hidden viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#2F5BEA"/><g transform="translate(8 8)" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 16h12M9 12h6M11 4h2v8h-2z"/></g></svg>
-<section class="brand">
+<section class="brand media">
   <div class="logo"></div>
   <div class="fill">
     <div class="eyebrow">Plinth research note · September 2026</div>
     <h1>What 5,428 hackathon projects say about pitching</h1>
     <p class="lede">Colosseum Copilot data, Renaissance to Cypherpunk</p>
-    <p class="source" style="margin-top:28px">Source: Colosseum Copilot project index, pulled 2026-09-25 [P7]</p>
   </div>
+  <p class="source">Source: Colosseum Copilot project index, pulled 2026-09-25 [P7]</p>
+  <figure class="pic screen"><img src="img/colosseum-howtowin.jpg" alt="blog.colosseum.com: How to Win a Colosseum Hackathon"><figcaption class="credit">blog.colosseum.com, "How to Win a Colosseum Hackathon" [P1]</figcaption></figure>
   <aside class="notes">I pulled every Solana hackathon project Colosseum has indexed and compared the winners with everyone else. The short version: the things people polish are not the things that win.</aside>
 </section>
 <section>
   <div class="eyebrow">Base rate</div>
   <h2>Only one project in eighteen takes home a prize</h2>
-  <div class="row">
-    <div class="c5"><div class="big">5.4%</div></div>
-    <div class="c7"><p>293 winners out of 5,428 submissions across four global hackathons. Judges watch hundreds of three-minute videos per track.</p></div>
+  <div class="split">
+    <div class="iso" data-of="18" data-hi="1" data-icon="flag" style="--s:72px"></div>
+    <div><div class="kpis"><div class="hi"><b>5.4%</b><span>293 winners out of 5,428 submissions, four global hackathons</span></div></div>
+    <p class="lede">Judges watch hundreds of three-minute videos per track.</p></div>
   </div>
   <p class="source">Source: Colosseum Copilot /compare, winnersOnly cohort vs all projects, pulled 2026-09-25 [P7]</p>
   <aside class="notes">Start with the odds. About five percent. Which means the judge watching your video has already seen dozens that look like it, and decides in the first minute whether to keep watching.</aside>
@@ -24,11 +26,16 @@
 <section>
   <div class="eyebrow">What does not separate winners</div>
   <h2>Winners write their one-liners exactly as long as everyone else</h2>
-  <table class="t">
-    <tr><th>One-liner</th><th>Winners (180)</th><th>Non-winners (183)</th></tr>
-    <tr><td>Median length</td><td>13 words</td><td>13 words</td></tr>
-    <tr><td>Uses hype words</td><td>4%</td><td>4%</td></tr>
-  </table>
+  <div class="row">
+    <div class="c6"><p class="lede" style="margin:0 0 12px">Median one-liner length, words</p><div class="cols" style="--max:16;height:260px">
+      <div class="hi" style="--v:13;--d:0"><b>13</b><i></i><span>Winners</span></div>
+      <div style="--v:13;--d:1"><b>13</b><i></i><span>Others</span></div>
+    </div></div>
+    <div class="c6"><p class="lede" style="margin:0 0 12px">One-liners using hype words</p><div class="cols" style="--max:16;height:260px">
+      <div class="hi" style="--v:4;--d:2"><b>4%</b><i></i><span>Winners</span></div>
+      <div style="--v:4;--d:3"><b>4%</b><i></i><span>Others</span></div>
+    </div></div>
+  </div>
   <p class="source">Source: 363-project sample over 15 category queries (180 winners, 183 non-winners), Colosseum Copilot</p>
   <aside class="notes">I expected shorter, punchier one-liners from winners. The median is identical, thirteen words. And the buzzword rate is the same four percent. So polishing the tagline is not where the prize comes from.</aside>
 </section>
@@ -36,12 +43,11 @@
   <div class="eyebrow">What does</div>
   <h2>Winners are far more likely to be building in public</h2>
   <div class="row">
-    <div class="c8"><div class="hbars">
-      <span class="l">Winners</span><div class="t hi" style="--b:96;--d:0"><i></i></div><span class="v">96%</span>
-      <span class="l">Non-winners</span><div class="t" style="--b:80;--d:1"><i></i></div><span class="v">80%</span>
-      <span></span><div class="axis"><span>0</span><span>projects with a linked X account</span><span>100%</span></div><span></span>
+    <div class="c6"><div class="cols" style="--max:100">
+      <div class="hi" style="--v:96;--d:0"><b>96%</b><i></i><span>Winners</span></div>
+      <div style="--v:80;--d:1"><b>80%</b><i></i><span>Others</span></div>
     </div></div>
-    <div class="c4"><p>The one visible gap in the sample. Colosseum's own guide names it too: build in public, get beta testers early.</p></div>
+    <div class="c6"><p>Projects with a linked X account. The one visible gap in the sample.</p><p class="lede">Colosseum's own guide names it too: build in public, get beta testers early.</p></div>
   </div>
   <p class="source">Source: same sample; "How to Win a Colosseum Hackathon", blog.colosseum.com [P1]</p>
   <aside class="notes">The one gap that did show up is presence. Ninety-six percent of winners link an account where they post progress, versus eighty percent of the rest. It is a proxy, not proof, but it lines up with what Colosseum tells people directly.</aside>
@@ -57,11 +63,12 @@
   <p class="source">Source: "How to Win a Colosseum Hackathon" and "Perfecting Your Hackathon Submission", blog.colosseum.com [P2] [P3] [P5]</p>
   <aside class="notes">Colosseum publishes the checklist: team background, product, why you started, market, how you get first users, and the demo. I grouped them into three pairs. Running over three minutes is on their list of top mistakes [P5].</aside>
 </section>
-<section class="center">
-  <div class="fill center">
+<section class="media">
+  <div class="fill">
     <p class="quote">"A clear and well-structured narrative is more valuable than professional video editing."</p>
     <p class="who">Colosseum, Perfecting Your Hackathon Submission [P6]</p>
   </div>
+  <figure class="pic screen"><img src="img/colosseum-perfecting.jpg" alt="blog.colosseum.com: Perfecting Your Hackathon Submission"><figcaption class="credit">blog.colosseum.com, 8 May 2025 [P6]</figcaption></figure>
   <aside class="notes">This is the line I would put above every desk during submission week. A voiceover over clean slides is enough. The story has to be right.</aside>
 </section>
 <section>
@@ -77,9 +84,9 @@
 <section>
   <div class="eyebrow">Takeaway</div>
   <h2>Spend the last week on the story, not the edit</h2>
-  <div class="tl rv">
-    <div><svg class="ico"><use href="#i-flag"/></svg><b>Day 1</b><span>Open a project X account and post progress [P1]</span></div>
-    <div><svg class="ico"><use href="#i-users"/></svg><b>Weeks 1–4</b><span>Engineering sprint [P4]</span></div>
+  <div class="flow rv">
+    <div><svg class="ico"><use href="#i-flag"/></svg><b>Day 1</b><span>Open a project X account and post progress [P1]</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-code"/></svg><b>Weeks 1–4</b><span>Engineering sprint [P4]</span></div><em>→</em>
     <div class="hi"><svg class="ico"><use href="#i-send"/></svg><b>Week 5</b><span>Headlines first, then one claim and one piece of evidence per slide</span></div>
   </div>
   <p class="source">Source: "How to Win a Colosseum Hackathon", blog.colosseum.com [P1] [P4]</p>

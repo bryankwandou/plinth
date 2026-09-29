@@ -18,7 +18,7 @@ An off-white or off-black background, never pure. One accent color, used for the
 - No 3D, no pie with more than 3 slices, no gridline heavier than 1px at 10% opacity.
 
 ## Images
-Product screenshots go in a plain frame with a soft shadow, cropped to the part being discussed. No stock photos of people shaking hands or pointing at screens.
+Product screenshots go in a plain frame with a soft shadow, cropped to the part being discussed. Documentary photos of the real users or place run to the slide edge (`section.media`) with a small credit; no posed stock photos of people shaking hands or pointing at screens.
 
 ## Motion
 One transition style for the whole deck (fade, or none). Use builds only when showing the answer early would spoil the setup.

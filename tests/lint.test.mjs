@@ -112,3 +112,19 @@ test('an all-text HTML deck loses points for having no charts', () => {
   let out = ''; try { execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', f], { encoding: 'utf8' }); } catch (e) { out = e.stdout; }
   assert.match(out, /visual/);
 });
+test('a deck of charts with no photo, screen or phone is told to add real pictures', () => {
+  const s = n => `<section><h2>Claim number ${n} holds up here</h2><div class="cols"><div style="--v:5"><b>5</b><i></i><span>a</span></div></div><p class="source">Source: X</p></section>`;
+  const f = join(tmpdir(), 'plinth-nopics.html');
+  writeFileSync(f, Array.from({ length: 7 }, (_, i) => s(i + 1)).join(''));
+  let out = ''; try { out = execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', f], { encoding: 'utf8' }); } catch (e) { out = e.stdout; }
+  assert.match(out, /real picture/);
+});
+test('photos, screenshots and phones count as real pictures', () => {
+  const pic = `<section class="media"><h2>Warung owners already use chat daily</h2><figure class="pic"><img src="a.jpg" alt="a warung"><figcaption class="credit">Foto: X, CC BY 3.0</figcaption></figure></section>`;
+  const s = n => `<section><h2>Claim number ${n} holds up here</h2><div class="flow"><div><b>A</b></div></div></section>`;
+  const f = join(tmpdir(), 'plinth-pics.html');
+  writeFileSync(f, pic + pic + Array.from({ length: 5 }, (_, i) => s(i + 1)).join(''));
+  let out = ''; try { out = execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', f], { encoding: 'utf8' }); } catch (e) { out = e.stdout; }
+  assert.doesNotMatch(out, /real picture/);
+  assert.doesNotMatch(out, /Number with no source/, 'a date in a photo credit is not a claim');
+});

@@ -1,12 +1,13 @@
 <title>QuantCoin talk</title>
 <style>:root{--accent:#0D8A80;--brand:#0B1020}</style>
 <svg id="brandmark" hidden viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
-<section class="brand">
+<section class="brand media">
   <div class="logo"></div>
   <div class="fill">
     <h1>A token cannot make Solana quantum-safe, but a vault can</h1>
     <p class="lede">What QuantCoin protects, what it cannot, and what it cost to build · Bryan Kwandou</p>
   </div>
+  <figure class="pic screen"><img src="img/qc-explorer-mint.jpg" alt="Solana Explorer, devnet: QuantCoin (QC) Token-2022 mint, fixed supply 22,000,000,000,000"><figcaption class="credit">Solana Explorer, devnet, 29 Sep 2026: mint BUoNsF…rukAK8</figcaption></figure>
   <aside class="notes">This talk is about one narrow claim. No token fixes the chain it runs on. What a token can do is choose where its long-term balances live, and make that place need a signature a quantum computer cannot forge.</aside>
 </section>
 <section>
@@ -25,21 +26,19 @@
 <section>
   <div class="eyebrow">The answer</div>
   <h2>Only balances that also need a hash-based signature survive</h2>
-  <table class="t">
-    <tr><th>Where it sits</th><th>Signature</th><th>After Shor</th></tr>
-    <tr><td>Normal wallet</td><td>Ed25519</td><td>Open</td></tr>
-    <tr class="hi"><td>Hybrid vault</td><td>Ed25519 + WOTS/SHA-256</td><td>Hash half holds</td></tr>
-  </table>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-wallet"/></svg><b>Normal wallet</b><span>Signature: Ed25519<br>After Shor: open</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-shield"/></svg><b>Hybrid vault</b><span>Signature: Ed25519 + WOTS over SHA-256<br>After Shor: the hash half holds</span></div>
+  </div>
   <aside class="notes">That is the whole finding. Everything after this slide is how we built the right-hand box, what it costs, and where it stops working.</aside>
 </section>
 <section>
   <div class="eyebrow">Why hash-based</div>
   <h2>Hash signatures lose only half their bits to Grover</h2>
-  <div class="hbars">
-    <span class="l">Against a normal computer</span><div class="t" style="--b:100;--d:0"><i></i></div><span class="v">192 bits</span>
-    <span class="l">Against Grover</span><div class="t hi" style="--b:50;--d:1"><i></i></div><span class="v">~96 bits</span>
-  </div>
-  <p class="lede">A square-root speedup halves the bits. NIST standardized this family as SLH-DSA.</p>
+  <div class="row"><div class="c6"><div class="cols" style="--max:192">
+    <div style="--v:192;--d:0"><b>192 bits</b><i></i><span>Normal computer</span></div>
+    <div class="hi" style="--v:96;--d:1"><b>~96 bits</b><i></i><span>Grover</span></div>
+  </div></div><div class="c6"><p>A square-root speedup halves the bits. Half of a strong hash is still out of reach.</p><p class="lede">NIST standardized this family as SLH-DSA.</p></div></div>
   <p class="source">Source: NIST, August 2024 [G3]; QuantCoin whitepaper, section 3.3</p>
   <aside class="notes">Lattice schemes are faster and smaller, but newer. Hash-based signatures assume only that SHA-256 behaves like a hash. For money meant to sit for decades, the oldest assumption is the one I wanted.</aside>
 </section>
@@ -62,8 +61,8 @@
     <div><svg class="ico"><use href="#i-key"/></svg><b>Signature</b><span>Program recomputes the Winternitz key</span></div><em>→</em>
     <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Same address?</b><span>Yes: spend. No: refuse</span></div>
   </div>
-  <p class="lede">Nothing is stored on-chain.</p>
-  <aside class="notes">This is the trick that keeps the program stateless. There is no account holding a public key that could be swapped. If the signature does not rebuild the key that made the address, the spend fails.</aside>
+  <p class="lede">No public key is stored. After a spend, the program writes one marker: spent.</p>
+  <aside class="notes">There is no account holding a public key that could be swapped. If the signature does not rebuild the key that made the address, the spend fails. The internal audit found that an old signature could be replayed against a token account created later for the same vault, finding M-1. The fix hands the empty vault address to the program after the spend, so any second spend is refused.</aside>
 </section>
 <section>
   <div class="eyebrow">Cost</div>
@@ -78,12 +77,16 @@
   <p class="source">Source: QuantCoin README, measured on devnet 2026-09-23; Solana docs, compute limit [X1]</p>
   <aside class="notes">This is the price. Verifying a Winternitz signature means hashing a lot. It fits in one transaction, but only just, which is why this is for cold storage and not for buying coffee.</aside>
 </section>
-<section>
+<section class="media">
   <div class="eyebrow">Cost</div>
   <h2>Deploying the program cost 0.0376 SOL on devnet</h2>
-  <div class="row"><div class="c5"><div class="big">0.0376</div></div><div class="c7"><p>SOL for the 6,872-byte program. Minting the full 22 trillion supply into the first vault cost another 0.0041 SOL.</p></div></div>
-  <p class="source">Source: QuantCoin README, devnet deployment table</p>
-  <aside class="notes">Small program, small rent. Pinocchio instead of Anchor is most of the reason it is under seven kilobytes.</aside>
+  <div class="kpis" style="grid-auto-flow:row;gap:28px;margin:auto 0">
+    <div class="hi"><b>0.0376 SOL</b><span>first deploy, 6,872-byte build</span></div>
+    <div><b>0.0041 SOL</b><span>minting the full 22 trillion supply into the first vault</span></div>
+  </div>
+  <p class="source">Source: QuantCoin README, devnet deployment table; upgrade to the 7,464-byte build, commit 48572e7</p>
+  <figure class="pic screen"><img src="img/qc-explorer-program.jpg" alt="Solana Explorer, devnet: vault program account, executable, last deployed slot 505,509,508"><figcaption class="credit">Solana Explorer, devnet, 29 Sep 2026: program CiupyG…L2FfACms</figcaption></figure>
+  <aside class="notes">Small program, small rent. Pinocchio instead of Anchor is most of the reason it stayed that small. The fix for finding M-1 grew it to 7,464 bytes, deployed as an upgrade to the same address you see on the explorer.</aside>
 </section>
 <section>
   <div class="eyebrow">Proof</div>
@@ -132,14 +135,16 @@
   <p class="lede" style="margin-top:20px">Each one is a quantum backdoor.</p>
   <aside class="notes">This is the thing you can do on Monday without any new cryptography. Count the keys that can still change your token. Every one of them is a single Ed25519 signature away from someone else.</aside>
 </section>
-<section>
+<section class="media">
   <div class="eyebrow">Summary</div>
   <h2>A token cannot make Solana quantum-safe, but a vault can</h2>
   <table class="t rv">
-    <tr><th></th><th>Normal wallet</th><th>Hybrid vault</th></tr>
-    <tr><td>Signatures checked</td><td>Ed25519</td><td>Ed25519 + Winternitz</td></tr>
-    <tr class="hi"><td>Quantum break of Ed25519 alone</td><td>Funds lost</td><td>Spend refused</td></tr>
+    <tr><th></th><th>Wallet</th><th>Vault</th></tr>
+    <tr><td>Signatures</td><td>Ed25519</td><td>+ Winternitz</td></tr>
+    <tr class="hi"><td>Ed25519 broken</td><td>Funds lost</td><td>Refused</td></tr>
+    <tr class="hi"><td>Devnet attacks</td><td></td><td>13 of 13 refused</td></tr>
   </table>
   <p class="source">Code, whitepaper and audit: github.com/bryankwandou/QUANTCOIN</p>
+  <figure class="pic screen"><img src="img/qc-attack-run.jpg" alt="GitHub: audit/devnet-attack-run-v2.txt, each attack with its transaction and blocked: true"><figcaption class="credit">github.com/bryankwandou/QUANTCOIN, audit/devnet-attack-run-v2.txt, commit 48572e7</figcaption></figure>
   <aside class="notes">Same sentence as the start. Everything is public, including the parts that are not finished.</aside>
 </section>

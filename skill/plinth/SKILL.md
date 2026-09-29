@@ -51,11 +51,20 @@ For each headline pick exactly one supporting element:
 - nested market circles (`.rings`), every ring a sourced number, for market size
 - a two-axis positioning map (`.quad`) for competition, axes the buyer cares about
 - one screenshot or product frame (`img.shot` + `.cap`), cropped to the part that matters. A design mockup says "Design mockup, not yet built" in its caption
+- a column chart (`.cols`) for periods or options side by side, the one that matters in the accent
+- a donut (`.donut`, `--p`) for one share of a whole; two donuts side by side for "worried vs. prepared"
+- an isotype (`.iso data-of data-hi data-icon`) for "three in four", "one in eighteen": one icon per unit
+- a row of key numbers (`.kpis`), as in an earnings deck, when three sourced numbers belong together
+- a stacked bar (`.stack`) for how one whole splits (6% interest = 5% to lenders + 1% to the platform)
+- loss layers (`.layers`) for who pays first, top to bottom
+- several phones in a row (`.phones`), one per step, when the demo is a chat
+- a half-bleed photo or screen (`section.media` + `figure.pic`), or a full-bleed photo (`section.photo` + `figure.bg`), with the credit in `figcaption.credit`
+- a drawn diagram in inline SVG (a cross-section, a mechanism) when the idea is physical; caption it "not to scale"
 - one number, set large (`.big`), with its source line underneath, only when there is nothing to compare it with
 - one short list, three items at most
 - one quote from a real user, with name and role
 
-A pitch or data talk needs at least three slides with a chart, table, timeline, diagram or image; the linter takes points off below that. The closing slide stays on screen through the questions, so it is never a headline alone: show the ask as a timeline (what happens by when), a table (who you need and why) or a flow (where the money goes). Bars grow and `.rv` children rise in when the slide appears; the PDF and PPTX show the final state. Markup for every component is in `assets/deck-template.html` and `examples/pitch-quantcoin.slides.html`.
+A pitch or data talk needs at least three slides with a chart, table, timeline, diagram or image, and at least two slides with a real picture: a photo of the people or place the product serves, a product screenshot, or the product on a phone. The linter takes points off below either. Real pictures come from, in this order: the product itself (screenshot it, or the block explorer / GitHub page that proves it runs); the team's own photos; documentary photos with an open licence, found through the Wikimedia Commons API (`generator=search&prop=imageinfo&iiprop=url|extmetadata`), keeping only CC BY, CC BY-SA or public-domain files and writing author, licence and "Wikimedia Commons" in the credit. Never a posed stock photo, never an AI-generated image, never a photo whose caption would mislead (a photo of a health worker is captioned with who and where they are, not presented as your programme). Record every picture in `research/photo-credits.md`. The closing slide stays on screen through the questions, so it is never a headline alone: show the ask as a timeline (what happens by when), a table (who you need and why) or a flow (where the money goes). Bars grow and `.rv` children rise in when the slide appears; the PDF and PPTX show the final state. Markup for every component is in `assets/deck-template.html` and `examples/pitch-quantcoin.slides.html`.
 
 Two elements = two slides. Empty space is fine; it is where the eye rests.
 
@@ -73,7 +82,7 @@ Run:
 node scripts/lint-deck.mjs path/to/deck.html
 ```
 
-Then check that nothing runs off a slide or overlaps (headless Chrome, 1280×720, every slide):
+Then check that nothing runs off a slide or overlaps, that no text is under 18px, and that each picture fills at least 45% of the space under its headline (headless Chrome, 1280×720, every slide):
 
 ```bash
 npm install puppeteer-core       # once
@@ -108,6 +117,6 @@ The .pptx shows every slide exactly as the HTML renders it (charts, images, font
 ## Non-negotiables
 
 - No invented data. A number without a source is researched or cut before export; it never ships as a placeholder.
-- No emoji, no exclamation marks, no gradient text, no stock-photo people.
+- No emoji, no exclamation marks, no gradient text, no posed stock photos, no AI-generated images. Documentary photos only with an open licence and a visible credit.
 - Font sizes: headline ≥ 40px on a 1280×720 canvas, body ≥ 22px. Anything smaller means too many words.
 - 3 minutes of video pitch = 8–11 slides. 20-minute talk = 15–25. More slides with less on each beats the reverse.

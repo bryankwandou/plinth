@@ -14,13 +14,23 @@ Check the spine against these three before building slides. Each missing row is 
   - real product screens, traction as large numbers, team as faces with one line each;
   - no slide is only words.
 
+- Big-company investor decks, downloaded and read page by page on 2026-09-29: GoTo Gojek Tokopedia, 3Q 2023 earnings presentation (30 pages, assets.tokopedia.net) and Grab Holdings, Q2 2026 earnings presentation (27 pages, s205.q4cdn.com). What both do:
+  - a documentary photo of the people the business serves runs to the slide edge on the cover and section slides (Grab: a driver and passenger; a courier on the highlights slide);
+  - the app is shown on phones, several side by side;
+  - numbers are column charts over periods with the latest column in the brand colour and the change called out, or a row of three or four key numbers ("Key Results");
+  - the key phrase of a headline is set in the brand colour;
+  - section dividers are full-bleed brand colour with a large graphic shape;
+  - every chart fills the slide; nothing floats in white space.
+
 ## What Plinth does about it
 
 - `<style>:root{--accent:…;--brand:…}</style>` and `<svg id="brandmark" hidden>` at the top of the deck: the template puts the mark, deck name and page number on every slide.
 - `section.brand` for the cover, section breaks and discussion questions: full-bleed brand colour with the logo (`<div class="logo"></div>`).
 - Icons from the template sprite (`<svg class="ico"><use href="#i-chat"/></svg>`) at the start of every `.flow`, `.tl` and `.cards` item.
 - `.cards` for anything listed without numbers: team roles, budget lines, audit findings, learning goals.
-- The linter flags every slide that is only words.
+- `section.media` + `figure.pic` for a half-bleed photo or product screen, `section.photo` for a full-bleed one, always with `figcaption.credit`.
+- `.cols`, `.donut`, `.iso`, `.kpis`, `.stack`, `.layers`, `.phones` for the chart types those decks use; `h2 em` for the brand-coloured key phrase.
+- The linter flags every slide that is only words and any deck with fewer than two real pictures; the layout checker flags text under 18px and any picture that fills less than 45% of the space under its headline.
 
 ## Checklist
 
@@ -43,4 +53,6 @@ A grant deck swaps market and competition for need, evidence (including evidence
 
 - A product that exists: screenshot it (`img.shot`), cropped to the part that matters, and check the screenshot says the same thing as the deck. If the live product now does something else, do not use it.
 - A product that does not exist yet: draw the real interaction (`.phone` chat or SMS, `.flow`) and caption it "Illustration" or "Design mockup, not yet built".
-- Never stock photos of people, never AI-generated scenes, never a logo you are not allowed to use.
+- The people and places the product serves: a documentary photo with an open licence (Wikimedia Commons: CC BY, CC BY-SA, public domain), credited on the slide with author and licence, captioned with who and where. The examples use a warung in Garut, a farmer in Bali, a barangay health worker in the Philippines and NASA's own NISAR subsidence map.
+- Proof that it runs: a screenshot of the block explorer, the repository or the live site, dated in the credit.
+- Never posed stock photos, never AI-generated scenes, never a logo you are not allowed to use.

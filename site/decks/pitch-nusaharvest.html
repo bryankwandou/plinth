@@ -56,16 +56,90 @@ section.brand .logo{width:96px;height:96px;margin-bottom:36px;border-radius:24px
 section.brand::after{content:"";position:absolute;right:-160px;top:-160px;width:560px;height:560px;border-radius:50%;border:80px solid rgba(255,255,255,.08);pointer-events:none}
 /* Line icons from the sprite below: <svg class="ico"><use href="#i-chat"/></svg> */
 .ico{width:30px;height:30px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.flow .ico{display:block;margin-bottom:12px;width:34px;height:34px}
-.tl .ico{display:block;margin-bottom:8px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:20px;margin-top:40px}
-.cards>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+.flow .ico{display:block;margin-bottom:18px;width:44px;height:44px}
+.tl .ico{display:block;margin-bottom:10px;width:36px;height:36px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:22px;margin-top:40px}
+.cards>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:30px 28px;min-height:230px}
 .cards>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
-.cards .ico{width:40px;height:40px;margin-bottom:16px}
-.cards b{display:block;font-size:24px;letter-spacing:-.01em;margin-bottom:8px}.cards span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.cards .ico{width:48px;height:48px;margin-bottom:22px}
+.cards b{display:block;font-size:26px;letter-spacing:-.01em;margin-bottom:10px}.cards span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 /* The picture sits in the middle of the space under the headline, not stuck to it with a void below. */
-section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split{margin-top:auto!important;margin-bottom:auto}
-.tl b{font-size:34px}.tl span{font-size:19px}
+section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso{margin-top:auto!important;margin-bottom:auto}
+/* The key phrase of a headline in the brand colour, as GoTo and Grab do: <h2>Loans <em>tripled</em> in a year</h2> */
+h1 em,h2 em{font-style:normal;color:var(--accent)}
+section.brand h1 em,section.brand h2 em,section.photo h1 em,section.photo h2 em{color:inherit;text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:10px}
+/* Half-bleed picture running to the slide edge (Grab and GoTo covers, Airbnb's product slide).
+   <section class="media"> ... <figure class="pic"><img src alt><figcaption class="credit">Foto: name, licence</figcaption></figure> */
+section.media{padding-right:calc(44% + 56px)}
+section.media>.pic{position:absolute;top:0;right:0;bottom:0;width:44%;margin:0;overflow:hidden;background:var(--panel)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
+.pic.screen{background:#0d0f13;display:flex;align-items:center;padding:40px 28px}.pic.screen img{height:auto;object-fit:contain;border-radius:10px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.credit{position:absolute;right:10px;bottom:8px;font-size:11px;line-height:1.3;color:#fff;background:rgba(0,0,0,.55);padding:3px 8px;border-radius:4px;max-width:92%}
+section.media .foot{right:calc(44% + 32px)}
+section.media h1{font-size:58px}section.media h2{font-size:44px}
+section.media::after{display:none}
+/* Full-bleed photograph with the headline over a dark fade. */
+section.photo{color:#fff;--ink:#fff;--muted:rgba(255,255,255,.85);--line:rgba(255,255,255,.35);--panel:rgba(0,0,0,.35);justify-content:flex-end;background:#111}
+section.photo>.bg{position:absolute;inset:0;margin:0}
+section.photo>.bg img{width:100%;height:100%;object-fit:cover;display:block}
+section.photo>.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 20%,rgba(0,0,0,.8))}
+section.photo>:not(.bg):not(.foot){position:relative;z-index:1}
+section.photo .credit{top:10px;bottom:auto;z-index:2}
+section.photo .foot::before{background:rgba(255,255,255,.35)}
+.foot{z-index:2}
+/* Column chart: periods or options side by side, value above, label below, one column in the accent.
+   <div class="cols" style="--max:100"><div style="--v:78"><b>78%</b><i></i><span>2023</span></div>...</div> */
+.cols{display:flex;align-items:flex-end;gap:36px;height:330px;margin-bottom:44px;border-bottom:2px solid var(--ink);padding:0 24px}
+.cols>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;position:relative;min-width:0}
+.cols i{display:block;width:100%;max-width:150px;height:0;background:color-mix(in srgb,var(--muted) 35%,var(--bg));border-radius:6px 6px 0 0;transition:height .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*150ms + .2s)}
+.cols .hi i{background:var(--accent)}
+.cols b{font-size:28px;font-weight:700;margin-bottom:10px;font-feature-settings:"tnum";white-space:nowrap}
+.cols .hi b{color:var(--accent)}
+.cols span{position:absolute;top:100%;margin-top:12px;font-size:19px;color:var(--muted);white-space:nowrap}
+section.on .cols i,.print .cols i{height:calc(var(--v) / var(--max,100) * (100% - 52px))}
+/* Donut for one share of a whole ("77% still write it by hand"). <div class="donut" style="--p:77"><div><b>77%</b><span>label</span></div></div> */
+@property --pp{syntax:'<number>';inherits:false;initial-value:0}
+.donut{--pp:0;position:relative;width:320px;height:320px;border-radius:50%;flex:none;display:grid;place-items:center;text-align:center;
+  background:conic-gradient(var(--accent) calc(var(--pp)*1%),color-mix(in srgb,var(--muted) 22%,var(--bg)) 0);transition:--pp 1.3s cubic-bezier(.2,.7,.2,1) .2s}
+.donut::before{content:"";position:absolute;inset:46px;border-radius:50%;background:var(--bg)}
+.donut>*{position:relative}
+.donut b{display:block;font-size:68px;font-weight:700;letter-spacing:-.035em;color:var(--accent);line-height:1;font-feature-settings:"tnum"}
+.donut span{display:block;font-size:18px;color:var(--muted);max-width:160px;margin:8px auto 0;line-height:1.3}
+section.on .donut,.print .donut{--pp:var(--p)}
+.donut.lo{background:conic-gradient(color-mix(in srgb,var(--muted) 70%,var(--bg)) calc(var(--pp)*1%),color-mix(in srgb,var(--muted) 22%,var(--bg)) 0)}.donut.lo b{color:var(--ink)}
+/* Isotype: one icon per unit, the counted ones in the accent ("three in four"). <div class="iso" data-of="4" data-hi="3" data-icon="store"></div> */
+.iso{display:flex;flex-wrap:wrap;gap:20px;align-content:center}
+.iso svg{width:var(--s,110px);height:var(--s,110px);stroke:color-mix(in srgb,var(--muted) 40%,var(--bg));fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:translateY(12px);transition:opacity .45s,transform .45s}
+.iso svg.hi{stroke:var(--accent);stroke-width:1.7}
+section.on .iso svg,.print .iso svg{opacity:1;transform:none}
+/* Key numbers in a row, as in GoTo's "Key Results". <div class="kpis"><div class="hi"><b>39,3 jt</b><span>label</span></div>...</div> */
+.kpis{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:36px}
+.kpis>div{border-top:3px solid var(--line);padding-top:20px}
+.kpis>div.hi{border-color:var(--accent)}
+.kpis b{display:block;font-size:72px;font-weight:700;letter-spacing:-.04em;line-height:1;font-feature-settings:"tnum";white-space:nowrap}
+.kpis .hi b{color:var(--accent)}
+.kpis span{display:block;font-size:20px;line-height:1.35;color:var(--muted);margin-top:12px}
+/* Stacked bar: how one whole splits (6% interest = 5% to lenders + 1% to the platform). Width = --w. */
+.stack{display:flex;gap:6px;height:150px}
+.stack>div{flex:var(--w) 1 0;min-width:0;border-radius:10px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;padding:0 26px;
+  clip-path:inset(0 100% 0 0);transition:clip-path .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*250ms + .2s)}
+.stack>div.hi{background:var(--accent);border-color:var(--accent);color:#fff}
+.stack b{font-size:52px;font-weight:700;letter-spacing:-.03em;line-height:1;font-feature-settings:"tnum"}
+.stack span{font-size:19px;margin-top:8px;opacity:.85}
+section.on .stack>div,.print .stack>div{clip-path:inset(0)}
+.scale{display:flex;justify-content:space-between;font-size:18px;color:var(--muted);margin-top:12px}
+/* Layers: who takes a loss first, top to bottom; the last layer is the one being protected. */
+.layers{display:grid;gap:10px}
+.layers>div{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:22px;padding:18px 28px;border-radius:12px;background:var(--accent);color:#fff}
+.layers>div:nth-child(2){background:color-mix(in srgb,var(--accent) 82%,#000)}.layers>div:nth-child(3){background:color-mix(in srgb,var(--accent) 64%,#000)}
+.layers>div.base{background:var(--panel);color:var(--ink);border:2px dashed var(--muted)}
+.layers .ico{stroke:currentColor;width:44px;height:44px}
+.layers b{font-size:26px}.layers span{font-size:19px;opacity:.85}.layers em{font-style:normal;font-size:19px;opacity:.9;text-align:right}
+/* Several phone screens in a row, one per step of the product. */
+.phones{display:flex;gap:44px;justify-content:center;align-items:flex-start}
+.phones figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.phones .phone{width:210px;height:300px}
+.phones figcaption{font-size:22px;font-weight:600;text-align:center}.phones figcaption span{display:block;font-weight:400;color:var(--muted);font-size:18px;margin-top:2px}
 aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
@@ -74,12 +148,13 @@ aside.notes{display:none}
 #hint{position:fixed;right:16px;bottom:10px;font:12px var(--font);color:#777;transition:opacity .6s;pointer-events:none}
 #hint.gone{opacity:0}
 /* ---- charts and visuals: data lives in the markup, CSS draws it, entrance plays when the slide shows ---- */
-.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:14px 18px;align-items:center;margin-top:8px}
-.hbars .l{font-size:20px;color:var(--ink);white-space:nowrap}
-.hbars .t{position:relative;height:30px;background:var(--panel);border-radius:4px}
+.hbars{display:grid;grid-template-columns:auto 1fr auto;gap:22px 20px;align-items:center;margin-top:8px}
+.hbars .l{font-size:22px;color:var(--ink);white-space:nowrap}
+.hbars .t{position:relative;height:46px;background:var(--panel);border-radius:6px}
 .hbars .t i{position:absolute;top:0;bottom:0;left:calc(var(--a,0)*1%);width:0;background:var(--line);border-radius:4px;transition:width .9s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*120ms + .2s)}
 .hbars .hi i{background:var(--accent)}
-.hbars .v{font-size:20px;font-weight:600;font-feature-settings:"tnum";white-space:nowrap}
+.hbars .v{font-size:24px;font-weight:700;font-feature-settings:"tnum";white-space:nowrap}
+.hbars .hi+.v{color:var(--accent)}
 section.on .hbars .t i,.print .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)}
 .axis{grid-column:2;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
 table.t{border-collapse:collapse;width:100%;margin-top:28px;font-size:20px}
@@ -91,15 +166,15 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .tl>div{position:relative;padding-right:16px}
 .tl>div::before{content:"";position:absolute;top:-31px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
 .tl>div.hi::before{background:var(--accent);border-color:var(--accent)}
-.tl b{display:block;font-size:30px;letter-spacing:-.02em;font-feature-settings:"tnum"}
+.tl b{display:block;font-size:34px;letter-spacing:-.02em;font-feature-settings:"tnum"}
 .tl .hi b{color:var(--accent)}
-.tl span{display:block;font-size:17px;line-height:1.35;color:var(--muted);margin-top:6px}
+.tl span{display:block;font-size:19px;line-height:1.35;color:var(--muted);margin-top:8px}
 .flow{display:flex;align-items:stretch;gap:0;margin-top:44px}
-.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:20px 22px}
+.flow>div{flex:1;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:28px 24px;min-height:220px}
 .flow>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
-.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:28px;color:var(--muted)}
-.flow b{display:block;font-size:22px;margin-bottom:6px}
-.flow span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+.flow>em{flex:0 0 44px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:30px;color:var(--muted)}
+.flow b{display:block;font-size:26px;margin-bottom:8px}
+.flow span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 .shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
 .cap{font-size:14px;color:var(--muted);margin-top:10px}
 /* Product illustration: a phone showing the real message flow. Caption says whether it is built or a mockup. */
@@ -125,7 +200,7 @@ section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone 
 .quad .dot{position:absolute;transform:translateY(50%);display:flex;align-items:center;gap:8px;font-size:16px;white-space:nowrap}
 .quad .dot::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--muted)}
 .quad .dot.hi{color:var(--accent);font-weight:700}.quad .dot.hi::before{background:var(--accent);width:18px;height:18px}
-.split{display:flex;gap:56px;align-items:center;flex:1;min-height:0}.split>div:not(.phone):not(.rings):not(.quad){flex:1;min-width:0}
+.split{display:flex;gap:56px;align-items:center;flex:1;min-height:0}.split>div:not(.phone):not(.rings):not(.quad):not(.donut){flex:1;min-width:0}
 /* entrance: children of .rv rise in one after another */
 .rv>*{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 section.on .rv>*,.print .rv>*{opacity:1;transform:none}
@@ -140,7 +215,9 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   #progress,#notes,#hint{display:none}
 }
 @media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
-@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*{transition:none}}
+@media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*,.cols i,.donut,.stack>div,.iso svg{transition:none}}
+/* PDF and PPTX capture the final frame: nothing may still be moving. */
+.print *,.print *::before{transition:none!important}
 </style>
 </head>
 <body>
@@ -173,43 +250,47 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <symbol id="i-down" viewBox="0 0 24 24"><path d="M3 6l7 7 4-4 7 7"/><path d="M15 16h6v-6"/></symbol>
   <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L3 10.5l7 2.5 2.5 7z"/><path d="M10 13l11-10"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 10h14M9 20l-2 2M15 20l2 2M8.5 13.5h.01M15.5 13.5h.01"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><rect x="2.5" y="8" width="19" height="8" rx="4" transform="rotate(-45 12 12)"/><path d="M8.6 8.6l6.8 6.8"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.6"/><path d="M8 21v-6H6.5v-4.5A2.5 2.5 0 0 1 9 8h6a2.5 2.5 0 0 1 2.5 2.5V15H16v6"/></symbol>
 </svg>
 <div class="stage"><div class="deck" id="deck">
 <style>:root{--accent:#B45309;--brand:#B45309}</style>
 <svg id="brandmark" hidden viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#B45309"/><g transform="translate(8 8)" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12c0-4 3-6 7-6 0 4-3 6-7 6zM12 14c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/></g></svg>
-<section class="brand">
+<section class="brand media">
   <div class="logo"></div>
   <div class="fill">
     <h1>NusaHarvest lends to farmers and pays claims from BMKG rainfall data</h1>
     <p class="lede">Pinjaman dan asuransi panen untuk petani koperasi · tahap pilot</p>
   </div>
+  <figure class="pic"><img src="img/petani-sepeda.jpg" alt="Petani membawa ikatan padi dengan sepeda di tepi sawah menguning"><figcaption class="credit">Petani di Indonesia · Foto: CEphoto, Uwe Aranas, CC BY-SA 3.0, Wikimedia Commons</figcaption></figure>
   <aside class="notes">NusaHarvest menghubungkan pemodal dengan petani koperasi. Petani dapat pinjaman modal tanam, dan asuransi panennya cair otomatis kalau data curah hujan BMKG menunjukkan gagal panen. Pemodal dilindungi tiga lapis sebelum uangnya tersentuh.</aside>
 </section>
-<section>
+<section class="media">
   <div class="eyebrow">Masalah</div>
-  <h2>Satu dari tiga usaha tani terhambat modal</h2>
-  <div class="row"><div class="c8"><div class="hbars">
-    <span class="l">Hama dan penyakit</span><div class="t" style="--b:55.03;--d:0"><i></i></div><span class="v">55,03%</span>
-    <span class="l">Keterbatasan modal</span><div class="t hi" style="--b:34.82;--d:1"><i></i></div><span class="v">34,82%</span>
-    <span></span><div class="axis"><span>0</span><span>usaha tani perorangan yang menyebut hambatan</span><span>100%</span></div><span></span>
-  </div></div><div class="c4"><p>Hama nomor satu, modal menyusul.</p></div></div>
-  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N1] [N2]</p>
-  <aside class="notes">Angka ini dari survei BPS, bukan dari kami. Artinya sepertiga petani sudah tahu apa yang mereka butuhkan dan tidak mendapatkannya. Ada 40,69 juta orang bekerja di pertanian, menurut UGM [N3].</aside>
+  <h2><em>Satu dari tiga</em> usaha tani terhambat modal</h2>
+  <div class="cols" style="--max:60">
+    <div style="--v:55.03;--d:0"><b>55,03%</b><i></i><span>Hama, penyakit</span></div>
+    <div class="hi" style="--v:34.82;--d:1"><b>34,82%</b><i></i><span>Modal</span></div>
+  </div>
+  <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, usaha tani perorangan yang menyebut hambatan, via GoodStats [N1] [N2]</p>
+  <figure class="pic"><img src="img/petani-bali.jpg" alt="Petani bercaping bekerja di sawah"><figcaption class="credit">Petani di sawah, Bali, 2020 · Foto: Tiket2, CC BY 2.0, Wikimedia Commons</figcaption></figure>
+  <aside class="notes">Angka ini dari survei BPS, bukan dari kami. Hama nomor satu, modal menyusul: sepertiga petani sudah tahu apa yang mereka butuhkan dan tidak mendapatkannya. Ada 40,69 juta orang bekerja di pertanian, menurut UGM [N3].</aside>
 </section>
 <section>
   <div class="eyebrow">Kenapa bank menolak</div>
   <h2>Hama dan cuaca membuat pinjaman petani terlihat terlalu berisiko</h2>
-  <table class="t rv">
-    <tr><th>Risiko</th><th>Penanggung</th><th>Cara klaim</th></tr>
-    <tr><td>Hama dan penyakit [N2]</td><td>AUTP Jasindo</td><td>Survei kerusakan</td></tr>
-    <tr class="hi"><td>Kekeringan dan banjir</td><td>Indeks curah hujan BMKG</td><td>Otomatis</td></tr>
-  </table>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-alert"/></svg><b>Hama dan penyakit</b><span>Ditanggung AUTP Jasindo. Klaim lewat survei kerusakan di lahan, berminggu-minggu [N2]</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-rain"/></svg><b>Kekeringan dan banjir</b><span>Ditanggung indeks curah hujan BMKG. Klaim cair otomatis saat ambang terlewati</span></div>
+  </div>
   <p class="source">Source: BPS Survei Ekonomi Pertanian 2024, via GoodStats [N2]; NusaHarvest, rencana produk</p>
   <aside class="notes">Kami sebut ini terang-terangan. Asuransi indeks cuaca tidak menanggung hama. Karena itu setiap pinjaman kami wajib dipasangkan dengan AUTP dari Jasindo yang menanggung hama, dan indeks BMKG untuk kekeringan dan banjir.</aside>
 </section>
 <section>
   <div class="eyebrow">Produk</div>
-  <h2>Klaim cair tanpa survei lapangan saat curah hujan melewati ambang</h2>
+  <h2>Klaim cair <em>tanpa survei lapangan</em> saat curah hujan melewati ambang</h2>
   <div class="flow rv">
     <div><svg class="ico"><use href="#i-users"/></svg><b>Koperasi</b><span>Menyalurkan pinjaman modal tanam</span></div><em>→</em>
     <div><svg class="ico"><use href="#i-rain"/></svg><b>Data BMKG</b><span>Oracle membaca curah hujan</span></div><em>→</em>
@@ -221,44 +302,59 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Perlindungan pemodal</div>
   <h2>Pemodal kehilangan uang hanya kalau tiga lapis habis</h2>
-  <div class="flow rv">
-    <div><svg class="ico"><use href="#i-shield"/></svg><b>1. Asuransi</b><span>Wajib per pinjaman</span></div><em>→</em>
-    <div><svg class="ico"><use href="#i-bank"/></svg><b>2. Penjaminan</b><span>Rencana: lewat koperasi penyalur KUR [N5]</span></div><em>→</em>
-    <div class="hi"><svg class="ico"><use href="#i-wallet"/></svg><b>3. Cadangan</b><span>20% dana pool, rencana</span></div>
+  <div class="layers rv">
+    <div><svg class="ico"><use href="#i-shield"/></svg><div><b>1. Asuransi</b><br><span>Wajib per pinjaman</span></div><em>kerugian masuk di sini</em></div>
+    <div><svg class="ico"><use href="#i-bank"/></svg><div><b>2. Penjaminan</b><br><span>Rencana: lewat koperasi penyalur KUR [N5]</span></div><em>lalu di sini</em></div>
+    <div><svg class="ico"><use href="#i-wallet"/></svg><div><b>3. Cadangan</b><br><span>20% dana pool, rencana</span></div><em>lalu di sini</em></div>
+    <div class="base"><svg class="ico"><use href="#i-coin"/></svg><div><b>Dana pemodal</b><br><span>Tersentuh hanya kalau tiga lapis di atas habis</span></div><em></em></div>
   </div>
-  <p class="source">Source: Jamkrindo, Penjaminan KUR [N5]</p>
+  <p class="source">Source: Jamkrindo, Penjaminan KUR [N5]; urutan lapis adalah rencana tim</p>
   <aside class="notes">Urutan ini penting. Asuransi membayar lebih dulu, lalu penjaminan, baru cadangan. Kami belum punya perjanjian dengan Askrindo atau Jamkrindo. Rencananya pinjaman disalurkan lewat koperasi yang layak KUR, karena KUR sudah dijamin perusahaan penjamin. Itu rencana, bukan kemitraan, dan kami akan bilang begitu kalau juri bertanya.</aside>
 </section>
 <section>
   <div class="eyebrow">Model bisnis</div>
-  <h2>Petani membayar 6%, pemodal menerima 5%</h2>
-  <div class="row"><div class="c5"><div class="big">1%</div></div><div class="c7"><p>Selisih bunga untuk platform, ditambah 15% dari premi sebagai biaya administrasi polis.</p></div></div>
-  <p class="source">Source: NusaHarvest, rencana tarif</p>
-  <aside class="notes">Ini rencana tarif kami sendiri, bukan data luar. Kami sengaja membuang biaya deposit 2,5% dan hasil DeFi dari dana asuransi di deck lama. Dana klaim petani tidak boleh diputar di DeFi. Dua sumber pendapatan ini cukup dan mudah dijelaskan.</aside>
+  <h2>Petani membayar 6%, pemodal menerima 5%, <em>platform 1%</em></h2>
+  <div style="margin:auto 0">
+    <div class="stack rv">
+      <div style="--w:5;--d:0"><b>5%</b><span>ke pemodal</span></div>
+      <div class="hi" style="--w:1;--d:1"><b>1%</b><span>platform</span></div>
+    </div>
+    <div class="scale"><span>0%</span><span>bunga yang dibayar petani per tahun</span><span>6%</span></div>
+    <div class="cards" style="margin-top:36px">
+      <div class="hi" style="min-height:0"><b>+ 15% dari premi</b><span>biaya administrasi polis, pendapatan kedua</span></div>
+      <div style="min-height:0"><b>Tanpa biaya deposit</b><span>dan dana klaim tidak diputar di DeFi</span></div>
+    </div>
+  </div>
+  <p class="source">Source: NusaHarvest, rencana tarif, bukan data luar</p>
+  <aside class="notes">Ini rencana tarif kami sendiri, bukan data luar. Dari enam persen bunga, lima ke pemodal dan satu ke platform. Kami sengaja membuang biaya deposit 2,5% dan hasil DeFi dari dana asuransi di deck lama. Dana klaim petani tidak boleh diputar di DeFi.</aside>
 </section>
 <section>
   <div class="eyebrow">Pasar</div>
   <h2>Tujuh belas juta petani gurem menggarap kurang dari setengah hektar</h2>
   <div class="split">
-    <div><p>Yang paling sulit dapat pinjaman bank adalah petani gurem. Kami mulai dari satu koperasi di antara mereka.</p></div>
+    <div><div class="kpis" style="grid-auto-flow:row;gap:26px">
+      <div><b>40,69 jt</b><span>orang bekerja di pertanian [N3]</span></div>
+      <div class="hi"><b>17,25 jt</b><span>petani gurem, lahan di bawah 0,5 ha [N4]</span></div>
+    </div></div>
     <div class="rings">
-      <div style="width:340px;height:340px"><div><b>40,69 juta</b><span>orang bekerja di pertanian [N3]</span></div></div>
-      <div style="width:225px;height:225px"><div><b>17,25 juta</b><span>petani gurem, &lt; 0,5 ha [N4]</span></div></div>
+      <div style="width:340px;height:340px"><div><b>40,69 juta</b><span>pekerja pertanian</span></div></div>
+      <div style="width:225px;height:225px"><div><b>17,25 juta</b><span>petani gurem</span></div></div>
       <div class="hi" style="width:120px;height:120px"><div><b>1</b><span>koperasi pilot</span></div></div>
     </div>
   </div>
   <p class="source">Sumber: UGM, 2024 [N3]; BPS, Sensus Pertanian 2023 [N4]; pilot adalah rencana tim</p>
   <aside class="notes">Angka ini dari Sensus Pertanian 2023 BPS: 17,25 juta petani gurem [N4], lahannya di bawah setengah hektar. Mereka yang paling sulit dapat pinjaman bank. Ini bukan pasar yang langsung kami layani. Kami mulai dari satu koperasi pilot, lalu lima, dan angka nasional ini menunjukkan ruang tumbuhnya.</aside>
 </section>
-<section>
+<section class="media">
   <div class="eyebrow">Rencana</div>
   <h2>Satu koperasi di semester satu, lima di akhir tahun</h2>
   <div class="tl rv">
     <div class="hi"><svg class="ico"><use href="#i-sprout"/></svg><b>Q1–Q2</b><span>Pilot satu koperasi padi</span></div>
     <div><svg class="ico"><use href="#i-users"/></svg><b>Q3–Q4</b><span>Lima koperasi</span></div>
-    <div><svg class="ico"><use href="#i-flag"/></svg><b>Berikutnya</b><span>Kopi dan kakao</span></div>
+    <div><svg class="ico"><use href="#i-flag"/></svg><b>Lalu</b><span>Kopi dan kakao</span></div>
   </div>
   <p class="source">Source: NusaHarvest, rencana tim</p>
+  <figure class="pic"><img src="img/sawah-tabanan.jpg" alt="Sawah berundak dengan pondok dan petani, Tabanan"><figcaption class="credit">Sawah di Tabanan, Bali · Foto: CEphoto, Uwe Aranas, CC BY-SA 3.0, Wikimedia Commons</figcaption></figure>
   <aside class="notes">Ukuran sukses pilot: berapa pinjaman tersalur, tingkat pengembalian, dan satu klaim BMKG yang cair otomatis.</aside>
 </section>
 <section>
@@ -299,6 +395,9 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
   const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
   fitBig();document.fonts&&document.fonts.ready.then(fitBig);
+  // Isotype: data-of icons, the first data-hi in the accent, appearing one after another.
+  deck.querySelectorAll('.iso[data-of]').forEach(el=>{const n=+el.dataset.of,h=+el.dataset.hi||0,step=Math.min(.12,1.4/n);
+    el.innerHTML=Array.from({length:n},(_,k)=>`<svg class="${k<h?'hi':''}" style="transition-delay:${(.2+k*step).toFixed(2)}s"><use href="#i-${el.dataset.icon||'person'}"/></svg>`).join('')});
   // Brand frame: the deck's mark (<svg id="brandmark">, optional) + title + page number on every slide.
   const bm=document.getElementById('brandmark'),name=document.title;
   const mark=()=>{const c=bm.cloneNode(true);c.removeAttribute('id');c.removeAttribute('hidden');return c};
