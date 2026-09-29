@@ -223,12 +223,16 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <p>Bryan Kwandou built the Pinocchio vault, the TypeScript WOTS client, the Codama IDL and the internal audit. The next hire is a reviewer who did not write the code.</p>
   <aside class="notes">It is one person today. That is the main risk, and the reason the external audit comes before anything else.</aside>
 </section>
-<section class="center">
-  <div class="fill center">
-    <div class="eyebrow">Ask</div>
-    <h2>Fund an external audit, then lock the program for good</h2>
-    <p class="lede">After the audit: deploy to mainnet and set the upgrade authority to final, because that key is an Ed25519 backdoor</p>
+<section>
+  <div class="eyebrow">Ask</div>
+  <h2>Fund an external audit, then lock the program for good</h2>
+  <div class="flow rv">
+    <div><b>Today</b><span>Devnet, program under 7&nbsp;KB</span></div><em>→</em>
+    <div class="hi"><b>External audit</b><span>What we ask you to fund</span></div><em>→</em>
+    <div><b>Mainnet</b><span>Same bytes the auditor read</span></div><em>→</em>
+    <div><b>Upgrade key final</b><span>No Ed25519 backdoor left</span></div>
   </div>
+  <p class="source">Source: team plan, not outside data</p>
   <aside class="notes">The ask is simple. An outside audit of a program under seven kilobytes. Then mainnet, and the upgrade key thrown away, because any Ed25519 key left behind would undo the whole point.</aside>
 </section>
 

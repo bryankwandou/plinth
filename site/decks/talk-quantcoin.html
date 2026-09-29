@@ -205,11 +205,15 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <p>Mint authority, freeze authority, metadata authority, program upgrade authority. Each one is a quantum backdoor. QuantCoin revoked the first three after genesis. The upgrade key goes before mainnet.</p>
   <aside class="notes">This is the thing you can do on Monday without any new cryptography. Count the keys that can still change your token. Every one of them is a single Ed25519 signature away from someone else.</aside>
 </section>
-<section class="center">
-  <div class="fill center">
-    <h2>A token cannot make Solana quantum-safe, but a vault can</h2>
-    <p class="lede">Code, whitepaper and audit: github.com/bryankwandou/QUANTCOIN</p>
-  </div>
+<section>
+  <div class="eyebrow">Summary</div>
+  <h2>A token cannot make Solana quantum-safe, but a vault can</h2>
+  <table class="t rv">
+    <tr><th></th><th>Normal wallet</th><th>Hybrid vault</th></tr>
+    <tr><td>Signatures checked</td><td>Ed25519</td><td>Ed25519 + Winternitz</td></tr>
+    <tr class="hi"><td>Quantum break of Ed25519 alone</td><td>Funds lost</td><td>Spend refused</td></tr>
+  </table>
+  <p class="source">Code, whitepaper and audit: github.com/bryankwandou/QUANTCOIN</p>
   <aside class="notes">Same sentence as the start. Everything is public, including the parts that are not finished.</aside>
 </section>
 

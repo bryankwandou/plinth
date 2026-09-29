@@ -50,7 +50,7 @@ For each headline pick exactly one supporting element:
 - one short list, three items at most
 - one quote from a real user, with name and role
 
-A pitch or data talk needs at least three slides with a chart, table, timeline, diagram or image; the linter takes points off below that. Bars grow and `.rv` children rise in when the slide appears; the PDF and PPTX show the final state. Markup for every component is in `assets/deck-template.html` and `examples/pitch-quantcoin.slides.html`.
+A pitch or data talk needs at least three slides with a chart, table, timeline, diagram or image; the linter takes points off below that. The closing slide stays on screen through the questions, so it is never a headline alone: show the ask as a timeline (what happens by when), a table (who you need and why) or a flow (where the money goes). Bars grow and `.rv` children rise in when the slide appears; the PDF and PPTX show the final state. Markup for every component is in `assets/deck-template.html` and `examples/pitch-quantcoin.slides.html`.
 
 Two elements = two slides. Empty space is fine; it is where the eye rests.
 

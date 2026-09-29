@@ -31,6 +31,12 @@ if (/<section[\s>]/i.test(raw) && slides.length >= 6) {
     r.issues.push({ slide: 0, kind: 'visual', msg: `Only ${visual} slide(s) show a chart, table, timeline, diagram or image. Chart at least three of the sourced numbers.`, cost: 6 });
     r.score = Math.max(0, r.score - Math.round(6 * 10 / Math.max(slides.length, 5)) * (3 - visual));
   }
+  // The last slide is what stays on screen during questions. A headline alone on it reads as a template.
+  const secs = [...raw.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/gi)].map(m => m[1].replace(/<aside[\s\S]*?<\/aside>/gi, ''));
+  if (!/class="[^"]*\b(hbars|tl|flow|shot|frame|stat)\b|<table|<svg|<img/i.test(secs[secs.length - 1])) {
+    r.issues.push({ slide: secs.length, kind: 'visual', msg: 'Closing slide is text only. Show the ask as a timeline, table or flow: what it buys, by when.', cost: 4 });
+    r.score = Math.max(0, r.score - Math.round(4 * 10 / Math.max(slides.length, 5)));
+  }
 }
 if (process.argv.includes('--json')) { console.log(JSON.stringify(r, null, 2)); process.exit(0); }
 console.log(`${file}\n${r.slides} slides  score ${r.score}/100\n`);
