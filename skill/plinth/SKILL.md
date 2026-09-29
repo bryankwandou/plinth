@@ -61,7 +61,7 @@ Two elements = two slides. Empty space is fine; it is where the eye rests.
 
 ## Step 3 — Build the deck
 
-Copy `assets/deck-template.html`, fill the slides, keep its CSS tokens. Do not invent a new visual system per deck; consistency is what reads as professional. Change only `--accent` and the fonts when the user has a brand.
+Copy `assets/deck-template.html`, fill the slides, keep its CSS tokens. Give the deck its own brand first, as winning decks do: set `--accent` (and `--brand` if the cover colour differs), add `<svg id="brandmark" hidden>` with the project's logo or a simple mark, make the cover a `section.brand`, and put an icon on every flow, timeline and card item. No slide is only words: team, budget and goals become `.cards`. See `references/benchmark.md`. Do not invent a new visual system per deck; consistency is what reads as professional. Change only `--accent` and the fonts when the user has a brand.
 
 Speaker notes go in `<aside class="notes">` inside each slide: what to say, 40–70 words, written the way the person talks.
 

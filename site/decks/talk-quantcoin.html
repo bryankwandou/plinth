@@ -44,7 +44,28 @@ li::before{content:"";position:absolute;left:0;top:.62em;width:12px;height:2px;b
 .stat b{display:block;font-size:56px;letter-spacing:-.03em;font-weight:600;font-feature-settings:"tnum"}
 .stat span{font-size:18px;color:var(--muted)}
 .bar{height:14px;border-radius:3px;background:var(--line)} .bar.hi{background:var(--accent)}
-.foot{position:absolute;left:64px;right:64px;bottom:24px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+/* Brand frame on every slide, as funded decks do: mark + name left, page right. Filled in by the script. */
+.foot{position:absolute;left:64px;right:64px;bottom:20px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.foot .bm{width:20px;height:20px;display:flex}.foot .bm svg{width:100%;height:100%}.foot .pg{margin-left:auto;font-feature-settings:"tnum"}
+.foot::before{content:"";position:absolute;left:0;right:0;top:-10px;height:2px;background:linear-gradient(90deg,var(--accent) 0 64px,var(--line) 64px)}
+section{padding-bottom:64px}
+/* Full-bleed brand slide: cover, section break, close. */
+section.brand{background:var(--brand,var(--accent));color:#fff;--ink:#fff;--muted:rgba(255,255,255,.78);--line:rgba(255,255,255,.3);--panel:rgba(255,255,255,.12)}
+section.brand .foot::before{background:rgba(255,255,255,.35)}
+section.brand .logo{width:96px;height:96px;margin-bottom:36px;border-radius:24px;box-shadow:0 0 0 3px rgba(255,255,255,.9)}section.brand .logo svg{width:100%;height:100%;display:block}
+section.brand::after{content:"";position:absolute;right:-160px;top:-160px;width:560px;height:560px;border-radius:50%;border:80px solid rgba(255,255,255,.08);pointer-events:none}
+/* Line icons from the sprite below: <svg class="ico"><use href="#i-chat"/></svg> */
+.ico{width:30px;height:30px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.flow .ico{display:block;margin-bottom:12px;width:34px;height:34px}
+.tl .ico{display:block;margin-bottom:8px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:20px;margin-top:40px}
+.cards>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 24px}
+.cards>div.hi{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.cards .ico{width:40px;height:40px;margin-bottom:16px}
+.cards b{display:block;font-size:24px;letter-spacing:-.01em;margin-bottom:8px}.cards span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
+/* The picture sits in the middle of the space under the headline, not stuck to it with a void below. */
+section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split{margin-top:auto!important;margin-bottom:auto}
+.tl b{font-size:34px}.tl span{font-size:19px}
 aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
@@ -82,7 +103,7 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
 .cap{font-size:14px;color:var(--muted);margin-top:10px}
 /* Product illustration: a phone showing the real message flow. Caption says whether it is built or a mockup. */
-.phone{width:260px;height:430px;border:10px solid var(--ink);border-radius:40px;background:#ECE5DD;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);flex:none}
+.phone{width:240px;height:390px;border:10px solid var(--ink);border-radius:40px;background:#ECE5DD;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);flex:none}
 .phone .top{margin:-14px -12px 6px;padding:12px 14px;background:#075E54;color:#fff;font-size:15px;font-weight:600}
 .phone .top small{display:block;font-weight:400;opacity:.8;font-size:11px}
 .phone p{font-size:14px;line-height:1.35;max-width:82%;padding:7px 10px;border-radius:8px;background:#fff;color:#111;margin:0;box-shadow:0 1px 1px rgba(0,0,0,.12)}
@@ -93,7 +114,7 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 section.on .rv.phone p{opacity:1;transform:none}
 section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone p:nth-of-type(3){transition-delay:1s}section.on .rv.phone p:nth-of-type(4){transition-delay:1.5s}
 /* Market size: nested circles, area roughly proportional; every ring carries a sourced number. */
-.rings{position:relative;width:380px;height:380px;flex:none}
+.rings{position:relative;width:340px;height:340px;flex:none}
 .rings>div{position:absolute;left:50%;bottom:0;transform:translateX(-50%);border-radius:50%;border:2px solid var(--line);background:var(--panel);display:flex;justify-content:center;padding-top:18px;text-align:center}
 .rings>div.hi{background:var(--accent);border-color:var(--accent);color:#fff;align-items:center;padding:0}
 .rings b{display:block;font-size:26px}.rings span{display:block;font-size:14px;color:var(--muted);max-width:180px}.rings .hi span{color:#fff}
@@ -123,9 +144,42 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14h4"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M5 12v8h14v-8M10 20v-5h4v5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .9-3 2s1 1.7 3 2 3 .9 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6.5v11"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7 15a4 4 0 0 1-.6-8A6 6 0 0 1 18 8a3.5 3.5 0 0 1-.5 7z"/><path d="M8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4 3-6 7-6 0 4-3 6-7 6zM12 14c0-3-2.5-5-6-5 0 3 2.5 5 6 5z"/></symbol>
+  <symbol id="i-health" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 9l9-5 9 5z"/><path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 9.5V20h14V9.5M10 20v-5h4v5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5v.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M16 13.5h2"/></symbol>
+  <symbol id="i-water" viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M3 6l7 7 4-4 7 7"/><path d="M15 16h6v-6"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L3 10.5l7 2.5 2.5 7z"/><path d="M10 13l11-10"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
+</svg>
 <div class="stage"><div class="deck" id="deck">
-<section class="center">
-  <div class="fill center">
+<style>:root{--accent:#0D8A80;--brand:#0B1020}</style>
+<svg id="brandmark" hidden viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
+<section class="brand">
+  <div class="logo"></div>
+  <div class="fill">
     <h1>A token cannot make Solana quantum-safe, but a vault can</h1>
     <p class="lede">What QuantCoin protects, what it cannot, and what it cost to build · Bryan Kwandou</p>
   </div>
@@ -157,7 +211,11 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Why hash-based</div>
   <h2>Hash signatures lose only half their bits to Grover</h2>
-  <p>Grover's algorithm gives a square-root speedup against a hash, so a 192-bit digest keeps about 96 bits of post-quantum security. NIST standardized this family as SLH-DSA.</p>
+  <div class="hbars">
+    <span class="l">Against a normal computer</span><div class="t" style="--b:100;--d:0"><i></i></div><span class="v">192 bits</span>
+    <span class="l">Against Grover</span><div class="t hi" style="--b:50;--d:1"><i></i></div><span class="v">~96 bits</span>
+  </div>
+  <p class="lede">A square-root speedup halves the bits. NIST standardized this family as SLH-DSA.</p>
   <p class="source">Source: NIST, August 2024 [G3]; QuantCoin whitepaper, section 3.3</p>
   <aside class="notes">Lattice schemes are faster and smaller, but newer. Hash-based signatures assume only that SHA-256 behaves like a hash. For money meant to sit for decades, the oldest assumption is the one I wanted.</aside>
 </section>
@@ -165,17 +223,22 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <div class="eyebrow">Design</div>
   <h2>Winternitz keys sign once, so every spend empties the vault</h2>
   <div class="flow rv">
-    <div><b>Sign once</b><span>Owner signs with Ed25519 and WOTS</span></div><em>→</em>
-    <div><b>Pay</b><span>Amount goes to the destination</span></div><em>→</em>
-    <div class="hi"><b>Move change</b><span>The rest goes to the owner's next vault</span></div><em>→</em>
-    <div><b>Close</b><span>The old vault's account is closed</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Sign once</b><span>Owner signs with Ed25519 and WOTS</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-send"/></svg><b>Pay</b><span>Amount goes to the destination</span></div><em>→</em>
+    <div class="hi"><svg class="ico"><use href="#i-wallet"/></svg><b>Move change</b><span>The rest goes to the owner's next vault</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Close</b><span>The old vault's account is closed</span></div>
   </div>
   <aside class="notes">A one-time signature leaks part of its key each time it signs. Signing twice would let someone forge. So the program never allows it: spend means drain, and the change moves to a fresh key.</aside>
 </section>
 <section>
   <div class="eyebrow">Design</div>
   <h2>The vault address itself commits to both keys</h2>
-  <p>The address is a PDA of the Winternitz key hash and the owner. The program recomputes the Winternitz public key from the signature and checks it lands on the same address. Nothing is stored on-chain.</p>
+  <div class="flow rv">
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Key hash + owner</b><span>Seeds of the vault PDA</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Signature</b><span>Program recomputes the Winternitz key</span></div><em>→</em>
+    <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Same address?</b><span>Yes: spend. No: refuse</span></div>
+  </div>
+  <p class="lede">Nothing is stored on-chain.</p>
   <aside class="notes">This is the trick that keeps the program stateless. There is no account holding a public key that could be swapped. If the signature does not rebuild the key that made the address, the spend fails.</aside>
 </section>
 <section>
@@ -201,32 +264,48 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Proof</div>
   <h2>The whole supply moved once on devnet, and it matched</h2>
-  <p>Spend Np26Uxfw sent 1,000,000 QC, refunded 21,999,999,000,000 QC to a new vault and closed the old one. The TypeScript signer and Rust verifier agreed.</p>
+  <div class="flow rv">
+    <div><svg class="ico"><use href="#i-wallet"/></svg><b>Old vault</b><span>Whole supply</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-send"/></svg><b>1,000,000 QC</b><span>Paid out</span></div><em>+</em>
+    <div class="hi"><svg class="ico"><use href="#i-shield"/></svg><b>21,999,999,000,000 QC</b><span>Refunded to a fresh vault</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Closed</b><span>Old vault removed</span></div>
+  </div>
+  <p class="lede">Spend Np26Uxfw: the TypeScript signer and Rust verifier agreed.</p>
   <p class="source">Source: QuantCoin README, devnet run 2026-09-23</p>
   <aside class="notes">Two separate implementations of the same hash chains, in two languages, agreeing on a real transaction. That is the test I trust more than any unit test.</aside>
 </section>
 <section>
   <div class="eyebrow">Audit</div>
   <h2>The internal audit caught a test that passed for the wrong reason</h2>
-  <p>Negative tests failed on an earlier check, not the one they claimed to test. Fixed, and every test now asserts its exact error code. A client bug that could lock a vault after a failed broadcast was fixed too.</p>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-alert"/></svg><b>F1: tests</b><span>Failed on an earlier check than the one they claimed. Each now asserts its exact error code</span></div>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>F2: client</b><span>A failed broadcast could lock a vault. Fixed</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Status</b><span>Both fixed, both public in AUDIT.md</span></div>
+  </div>
   <p class="source">Source: QuantCoin audit/AUDIT.md, findings F1 and F2</p>
   <aside class="notes">This is my favourite finding because it is so ordinary. The tests were green. They were green for the wrong reason. It only showed up when each test had to name the exact error it expected.</aside>
 </section>
 <section>
   <div class="eyebrow">Caveats</div>
   <h2>QuantCoin in a normal wallet is exactly as exposed as SOL</h2>
-  <ul>
-    <li>Only vault balances get the hash half</li>
-    <li>Vault secrets sit in plaintext until moved offline</li>
-    <li>No external audit yet, so no mainnet yet</li>
-  </ul>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-wallet"/></svg><b>Normal wallet</b><span>Only vault balances get the hash half</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Secrets</b><span>Plaintext until moved offline</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-alert"/></svg><b>Audit</b><span>No external audit yet, so no mainnet yet</span></div>
+  </div>
   <p class="source">Source: QuantCoin README; audit/AUDIT.md finding F5</p>
   <aside class="notes">I want to be precise about the limits. Tokens you move to Phantom are protected by Phantom, which means Ed25519. The vault is for balances that sit still. And until someone outside checks the code, it stays on devnet.</aside>
 </section>
 <section>
   <div class="eyebrow">Try this</div>
   <h2>List every Ed25519 key that could still move your treasury</h2>
-  <p>Mint authority, freeze authority, metadata authority, program upgrade authority. Each one is a quantum backdoor. QuantCoin revoked the first three after genesis. The upgrade key goes before mainnet.</p>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Mint authority</b><span>Revoked after genesis</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Freeze authority</b><span>Revoked after genesis</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Metadata authority</b><span>Revoked after genesis</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-alert"/></svg><b>Upgrade authority</b><span>Still live: goes before mainnet</span></div>
+  </div>
+  <p class="lede" style="margin-top:20px">Each one is a quantum backdoor.</p>
   <aside class="notes">This is the thing you can do on Monday without any new cryptography. Count the keys that can still change your token. Every one of them is a single Ed25519 signature away from someone else.</aside>
 </section>
 <section>
@@ -255,6 +334,14 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   // A big number shrinks until it fits its column instead of wrapping or running into the text beside it.
   const fitBig=()=>deck.querySelectorAll('.big').forEach(b=>{const w=b.parentElement.clientWidth;let f=180;b.style.fontSize='';while(b.scrollWidth>w&&f>60){b.style.fontSize=(f-=6)+'px'}});
   fitBig();document.fonts&&document.fonts.ready.then(fitBig);
+  // Brand frame: the deck's mark (<svg id="brandmark">, optional) + title + page number on every slide.
+  const bm=document.getElementById('brandmark'),name=document.title;
+  const mark=()=>{const c=bm.cloneNode(true);c.removeAttribute('id');c.removeAttribute('hidden');return c};
+  S.forEach((s,n)=>{if(s.querySelector('.foot'))return;const f=document.createElement('div');f.className='foot';
+    f.innerHTML=`<span class="bm"></span><span></span><span class="pg">${n+1} / ${S.length}</span>`;
+    if(bm)f.firstChild.appendChild(mark());else f.firstChild.remove();
+    f.querySelector('span:not(.bm):not(.pg)').textContent=name;s.appendChild(f);
+    const lg=s.querySelector('.logo');if(lg&&bm&&!lg.firstElementChild)lg.appendChild(mark());});
   // ?print shows every slide in its final state, for PDF and PPTX export.
   if(/[?&]print\b/.test(location.search))document.body.classList.add('print');
   setTimeout(()=>document.getElementById('hint').classList.add('gone'),4000);

@@ -33,6 +33,15 @@ if (/<section[\s>]/i.test(raw) && slides.length >= 6) {
     r.issues.push({ slide: 0, kind: 'visual', msg: `Only ${visual} slide(s) show a chart, table, timeline, diagram or image. Chart at least three of the sourced numbers.`, cost: 6 });
     r.score = Math.max(0, r.score - Math.round(6 * 10 / Math.max(slides.length, 5)) * (3 - visual));
   }
+  // Funded decks (Colosseum winners, Airbnb) have no slide that is only words: each carries a picture, chart, icon or product.
+  // A brand slide (full-bleed colour with the logo) and a single quote slide count as pictures.
+  const VIS = /class="[^"]*\b(hbars|tl|flow|shot|frame|stat|phone|rings|quad|cards|ico|brand|logo|big|quote)\b|<table|<svg|<img/i;
+  [...raw.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/gi)].forEach(([, attrs, s], k) => {
+    if (!VIS.test(attrs + s.replace(/<aside[\s\S]*?<\/aside>/gi, ''))) {
+      r.issues.push({ slide: k + 1, kind: 'visual', msg: 'Text only. Add the chart, icon cards, product image or diagram that proves the headline.', cost: 2 });
+      r.score = Math.max(0, r.score - Math.round(2 * 10 / Math.max(slides.length, 5)));
+    }
+  });
   // The last slide is what stays on screen during questions. A headline alone on it reads as a template.
   const secs = [...raw.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/gi)].map(m => m[1].replace(/<aside[\s\S]*?<\/aside>/gi, ''));
   if (!/class="[^"]*\b(hbars|tl|flow|shot|frame|stat)\b|<table|<svg|<img/i.test(secs[secs.length - 1])) {

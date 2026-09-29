@@ -1,7 +1,9 @@
-<title>QuantCoin pitch</title>
-<section class="center">
-  <div class="fill center rv">
-    <svg width="88" height="88" viewBox="0 0 512 512" style="margin:0 auto 28px"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
+<title>QuantCoin</title>
+<style>:root{--accent:#0D8A80;--brand:#0B1020}</style>
+<svg id="brandmark" hidden viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
+<section class="brand">
+  <div class="fill rv">
+    <svg width="96" height="96" viewBox="0 0 512 512" style="margin:0 0 36px"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
     <h1>QuantCoin keeps long-held Solana tokens safe from a quantum computer</h1>
     <p class="lede">A Token-2022 token with a hybrid vault · Bryan Kwandou · devnet, pre-audit</p>
   </div>
@@ -61,10 +63,10 @@
   <div class="eyebrow">Product</div>
   <h2>A vault opens only when both signatures check out</h2>
   <div class="flow rv">
-    <div><b>Ed25519</b><span>Owner's normal wallet signature</span></div><em>+</em>
-    <div><b>Winternitz</b><span>One-time hash signature over SHA-256</span></div><em>→</em>
-    <div class="hi"><b>Vault program</b><span>Checks both, or refuses</span></div><em>→</em>
-    <div><b>Spend</b><span>Pays out, refunds the rest to a fresh vault</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Ed25519</b><span>Owner's normal wallet signature</span></div><em>+</em>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Winternitz</b><span>One-time hash signature over SHA-256</span></div><em>→</em>
+    <div class="hi"><svg class="ico"><use href="#i-shield"/></svg><b>Vault program</b><span>Checks both, or refuses</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-send"/></svg><b>Spend</b><span>Pays out, refunds the rest to a fresh vault</span></div>
   </div>
   <p class="lede" style="margin-top:48px">An attacker has to break both.</p>
   <aside class="notes">An attacker has to break both. Before quantum computers exist, Ed25519 also covers any bug in the newer Winternitz code. After, the hash half still holds. Every spend empties the vault, so no one-time key signs twice. Everyday transfers stay plain Token-2022, so wallets need nothing new.</aside>
@@ -119,17 +121,23 @@
 <section>
   <div class="eyebrow">Team</div>
   <h2>One builder wrote the program, the client and the audit trail</h2>
-  <p>Bryan Kwandou built the Pinocchio vault, the TypeScript WOTS client, the Codama IDL and the internal audit. The next hire is a reviewer who did not write the code.</p>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-code"/></svg><b>Vault program</b><span>Pinocchio, Rust</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>WOTS client</b><span>TypeScript signer, Codama IDL</span></div>
+    <div><svg class="ico"><use href="#i-doc"/></svg><b>Internal audit</b><span>Findings F1 to F5, all public</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-search"/></svg><b>Next hire</b><span>A reviewer who did not write the code</span></div>
+  </div>
+  <p class="lede" style="margin-top:20px">All four by Bryan Kwandou so far.</p>
   <aside class="notes">It is one person today. That is the main risk, and the reason the external audit comes before anything else.</aside>
 </section>
 <section>
   <div class="eyebrow">Ask</div>
   <h2>Fund an external audit, then lock the program for good</h2>
   <div class="flow rv">
-    <div><b>Today</b><span>Devnet, program under 7&nbsp;KB</span></div><em>→</em>
-    <div class="hi"><b>External audit</b><span>What we ask you to fund</span></div><em>→</em>
-    <div><b>Mainnet</b><span>Same bytes the auditor read</span></div><em>→</em>
-    <div><b>Upgrade key final</b><span>No Ed25519 backdoor left</span></div>
+    <div><svg class="ico"><use href="#i-code"/></svg><b>Today</b><span>Devnet, program under 7&nbsp;KB</span></div><em>→</em>
+    <div class="hi"><svg class="ico"><use href="#i-search"/></svg><b>External audit</b><span>What we ask you to fund</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-globe"/></svg><b>Mainnet</b><span>Same bytes the auditor read</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Upgrade key final</b><span>No Ed25519 backdoor left</span></div>
   </div>
   <p class="source">Source: team plan, not outside data</p>
   <aside class="notes">The ask is simple. An outside audit of a program under seven kilobytes. Then mainnet, and the upgrade key thrown away, because any Ed25519 key left behind would undo the whole point.</aside>

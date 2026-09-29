@@ -8,6 +8,20 @@ Check the spine against these three before building slides. Each missing row is 
 - Sequoia Capital, "Writing a Business Plan" (sequoiacap.com/article/writing-a-business-plan): Company purpose, Problem, Solution, Why now?, Market potential, Competition / alternatives, Business model, Team, Financials, Vision.
 - Airbnb seed deck, 2008 (widely republished; teardown at slidebean.com/blog/airbnb-pitch-deck): real product screenshots on the product slide, market size as nested figures with named sources, competitors placed on a two-axis map, one idea per slide.
 
+- Real Colosseum winner decks, from the public sheet of winning decks (docs.google.com/spreadsheets/d/19BzDy0DoJP3qNlK66qlmzYc8qh4H-zpf3LGialda-a0): Windfall (3rd, Radar, 55 slides) and Moon Boi Universe (4th, Renaissance, 14 slides), read page by page on 2026-09-29. What both do that a template deck does not:
+  - one brand colour owns the deck, with the logo on the cover and in the footer of every slide, plus a page number (Windfall: yellow; Moon Boi: black with neon);
+  - icons and partner names inside the diagrams (Windfall's flow: Player → Windfall → Sanctum → Jito);
+  - real product screens, traction as large numbers, team as faces with one line each;
+  - no slide is only words.
+
+## What Plinth does about it
+
+- `<style>:root{--accent:…;--brand:…}</style>` and `<svg id="brandmark" hidden>` at the top of the deck: the template puts the mark, deck name and page number on every slide.
+- `section.brand` for the cover, section breaks and discussion questions: full-bleed brand colour with the logo (`<div class="logo"></div>`).
+- Icons from the template sprite (`<svg class="ico"><use href="#i-chat"/></svg>`) at the start of every `.flow`, `.tl` and `.cards` item.
+- `.cards` for anything listed without numbers: team roles, budget lines, audit findings, learning goals.
+- The linter flags every slide that is only words.
+
 ## Checklist
 
 | Row | Colosseum | Sequoia | Airbnb 2008 | Plinth component |

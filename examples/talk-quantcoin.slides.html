@@ -1,6 +1,9 @@
 <title>QuantCoin talk</title>
-<section class="center">
-  <div class="fill center">
+<style>:root{--accent:#0D8A80;--brand:#0B1020}</style>
+<svg id="brandmark" hidden viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
+<section class="brand">
+  <div class="logo"></div>
+  <div class="fill">
     <h1>A token cannot make Solana quantum-safe, but a vault can</h1>
     <p class="lede">What QuantCoin protects, what it cannot, and what it cost to build · Bryan Kwandou</p>
   </div>
@@ -32,7 +35,11 @@
 <section>
   <div class="eyebrow">Why hash-based</div>
   <h2>Hash signatures lose only half their bits to Grover</h2>
-  <p>Grover's algorithm gives a square-root speedup against a hash, so a 192-bit digest keeps about 96 bits of post-quantum security. NIST standardized this family as SLH-DSA.</p>
+  <div class="hbars">
+    <span class="l">Against a normal computer</span><div class="t" style="--b:100;--d:0"><i></i></div><span class="v">192 bits</span>
+    <span class="l">Against Grover</span><div class="t hi" style="--b:50;--d:1"><i></i></div><span class="v">~96 bits</span>
+  </div>
+  <p class="lede">A square-root speedup halves the bits. NIST standardized this family as SLH-DSA.</p>
   <p class="source">Source: NIST, August 2024 [G3]; QuantCoin whitepaper, section 3.3</p>
   <aside class="notes">Lattice schemes are faster and smaller, but newer. Hash-based signatures assume only that SHA-256 behaves like a hash. For money meant to sit for decades, the oldest assumption is the one I wanted.</aside>
 </section>
@@ -40,17 +47,22 @@
   <div class="eyebrow">Design</div>
   <h2>Winternitz keys sign once, so every spend empties the vault</h2>
   <div class="flow rv">
-    <div><b>Sign once</b><span>Owner signs with Ed25519 and WOTS</span></div><em>→</em>
-    <div><b>Pay</b><span>Amount goes to the destination</span></div><em>→</em>
-    <div class="hi"><b>Move change</b><span>The rest goes to the owner's next vault</span></div><em>→</em>
-    <div><b>Close</b><span>The old vault's account is closed</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Sign once</b><span>Owner signs with Ed25519 and WOTS</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-send"/></svg><b>Pay</b><span>Amount goes to the destination</span></div><em>→</em>
+    <div class="hi"><svg class="ico"><use href="#i-wallet"/></svg><b>Move change</b><span>The rest goes to the owner's next vault</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Close</b><span>The old vault's account is closed</span></div>
   </div>
   <aside class="notes">A one-time signature leaks part of its key each time it signs. Signing twice would let someone forge. So the program never allows it: spend means drain, and the change moves to a fresh key.</aside>
 </section>
 <section>
   <div class="eyebrow">Design</div>
   <h2>The vault address itself commits to both keys</h2>
-  <p>The address is a PDA of the Winternitz key hash and the owner. The program recomputes the Winternitz public key from the signature and checks it lands on the same address. Nothing is stored on-chain.</p>
+  <div class="flow rv">
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Key hash + owner</b><span>Seeds of the vault PDA</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Signature</b><span>Program recomputes the Winternitz key</span></div><em>→</em>
+    <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Same address?</b><span>Yes: spend. No: refuse</span></div>
+  </div>
+  <p class="lede">Nothing is stored on-chain.</p>
   <aside class="notes">This is the trick that keeps the program stateless. There is no account holding a public key that could be swapped. If the signature does not rebuild the key that made the address, the spend fails.</aside>
 </section>
 <section>
@@ -76,32 +88,48 @@
 <section>
   <div class="eyebrow">Proof</div>
   <h2>The whole supply moved once on devnet, and it matched</h2>
-  <p>Spend Np26Uxfw sent 1,000,000 QC, refunded 21,999,999,000,000 QC to a new vault and closed the old one. The TypeScript signer and Rust verifier agreed.</p>
+  <div class="flow rv">
+    <div><svg class="ico"><use href="#i-wallet"/></svg><b>Old vault</b><span>Whole supply</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-send"/></svg><b>1,000,000 QC</b><span>Paid out</span></div><em>+</em>
+    <div class="hi"><svg class="ico"><use href="#i-shield"/></svg><b>21,999,999,000,000 QC</b><span>Refunded to a fresh vault</span></div><em>→</em>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>Closed</b><span>Old vault removed</span></div>
+  </div>
+  <p class="lede">Spend Np26Uxfw: the TypeScript signer and Rust verifier agreed.</p>
   <p class="source">Source: QuantCoin README, devnet run 2026-09-23</p>
   <aside class="notes">Two separate implementations of the same hash chains, in two languages, agreeing on a real transaction. That is the test I trust more than any unit test.</aside>
 </section>
 <section>
   <div class="eyebrow">Audit</div>
   <h2>The internal audit caught a test that passed for the wrong reason</h2>
-  <p>Negative tests failed on an earlier check, not the one they claimed to test. Fixed, and every test now asserts its exact error code. A client bug that could lock a vault after a failed broadcast was fixed too.</p>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-alert"/></svg><b>F1: tests</b><span>Failed on an earlier check than the one they claimed. Each now asserts its exact error code</span></div>
+    <div><svg class="ico"><use href="#i-lock"/></svg><b>F2: client</b><span>A failed broadcast could lock a vault. Fixed</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Status</b><span>Both fixed, both public in AUDIT.md</span></div>
+  </div>
   <p class="source">Source: QuantCoin audit/AUDIT.md, findings F1 and F2</p>
   <aside class="notes">This is my favourite finding because it is so ordinary. The tests were green. They were green for the wrong reason. It only showed up when each test had to name the exact error it expected.</aside>
 </section>
 <section>
   <div class="eyebrow">Caveats</div>
   <h2>QuantCoin in a normal wallet is exactly as exposed as SOL</h2>
-  <ul>
-    <li>Only vault balances get the hash half</li>
-    <li>Vault secrets sit in plaintext until moved offline</li>
-    <li>No external audit yet, so no mainnet yet</li>
-  </ul>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-wallet"/></svg><b>Normal wallet</b><span>Only vault balances get the hash half</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Secrets</b><span>Plaintext until moved offline</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-alert"/></svg><b>Audit</b><span>No external audit yet, so no mainnet yet</span></div>
+  </div>
   <p class="source">Source: QuantCoin README; audit/AUDIT.md finding F5</p>
   <aside class="notes">I want to be precise about the limits. Tokens you move to Phantom are protected by Phantom, which means Ed25519. The vault is for balances that sit still. And until someone outside checks the code, it stays on devnet.</aside>
 </section>
 <section>
   <div class="eyebrow">Try this</div>
   <h2>List every Ed25519 key that could still move your treasury</h2>
-  <p>Mint authority, freeze authority, metadata authority, program upgrade authority. Each one is a quantum backdoor. QuantCoin revoked the first three after genesis. The upgrade key goes before mainnet.</p>
+  <div class="cards rv">
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Mint authority</b><span>Revoked after genesis</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Freeze authority</b><span>Revoked after genesis</span></div>
+    <div><svg class="ico"><use href="#i-key"/></svg><b>Metadata authority</b><span>Revoked after genesis</span></div>
+    <div class="hi"><svg class="ico"><use href="#i-alert"/></svg><b>Upgrade authority</b><span>Still live: goes before mainnet</span></div>
+  </div>
+  <p class="lede" style="margin-top:20px">Each one is a quantum backdoor.</p>
   <aside class="notes">This is the thing you can do on Monday without any new cryptography. Count the keys that can still change your token. Every one of them is a single Ed25519 signature away from someone else.</aside>
 </section>
 <section>
