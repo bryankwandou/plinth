@@ -20,8 +20,22 @@ for (const f of process.argv.slice(2)) {
       s.classList.add('on');
       const box = s.getBoundingClientRect();
       // leaf blocks that carry visible content
-      const els = [...s.querySelectorAll('h1,h2,p,li,img,svg,.big,.hbars,.tl>div,.flow>div,table,.frame,.stat')]
+      const els = [...s.querySelectorAll('h1,h2,p,li,img,svg,.big,.hbars,.tl>div,.flow>div,table,.frame,.stat,.phone,.rings,.quad')]
         .filter(e => !e.closest('aside') && e.getClientRects().length);
+      // Labels drawn inside a picture (map dots, axis names, ring captions) can escape it or collide with each other.
+      const labels = [...s.querySelectorAll('.quad .dot,.quad .ax,.rings b,.rings span')];
+      for (const l of labels) {
+        const r = l.getBoundingClientRect();
+        if (r.right > box.right - 8 || r.left < box.left + 8) out.push(`slide ${n + 1}: label "${l.textContent.trim().slice(0, 30)}" runs off the slide`);
+        const ring = l.closest('.rings>div');
+        if (ring) { const c = ring.getBoundingClientRect(); if (r.left < c.left || r.right > c.right) out.push(`slide ${n + 1}: "${l.textContent.trim().slice(0, 30)}" is wider than its circle`); }
+        for (const o of [...labels, ...s.querySelectorAll('h1,h2,p.source,table')]) {
+          if (o === l || o.contains(l) || l.contains(o) || o.closest('.rings>div') && o.closest('.rings>div') === ring) continue;
+          const c = o.getBoundingClientRect();
+          if (Math.min(r.right, c.right) - Math.max(r.left, c.left) > 4 && Math.min(r.bottom, c.bottom) - Math.max(r.top, c.top) > 4)
+            out.push(`slide ${n + 1}: label "${l.textContent.trim().slice(0, 30)}" overlaps "${o.textContent.trim().slice(0, 30)}"`);
+        }
+      }
       for (const e of els) {
         const r = e.getBoundingClientRect();
         if (r.right > box.right - 8 || r.bottom > box.bottom - 8 || r.left < box.left + 8 || r.top < box.top + 8)

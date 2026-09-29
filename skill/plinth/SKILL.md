@@ -36,6 +36,8 @@ Headline rules:
 - 12 words or fewer. If it needs more, it is two slides.
 - Section labels ("Problem", "Market", "Team") go in the small eyebrow above the headline, never as the headline.
 
+For a pitch or grant, check the spine against `references/benchmark.md` (Colosseum's judging guidance, Sequoia's plan, the Airbnb seed deck). Each missing row becomes a slide, or a line in the hand-over saying why it is missing.
+
 Show the spine to the user when the stakes are high (investor, judged pitch). For a routine internal deck, go straight on.
 
 ## Step 2 — Give each slide one job
@@ -45,6 +47,9 @@ For each headline pick exactly one supporting element:
 - one table (`table.t`) when options are compared on the same attributes (competition, pricing tiers)
 - one timeline (`.tl`) for deadlines, milestones, regulation dates
 - one flow diagram (`.flow`) for how the product works; it needs no number
+- one phone mockup (`.phone`, `.phone.sms`) showing the real messages when the product lives in chat or SMS, captioned as an illustration
+- nested market circles (`.rings`), every ring a sourced number, for market size
+- a two-axis positioning map (`.quad`) for competition, axes the buyer cares about
 - one screenshot or product frame (`img.shot` + `.cap`), cropped to the part that matters. A design mockup says "Design mockup, not yet built" in its caption
 - one number, set large (`.big`), with its source line underneath, only when there is nothing to compare it with
 - one short list, three items at most

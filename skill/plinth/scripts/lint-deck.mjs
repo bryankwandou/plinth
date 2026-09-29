@@ -13,7 +13,9 @@ let slides;
 if (/<section[\s>]/i.test(raw)) {
   slides = [...raw.matchAll(/<section[^>]*>([\s\S]*?)<\/section>/gi)].map(([, s]) => {
     // Notes are spoken, not shown; "specimen" blocks quote bad copy on purpose.
-    s = s.replace(/<aside[\s\S]*?<\/aside>/gi, '').replace(/<div class="[^"]*specimen[^"]*">[\s\S]*?<\/div>/gi, '');
+    s = s.replace(/<aside[\s\S]*?<\/aside>/gi, '').replace(/<div class="[^"]*specimen[^"]*">[\s\S]*?<\/div>/gi, '')
+      // Phone mockups and positioning maps are pictures: their labels are not body copy.
+      .replace(/<div class="phone[\s\S]*?<\/p>\s*<\/div>/gi, '').replace(/<div class="quad[\s\S]*?<\/span>\s*<\/div>/gi, '');
     const h = (s.match(/<h[12][^>]*>([\s\S]*?)<\/h[12]>/i) || s.match(/class="quote"[^>]*>([\s\S]*?)<\/p>/i) || [])[1] || '';
     const source = strip((s.match(/class="source"[^>]*>([\s\S]*?)<\//i) || [])[1] || '');
     const body = s.replace(/<h[12][^>]*>[\s\S]*?<\/h[12]>/i, '').replace(/class="(eyebrow|source)"[^>]*>[\s\S]*?</gi, '><')

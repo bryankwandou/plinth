@@ -81,6 +81,30 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .flow span{display:block;font-size:17px;line-height:1.4;color:var(--muted)}
 .shot{display:block;max-width:100%;max-height:340px;border-radius:12px;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
 .cap{font-size:14px;color:var(--muted);margin-top:10px}
+/* Product illustration: a phone showing the real message flow. Caption says whether it is built or a mockup. */
+.phone{width:260px;height:430px;border:10px solid var(--ink);border-radius:40px;background:#ECE5DD;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.5);flex:none}
+.phone .top{margin:-14px -12px 6px;padding:12px 14px;background:#075E54;color:#fff;font-size:15px;font-weight:600}
+.phone .top small{display:block;font-weight:400;opacity:.8;font-size:11px}
+.phone p{font-size:14px;line-height:1.35;max-width:82%;padding:7px 10px;border-radius:8px;background:#fff;color:#111;margin:0;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+.phone p.me{align-self:flex-end;background:#DCF8C6}
+.phone p code{font-family:var(--mono);font-size:12px;display:block;white-space:pre;margin-top:4px}
+.phone.sms{background:#fff}.phone.sms .top{background:#F2F2F7;color:#111}.phone.sms p{background:#E9E9EB}.phone.sms p.me{background:#2F7CF6;color:#fff}
+.rv.phone p{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+section.on .rv.phone p{opacity:1;transform:none}
+section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone p:nth-of-type(3){transition-delay:1s}section.on .rv.phone p:nth-of-type(4){transition-delay:1.5s}
+/* Market size: nested circles, area roughly proportional; every ring carries a sourced number. */
+.rings{position:relative;width:380px;height:380px;flex:none}
+.rings>div{position:absolute;left:50%;bottom:0;transform:translateX(-50%);border-radius:50%;border:2px solid var(--line);background:var(--panel);display:flex;justify-content:center;padding-top:18px;text-align:center}
+.rings>div.hi{background:var(--accent);border-color:var(--accent);color:#fff;align-items:center;padding:0}
+.rings b{display:block;font-size:26px}.rings span{display:block;font-size:14px;color:var(--muted);max-width:180px}.rings .hi span{color:#fff}
+/* Positioning map: two axes that matter to the buyer, logos or names placed on it. */
+.quad{position:relative;width:100%;height:340px;border-left:2px solid var(--ink);border-bottom:2px solid var(--ink);flex:none;background:linear-gradient(var(--line),var(--line)) 50% 0/1px 100% no-repeat,linear-gradient(var(--line),var(--line)) 0 50%/100% 1px no-repeat}
+.quad .ax{position:absolute;white-space:nowrap;font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.quad .ax.x{right:0;bottom:-26px}.quad .ax.y{left:12px;top:0}
+.quad .dot{position:absolute;transform:translateY(50%);display:flex;align-items:center;gap:8px;font-size:16px;white-space:nowrap}
+.quad .dot::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--muted)}
+.quad .dot.hi{color:var(--accent);font-weight:700}.quad .dot.hi::before{background:var(--accent);width:18px;height:18px}
+.split{display:flex;gap:56px;align-items:center;flex:1;min-height:0}.split>div:not(.phone):not(.rings):not(.quad){flex:1;min-width:0}
 /* entrance: children of .rv rise in one after another */
 .rv>*{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 section.on .rv>*,.print .rv>*{opacity:1;transform:none}
@@ -201,12 +225,12 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Competition</div>
   <h2>Solana's own plan protects new wallets, not old balances</h2>
-  <table class="t rv">
-    <tr><th></th><th>Protects</th><th>Available</th><th>Needs a protocol change</th></tr>
-    <tr><td>Solana Foundation plan [L3]</td><td>New wallets</td><td>If quantum turns credible</td><td>Yes</td></tr>
-    <tr><td>Blueshift Winternitz vault [L1]</td><td>SOL only</td><td>Now</td><td>No</td></tr>
-    <tr class="hi"><td>QuantCoin</td><td>Any Token-2022 balance</td><td>Devnet now</td><td>No</td></tr>
-  </table>
+  <div class="quad rv" style="margin-top:40px">
+    <span class="ax y">↑ Protects balances that already exist</span><span class="ax x">Works today, no protocol change →</span>
+    <span class="dot" style="left:6%;bottom:22%">Solana Foundation plan: new wallets, if quantum turns credible [L3]</span>
+    <span class="dot" style="left:56%;bottom:52%">Blueshift vault: SOL only [L1]</span>
+    <span class="dot hi" style="left:56%;bottom:86%">QuantCoin: any Token-2022 balance, devnet now</span>
+  </div>
   <p class="source">Source: Solana Foundation, April 2026 [L3]; Blueshift on GitHub [L1]</p>
   <aside class="notes">The Foundation says quantum is still years away and plans Falcon for new wallets later. That is fair. But its plan starts when the threat is credible, and a treasury cannot move in a day. Blueshift proved the idea for SOL. QuantCoin extends it to tokens.</aside>
 </section>

@@ -56,13 +56,20 @@
 <section>
   <div class="eyebrow">Approach</div>
   <h2>We use the text to find who stopped, then send a person</h2>
-  <div class="flow rv">
-    <div><b>Daily SMS</b><span>Patient replies after each dose</span></div><em>→</em>
-    <div><b>Two silent days</b><span>Alert to the assigned health worker</span></div><em>→</em>
-    <div class="hi"><b>Home visit</b><span>Worker logs the reason</span></div><em>→</em>
-    <div><b>Clinic</b><span>Adjusts care</span></div>
+  <div class="split">
+    <div><div class="tl rv" style="grid-template-columns:1fr 1fr">
+      <div><b>Day 1–14</b><span>Patient replies "1" after each dose</span></div>
+      <div class="hi"><b>2 silent days</b><span>Health worker gets the alert and visits</span></div>
+    </div>
+    <p class="lede" style="margin-top:40px">The text is the trigger. The visit is the intervention.</p></div>
+    <div class="phone sms rv"><div class="top">TB Program<small>SMS</small></div>
+      <p>Did you take today's dose? Reply 1 for yes, 2 for no.</p>
+      <p class="me">1</p>
+      <p>Thank you. Day 14 of 180.</p>
+      <p>No reply for 2 days. Ibu Rina from the clinic will visit tomorrow.</p>
+    </div>
   </div>
-  <p class="lede" style="margin-top:48px">The text is the trigger. The visit is the intervention.</p>
+  <p class="source">Illustration of the proposed message flow, not a live system</p>
   <aside class="notes">Replies falling off is the data point Zindagi treated as failure. We treat it as the signal. The reason logged at each visit, whether side effects, cost of travel or stigma, becomes the dataset the ministries can use.</aside>
 </section>
 <section>
