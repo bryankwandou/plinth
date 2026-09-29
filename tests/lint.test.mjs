@@ -128,3 +128,10 @@ test('photos, screenshots and phones count as real pictures', () => {
   assert.doesNotMatch(out, /real picture/);
   assert.doesNotMatch(out, /Number with no source/, 'a date in a photo credit is not a claim');
 });
+test('built decks (template + slides) score the same as their source', () => {
+  const run = f => { try { return execFileSync('node', ['skill/plinth/scripts/lint-deck.mjs', f, '--json'], { encoding: 'utf8' }); } catch (e) { return e.stdout; } };
+  for (const n of ['pitch-catatkas', 'talk-cdmx-es', 'pitch-quantcoin']) {
+    const a = JSON.parse(run(`examples/${n}.slides.html`)), b = JSON.parse(run(`site/decks/${n}.html`));
+    assert.equal(b.slides, a.slides, n + ' slide count'); assert.equal(b.score, a.score, n + ' score');
+  }
+});

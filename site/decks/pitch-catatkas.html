@@ -69,7 +69,7 @@ section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>ta
 h1 em,h2 em{font-style:normal;color:var(--accent)}
 section.brand h1 em,section.brand h2 em,section.photo h1 em,section.photo h2 em{color:inherit;text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:10px}
 /* Half-bleed picture running to the slide edge (Grab and GoTo covers, Airbnb's product slide).
-   <section class="media"> ... <figure class="pic"><img src alt><figcaption class="credit">Foto: name, licence</figcaption></figure> */
+   Markup: section.media, then as its last child figure.pic holding the img and a figcaption.credit (author, licence). */
 section.media{padding-right:calc(44% + 56px)}
 section.media>.pic{position:absolute;top:0;right:0;bottom:0;width:44%;margin:0;overflow:hidden;background:var(--panel)}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}

@@ -6,7 +6,8 @@ const { lintSlides, parseText } = createRequire(import.meta.url)('./lint-core.js
 
 const file = process.argv[2];
 if (!file) { console.error('usage: lint-deck.mjs <deck.html|slides.txt> [--json]'); process.exit(2); }
-const raw = readFileSync(file, 'utf8');
+// Styles and scripts are not slides, even when a comment inside them shows example markup.
+const raw = readFileSync(file, 'utf8').replace(/<(style|script)\b[\s\S]*?<\/\1>/gi, '');
 
 const strip = s => s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/[ \t]+/g, ' ').trim();
 let slides;
