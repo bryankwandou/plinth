@@ -66,7 +66,7 @@ section.brand::after{content:"";position:absolute;right:-160px;top:-160px;width:
 .cards .ico{width:48px;height:48px;margin-bottom:22px}
 .cards b{display:block;font-size:26px;letter-spacing:-.01em;margin-bottom:10px}.cards span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 /* The picture sits in the middle of the space under the headline, not stuck to it with a void below. */
-section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso{margin-top:auto!important;margin-bottom:auto}
+section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso,section>.gantt{margin-top:auto!important;margin-bottom:auto}
 /* The key phrase of a headline in the brand colour, as GoTo and Grab do: <h2>Loans <em>tripled</em> in a year</h2> */
 h1 em,h2 em{font-style:normal;color:var(--accent)}
 section.brand h1 em,section.brand h2 em,section.photo h1 em,section.photo h2 em{color:inherit;text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:10px}
@@ -142,6 +142,20 @@ section.on .stack>div,.print .stack>div{clip-path:inset(0)}
 .phones figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
 .phones .phone{width:210px;height:300px}
 .phones figcaption{font-size:22px;font-weight:600;text-align:center}.phones figcaption span{display:block;font-weight:400;color:var(--muted);font-size:18px;margin-top:2px}
+/* Roadmap or ask as a gantt over real months or weeks, as in investor decks: one row per deliverable, the bar
+   from --a to --b on a 0..--max axis, the end label beside the bar (inside it with class "end").
+   --ticks is the number of gridline intervals; the last row is the axis: <div class="ax"><b></b><p><span>0</span>…<span>18</span></p></div>
+   <div class="gantt" style="--max:18;--ticks:3"><div style="--a:0;--b:3"><b>SMS service<small>open source</small></b><i><em>Month 3</em></i></div>…</div> */
+.gantt{display:grid;gap:16px;padding-top:24px}
+.gantt>div{display:grid;grid-template-columns:320px 1fr;align-items:center;gap:28px}
+.gantt>div>b{font-size:22px;font-weight:600;line-height:1.25}.gantt>div>b small{display:block;font-size:18px;font-weight:400;color:var(--muted);margin-top:2px}
+.gantt>div>i{position:relative;height:52px;border-left:2px solid var(--ink);background:repeating-linear-gradient(90deg,transparent 0 calc(100% / var(--ticks,3) - 1px),var(--line) 0 calc(100% / var(--ticks,3)))}
+.gantt>div>i::before{content:"";position:absolute;top:8px;bottom:8px;left:calc(var(--a) / var(--max) * 100%);width:calc((var(--b) - var(--a)) / var(--max) * 100%);background:color-mix(in srgb,var(--muted) 38%,var(--bg));border-radius:0 8px 8px 0}
+.gantt>div.hi>i::before{background:var(--accent)}
+.gantt em{position:absolute;top:50%;transform:translateY(-50%);left:calc(var(--b) / var(--max) * 100% + 14px);font-style:normal;font-size:19px;font-weight:600;white-space:nowrap}
+.gantt .hi em{color:var(--accent)}
+.gantt .end em{left:auto;right:calc((var(--max) - var(--b)) / var(--max) * 100% + 14px);color:#fff}
+.gantt>.ax p{margin:-6px -12px 0 -6px;max-width:none;display:flex;justify-content:space-between;font-size:18px;color:var(--muted);font-feature-settings:"tnum"}
 aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
@@ -188,7 +202,7 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .phone p code{font-family:var(--mono);font-size:12px;display:block;white-space:pre;margin-top:4px}
 .phone.sms{background:#fff}.phone.sms .top{background:#F2F2F7;color:#111}.phone.sms p{background:#E9E9EB}.phone.sms p.me{background:#2F7CF6;color:#fff}
 .rv.phone p{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
-section.on .rv.phone p{opacity:1;transform:none}
+section.on .rv.phone p,.print .rv.phone p{opacity:1;transform:none}
 section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone p:nth-of-type(3){transition-delay:1s}section.on .rv.phone p:nth-of-type(4){transition-delay:1.5s}
 /* Market size: nested circles, area roughly proportional; every ring carries a sourced number. */
 .rings{position:relative;width:340px;height:340px;flex:none}
@@ -216,7 +230,13 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
-@media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
+/* Ctrl+P or the P key prints every slide, not only the one on screen: each chart in its final frame. */
+@media print{
+  *,*::before,*::after{transition:none!important}
+  .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important}.rv>*,.rv.phone p{opacity:1!important;transform:none!important}
+  .cols i{height:calc(var(--v) / var(--max,100) * (100% - 52px))!important}.donut{--pp:var(--p)!important}
+  .iso svg{opacity:1!important;transform:none!important}.stack>div{clip-path:inset(0)!important}
+}
 @media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*,.cols i,.donut,.stack>div,.iso svg{transition:none}}
 /* PDF and PPTX capture the final frame: nothing may still be moving. */
 .print *,.print *::before{transition:none!important}
@@ -337,10 +357,11 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Milestones</div>
   <h2>Three deliverables, each checkable by the funder</h2>
-  <div class="flow rv">
-    <div><svg class="ico"><use href="#i-code"/></svg><b>Month 3</b><span>Open-source SMS and alert service on GitHub</span></div><em>→</em>
-    <div><svg class="ico"><use href="#i-home"/></svg><b>Month 6</b><span>Pilot in one district per country</span></div><em>→</em>
-    <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Month 18</b><span>Randomized evaluation report, registered protocol</span></div>
+  <div class="gantt" style="--max:18;--ticks:6">
+    <div style="--a:0;--b:3"><b>SMS and alert service<small>open source, on GitHub</small></b><i><em>Month 3</em></i></div>
+    <div style="--a:3;--b:6"><b>District pilots<small>one district per country</small></b><i><em>live by Month 6</em></i></div>
+    <div class="hi end" style="--a:6;--b:18"><b>Randomized evaluation<small>registered protocol</small></b><i><em>report, Month 18</em></i></div>
+    <div class="ax"><b></b><p><span>0</span><span>3</span><span>6</span><span>9</span><span>12</span><span>15</span><span>18 mo</span></p></div>
   </div>
   <p class="source">Plan: proposed schedule, months from grant start</p>
   <aside class="notes">Dates are from grant start. Pilot districts are not yet chosen and depend on partner health offices. The evaluation will be pre-registered so a null result gets published too.</aside>
@@ -357,16 +378,9 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <p class="lede" style="margin-top:20px">No amounts yet; they come from the country partners.</p>
   <aside class="notes">We have not written a budget yet and will not guess one on a slide. The principle is fixed: the software is small and open source, and the spending follows the visits, because the visits are what the evidence supports.</aside>
 </section>
-<section>
-  <div class="eyebrow">Team</div>
-  <h2>Sample deck: no team yet, three roles needed</h2>
-  <div class="cards rv">
-    <div><svg class="ico"><use href="#i-health"/></svg><b>TB program, Indonesia</b><span>National program partner</span></div>
-    <div><svg class="ico"><use href="#i-health"/></svg><b>TB program, Philippines</b><span>National program partner</span></div>
-    <div class="hi"><svg class="ico"><use href="#i-search"/></svg><b>Evaluator</b><span>Someone who has run a trial before</span></div>
-  </div>
-  <aside class="notes">This is a sample deck, so no people or organisations are named, and none are invented. A real applicant fills three roles: a national TB programme partner in Indonesia, one in the Philippines, and an evaluator who has run a randomized trial before. Reviewers will check each one for past delivery.</aside>
-</section>
+<!-- No team slide: this is a sample deck and Plinth never invents people or partners. A real applicant adds one here
+     with three named roles: a national TB programme partner in Indonesia, one in the Philippines, and an evaluator who
+     has run a randomized trial before (benchmark.md, row "Team"). -->
 <section>
   <div class="eyebrow">Impact</div>
   <h2>Success means beating the 88% global treatment success rate</h2>

@@ -78,10 +78,11 @@
 <section>
   <div class="eyebrow">Milestones</div>
   <h2>Three deliverables, each checkable by the funder</h2>
-  <div class="flow rv">
-    <div><svg class="ico"><use href="#i-code"/></svg><b>Month 3</b><span>Open-source SMS and alert service on GitHub</span></div><em>→</em>
-    <div><svg class="ico"><use href="#i-home"/></svg><b>Month 6</b><span>Pilot in one district per country</span></div><em>→</em>
-    <div class="hi"><svg class="ico"><use href="#i-check"/></svg><b>Month 18</b><span>Randomized evaluation report, registered protocol</span></div>
+  <div class="gantt" style="--max:18;--ticks:6">
+    <div style="--a:0;--b:3"><b>SMS and alert service<small>open source, on GitHub</small></b><i><em>Month 3</em></i></div>
+    <div style="--a:3;--b:6"><b>District pilots<small>one district per country</small></b><i><em>live by Month 6</em></i></div>
+    <div class="hi end" style="--a:6;--b:18"><b>Randomized evaluation<small>registered protocol</small></b><i><em>report, Month 18</em></i></div>
+    <div class="ax"><b></b><p><span>0</span><span>3</span><span>6</span><span>9</span><span>12</span><span>15</span><span>18 mo</span></p></div>
   </div>
   <p class="source">Plan: proposed schedule, months from grant start</p>
   <aside class="notes">Dates are from grant start. Pilot districts are not yet chosen and depend on partner health offices. The evaluation will be pre-registered so a null result gets published too.</aside>
@@ -98,16 +99,9 @@
   <p class="lede" style="margin-top:20px">No amounts yet; they come from the country partners.</p>
   <aside class="notes">We have not written a budget yet and will not guess one on a slide. The principle is fixed: the software is small and open source, and the spending follows the visits, because the visits are what the evidence supports.</aside>
 </section>
-<section>
-  <div class="eyebrow">Team</div>
-  <h2>Sample deck: no team yet, three roles needed</h2>
-  <div class="cards rv">
-    <div><svg class="ico"><use href="#i-health"/></svg><b>TB program, Indonesia</b><span>National program partner</span></div>
-    <div><svg class="ico"><use href="#i-health"/></svg><b>TB program, Philippines</b><span>National program partner</span></div>
-    <div class="hi"><svg class="ico"><use href="#i-search"/></svg><b>Evaluator</b><span>Someone who has run a trial before</span></div>
-  </div>
-  <aside class="notes">This is a sample deck, so no people or organisations are named, and none are invented. A real applicant fills three roles: a national TB programme partner in Indonesia, one in the Philippines, and an evaluator who has run a randomized trial before. Reviewers will check each one for past delivery.</aside>
-</section>
+<!-- No team slide: this is a sample deck and Plinth never invents people or partners. A real applicant adds one here
+     with three named roles: a national TB programme partner in Indonesia, one in the Philippines, and an evaluator who
+     has run a randomized trial before (benchmark.md, row "Team"). -->
 <section>
   <div class="eyebrow">Impact</div>
   <h2>Success means beating the 88% global treatment success rate</h2>

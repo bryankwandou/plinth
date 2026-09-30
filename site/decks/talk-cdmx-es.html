@@ -66,7 +66,7 @@ section.brand::after{content:"";position:absolute;right:-160px;top:-160px;width:
 .cards .ico{width:48px;height:48px;margin-bottom:22px}
 .cards b{display:block;font-size:26px;letter-spacing:-.01em;margin-bottom:10px}.cards span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 /* The picture sits in the middle of the space under the headline, not stuck to it with a void below. */
-section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso{margin-top:auto!important;margin-bottom:auto}
+section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso,section>.gantt{margin-top:auto!important;margin-bottom:auto}
 /* The key phrase of a headline in the brand colour, as GoTo and Grab do: <h2>Loans <em>tripled</em> in a year</h2> */
 h1 em,h2 em{font-style:normal;color:var(--accent)}
 section.brand h1 em,section.brand h2 em,section.photo h1 em,section.photo h2 em{color:inherit;text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:10px}
@@ -142,6 +142,20 @@ section.on .stack>div,.print .stack>div{clip-path:inset(0)}
 .phones figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
 .phones .phone{width:210px;height:300px}
 .phones figcaption{font-size:22px;font-weight:600;text-align:center}.phones figcaption span{display:block;font-weight:400;color:var(--muted);font-size:18px;margin-top:2px}
+/* Roadmap or ask as a gantt over real months or weeks, as in investor decks: one row per deliverable, the bar
+   from --a to --b on a 0..--max axis, the end label beside the bar (inside it with class "end").
+   --ticks is the number of gridline intervals; the last row is the axis: <div class="ax"><b></b><p><span>0</span>…<span>18</span></p></div>
+   <div class="gantt" style="--max:18;--ticks:3"><div style="--a:0;--b:3"><b>SMS service<small>open source</small></b><i><em>Month 3</em></i></div>…</div> */
+.gantt{display:grid;gap:16px;padding-top:24px}
+.gantt>div{display:grid;grid-template-columns:320px 1fr;align-items:center;gap:28px}
+.gantt>div>b{font-size:22px;font-weight:600;line-height:1.25}.gantt>div>b small{display:block;font-size:18px;font-weight:400;color:var(--muted);margin-top:2px}
+.gantt>div>i{position:relative;height:52px;border-left:2px solid var(--ink);background:repeating-linear-gradient(90deg,transparent 0 calc(100% / var(--ticks,3) - 1px),var(--line) 0 calc(100% / var(--ticks,3)))}
+.gantt>div>i::before{content:"";position:absolute;top:8px;bottom:8px;left:calc(var(--a) / var(--max) * 100%);width:calc((var(--b) - var(--a)) / var(--max) * 100%);background:color-mix(in srgb,var(--muted) 38%,var(--bg));border-radius:0 8px 8px 0}
+.gantt>div.hi>i::before{background:var(--accent)}
+.gantt em{position:absolute;top:50%;transform:translateY(-50%);left:calc(var(--b) / var(--max) * 100% + 14px);font-style:normal;font-size:19px;font-weight:600;white-space:nowrap}
+.gantt .hi em{color:var(--accent)}
+.gantt .end em{left:auto;right:calc((var(--max) - var(--b)) / var(--max) * 100% + 14px);color:#fff}
+.gantt>.ax p{margin:-6px -12px 0 -6px;max-width:none;display:flex;justify-content:space-between;font-size:18px;color:var(--muted);font-feature-settings:"tnum"}
 aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
@@ -188,7 +202,7 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .phone p code{font-family:var(--mono);font-size:12px;display:block;white-space:pre;margin-top:4px}
 .phone.sms{background:#fff}.phone.sms .top{background:#F2F2F7;color:#111}.phone.sms p{background:#E9E9EB}.phone.sms p.me{background:#2F7CF6;color:#fff}
 .rv.phone p{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
-section.on .rv.phone p{opacity:1;transform:none}
+section.on .rv.phone p,.print .rv.phone p{opacity:1;transform:none}
 section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone p:nth-of-type(3){transition-delay:1s}section.on .rv.phone p:nth-of-type(4){transition-delay:1.5s}
 /* Market size: nested circles, area roughly proportional; every ring carries a sourced number. */
 .rings{position:relative;width:340px;height:340px;flex:none}
@@ -216,7 +230,13 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
-@media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
+/* Ctrl+P or the P key prints every slide, not only the one on screen: each chart in its final frame. */
+@media print{
+  *,*::before,*::after{transition:none!important}
+  .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important}.rv>*,.rv.phone p{opacity:1!important;transform:none!important}
+  .cols i{height:calc(var(--v) / var(--max,100) * (100% - 52px))!important}.donut{--pp:var(--p)!important}
+  .iso svg{opacity:1!important;transform:none!important}.stack>div{clip-path:inset(0)!important}
+}
 @media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*,.cols i,.donut,.stack>div,.iso svg{transition:none}}
 /* PDF and PPTX capture the final frame: nothing may still be moving. */
 .print *,.print *::before{transition:none!important}
@@ -383,11 +403,29 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Concepto 3 · Dato que complica</div>
   <h2>La tasa de hundimiento no sigue a la tasa de bombeo</h2>
-  <div class="cards rv">
-    <div><svg class="ico"><use href="#i-water"/></svg><b>Bombeo → velocidad</b><span>Sin relación directa</span></div>
-    <div class="hi"><svg class="ico"><use href="#i-down"/></svg><b>Espesor del acuitardo → velocidad</b><span>Relación encontrada</span></div>
+  <div class="split">
+  <svg viewBox="0 0 560 380" style="width:520px;flex:none" role="img" aria-label="Esquema: mismo bombeo en dos pozos; donde la arcilla es delgada el suelo baja poco, donde es gruesa baja mucho">
+    <rect x="10" y="84" width="250" height="56" fill="#D8BF95"/><rect x="10" y="140" width="250" height="230" fill="#8C857A"/>
+    <rect x="300" y="150" width="250" height="180" fill="#D8BF95"/><rect x="300" y="330" width="250" height="40" fill="#8C857A"/>
+    <path d="M10 70 H550" stroke="#15161A" stroke-width="2" stroke-dasharray="8 8" fill="none"/>
+    <path d="M10 84 H260 M300 150 H550" stroke="#15161A" stroke-width="3" fill="none"/>
+    <g stroke="#15161A" stroke-width="6"><path d="M235 30 V356"/><path d="M525 30 V356"/></g>
+    <g stroke="#0E7490" stroke-width="5" fill="none" stroke-linecap="round"><path d="M370 72 V140"/><path d="M356 126 L370 144 L384 126"/></g>
+    <g font-family="Inter,sans-serif" font-size="22" fill="#15161A">
+      <text x="10" y="24" font-weight="600">mismo bombeo</text><text x="300" y="24" font-weight="600">mismo bombeo</text>
+      <text x="20" y="60" font-weight="700" fill="#0E7490">baja poco</text><text x="384" y="112" font-weight="700" fill="#0E7490">baja mucho</text>
+      <text x="22" y="120">arcilla delgada</text><text x="312" y="250">arcilla gruesa</text>
+      <text x="22" y="200" fill="#fff">roca y acuífero</text>
+    </g>
+  </svg>
+  <div><table class="t rv" style="font-size:24px;margin-top:0">
+    <tr><th>Se comparó la velocidad de hundimiento con…</th><th>Resultado</th></tr>
+    <tr><td><svg class="ico" style="vertical-align:-7px;margin-right:12px"><use href="#i-water"/></svg>la tasa de bombeo</td><td>Sin relación directa</td></tr>
+    <tr class="hi"><td><svg class="ico" style="vertical-align:-7px;margin-right:12px"><use href="#i-down"/></svg>el espesor de la arcilla (acuitardo)</td><td>Relación encontrada</td></tr>
+  </table>
+</div>
   </div>
-  <p class="source">Fuente: Chaussard et al., JGR Solid Earth, 2021 [M6]</p>
+  <p class="source">Esquema, no a escala; punteada: superficie original. Fuente: Chaussard et al., JGR Solid Earth, 2021 [M6]</p>
   <aside class="notes">Esto contradice la versión simple de la historia. El bombeo inició el proceso, pero hoy lo que decide qué tan rápido baja cada barrio es cuánta arcilla tiene debajo. Bombear menos mañana no frena el hundimiento mañana. Guarden esto para la pregunta de examen.</aside>
 </section>
 <section>

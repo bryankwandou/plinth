@@ -20,7 +20,7 @@ for (const f of process.argv.slice(2)) {
       s.classList.add('on');
       const box = s.getBoundingClientRect();
       // leaf blocks that carry visible content
-      const els = [...s.querySelectorAll('h1,h2,p,li,img,svg,.big,.hbars,.tl>div,.flow>div,table,.frame,.stat,.phone,.rings,.quad,.foot,.cols,.donut,.iso,.kpis,.stack,.layers,.cards>div')]
+      const els = [...s.querySelectorAll('h1,h2,p,li,img,svg,.big,.hbars,.tl>div,.flow>div,table,.frame,.stat,.phone,.rings,.quad,.foot,.cols,.donut,.iso,.kpis,.stack,.layers,.gantt,.gantt em,.cards>div')]
         .filter(e => !e.closest('aside') && !e.closest('.pic,.bg') && e.getClientRects().length);
       // A full-bleed photo or screen (.pic, .bg) runs to the slide edge on purpose.
       // Labels drawn inside a picture (map dots, axis names, ring captions) can escape it or collide with each other.
@@ -97,6 +97,23 @@ for (const f of process.argv.slice(2)) {
     return out;
   });
   problems.push(...pr);
+  // A presenter presses P (or Ctrl+P) on the deck as it is: only the slide on screen is active. Every chart on every
+  // other page must still print in its final frame, never as an empty axis.
+  const q = await b.newPage(); await q.setViewport({ width: 1280, height: 720 }); await q.emulateMediaType('print');
+  await q.goto(pathToFileURL(resolve(f)).href, { waitUntil: 'networkidle0' });
+  problems.push(...await q.evaluate(() => {
+    const out = [], S = [...document.querySelectorAll('section')];
+    S.forEach((s, k) => {
+      const n = `print: slide ${k + 1}`, cs = e => getComputedStyle(e);
+      s.querySelectorAll('.cols i').forEach(e => { if (e.getBoundingClientRect().height < 3) out.push(`${n}: column chart prints with no bar`); });
+      s.querySelectorAll('.hbars .t i').forEach(e => { if (e.getBoundingClientRect().width < 1) out.push(`${n}: bar chart prints with no bar`); });
+      s.querySelectorAll('.iso svg, .rv>*, .rv.phone p').forEach(e => { if (+cs(e).opacity < 1) out.push(`${n}: ${e.parentElement.className.split(' ')[0]} prints invisible`); });
+      s.querySelectorAll('.stack>div').forEach(e => { if (cs(e).clipPath !== 'none' && !/inset\(0(px)?\)/.test(cs(e).clipPath)) out.push(`${n}: stacked bar prints clipped`); });
+      s.querySelectorAll('.donut').forEach(e => { if (cs(e).getPropertyValue('--pp').trim() !== cs(e).getPropertyValue('--p').trim()) out.push(`${n}: donut prints empty`); });
+    });
+    return [...new Set(out)];
+  }));
+  await q.close();
   console.log(`${f}: ${problems.length ? problems.length + ' layout problem(s)' : 'layout OK'}`);
   for (const x of problems) console.log('  ' + x);
   bad += problems.length; await p.close();

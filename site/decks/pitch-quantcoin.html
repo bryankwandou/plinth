@@ -66,7 +66,7 @@ section.brand::after{content:"";position:absolute;right:-160px;top:-160px;width:
 .cards .ico{width:48px;height:48px;margin-bottom:22px}
 .cards b{display:block;font-size:26px;letter-spacing:-.01em;margin-bottom:10px}.cards span{display:block;font-size:19px;line-height:1.4;color:var(--muted)}
 /* The picture sits in the middle of the space under the headline, not stuck to it with a void below. */
-section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso{margin-top:auto!important;margin-bottom:auto}
+section>.tl,section>.flow,section>.cards,section>.quad,section>.hbars,section>table.t,section>.row,section>.split,section>.cols,section>.kpis,section>.stack,section>.layers,section>.phones,section>.iso,section>.gantt{margin-top:auto!important;margin-bottom:auto}
 /* The key phrase of a headline in the brand colour, as GoTo and Grab do: <h2>Loans <em>tripled</em> in a year</h2> */
 h1 em,h2 em{font-style:normal;color:var(--accent)}
 section.brand h1 em,section.brand h2 em,section.photo h1 em,section.photo h2 em{color:inherit;text-decoration:underline;text-decoration-thickness:5px;text-underline-offset:10px}
@@ -142,6 +142,20 @@ section.on .stack>div,.print .stack>div{clip-path:inset(0)}
 .phones figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
 .phones .phone{width:210px;height:300px}
 .phones figcaption{font-size:22px;font-weight:600;text-align:center}.phones figcaption span{display:block;font-weight:400;color:var(--muted);font-size:18px;margin-top:2px}
+/* Roadmap or ask as a gantt over real months or weeks, as in investor decks: one row per deliverable, the bar
+   from --a to --b on a 0..--max axis, the end label beside the bar (inside it with class "end").
+   --ticks is the number of gridline intervals; the last row is the axis: <div class="ax"><b></b><p><span>0</span>…<span>18</span></p></div>
+   <div class="gantt" style="--max:18;--ticks:3"><div style="--a:0;--b:3"><b>SMS service<small>open source</small></b><i><em>Month 3</em></i></div>…</div> */
+.gantt{display:grid;gap:16px;padding-top:24px}
+.gantt>div{display:grid;grid-template-columns:320px 1fr;align-items:center;gap:28px}
+.gantt>div>b{font-size:22px;font-weight:600;line-height:1.25}.gantt>div>b small{display:block;font-size:18px;font-weight:400;color:var(--muted);margin-top:2px}
+.gantt>div>i{position:relative;height:52px;border-left:2px solid var(--ink);background:repeating-linear-gradient(90deg,transparent 0 calc(100% / var(--ticks,3) - 1px),var(--line) 0 calc(100% / var(--ticks,3)))}
+.gantt>div>i::before{content:"";position:absolute;top:8px;bottom:8px;left:calc(var(--a) / var(--max) * 100%);width:calc((var(--b) - var(--a)) / var(--max) * 100%);background:color-mix(in srgb,var(--muted) 38%,var(--bg));border-radius:0 8px 8px 0}
+.gantt>div.hi>i::before{background:var(--accent)}
+.gantt em{position:absolute;top:50%;transform:translateY(-50%);left:calc(var(--b) / var(--max) * 100% + 14px);font-style:normal;font-size:19px;font-weight:600;white-space:nowrap}
+.gantt .hi em{color:var(--accent)}
+.gantt .end em{left:auto;right:calc((var(--max) - var(--b)) / var(--max) * 100% + 14px);color:#fff}
+.gantt>.ax p{margin:-6px -12px 0 -6px;max-width:none;display:flex;justify-content:space-between;font-size:18px;color:var(--muted);font-feature-settings:"tnum"}
 aside.notes{display:none}
 #progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);transition:width .3s}
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:32vh;overflow:auto;background:#16171b;color:#ddd;font:16px/1.5 var(--font);padding:18px 24px;display:none}
@@ -188,7 +202,7 @@ table.t tr.hi td{color:var(--accent);font-weight:600}
 .phone p code{font-family:var(--mono);font-size:12px;display:block;white-space:pre;margin-top:4px}
 .phone.sms{background:#fff}.phone.sms .top{background:#F2F2F7;color:#111}.phone.sms p{background:#E9E9EB}.phone.sms p.me{background:#2F7CF6;color:#fff}
 .rv.phone p{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
-section.on .rv.phone p{opacity:1;transform:none}
+section.on .rv.phone p,.print .rv.phone p{opacity:1;transform:none}
 section.on .rv.phone p:nth-of-type(2){transition-delay:.5s}section.on .rv.phone p:nth-of-type(3){transition-delay:1s}section.on .rv.phone p:nth-of-type(4){transition-delay:1.5s}
 /* Market size: nested circles, area roughly proportional; every ring carries a sourced number. */
 .rings{position:relative;width:340px;height:340px;flex:none}
@@ -216,7 +230,13 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   section{position:relative;opacity:1;width:1280px;height:720px;page-break-after:always;break-after:page}
   #progress,#notes,#hint{display:none}
 }
-@media print{.hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important;transition:none}.rv>*{opacity:1!important;transform:none!important}}
+/* Ctrl+P or the P key prints every slide, not only the one on screen: each chart in its final frame. */
+@media print{
+  *,*::before,*::after{transition:none!important}
+  .hbars .t i{width:calc((var(--b) - var(--a,0))*1%)!important}.rv>*,.rv.phone p{opacity:1!important;transform:none!important}
+  .cols i{height:calc(var(--v) / var(--max,100) * (100% - 52px))!important}.donut{--pp:var(--p)!important}
+  .iso svg{opacity:1!important;transform:none!important}.stack>div{clip-path:inset(0)!important}
+}
 @media (prefers-reduced-motion:reduce){section,.hbars .t i,.rv>*,.cols i,.donut,.stack>div,.iso svg{transition:none}}
 /* PDF and PPTX capture the final frame: nothing may still be moving. */
 .print *,.print *::before{transition:none!important}
@@ -264,10 +284,10 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
   <div class="fill rv">
     <svg width="96" height="96" viewBox="0 0 512 512" style="margin:0 0 36px"><circle cx="256" cy="256" r="256" fill="#0B1020"/><circle cx="256" cy="256" r="130" fill="none" stroke="#F2F4FA" stroke-width="42"/><path d="M310 310 L392 392" stroke="#F2F4FA" stroke-width="42" stroke-linecap="round"/><ellipse cx="256" cy="256" rx="200" ry="70" fill="none" stroke="#2EE6D6" stroke-width="16" transform="rotate(-30 256 256)"/><circle cx="430" cy="160" r="24" fill="#2EE6D6"/></svg>
     <h1>QuantCoin keeps long-held Solana tokens safe from a quantum computer</h1>
-    <p class="lede">A Token-2022 token with a hybrid vault · Bryan Kwandou · devnet, pre-audit</p>
+    <p class="lede">A Token-2022 token with a hybrid vault · Bryan Kwandou · live on mainnet, pre-audit</p>
   </div>
-  <figure class="pic screen"><img src="img/qc-explorer-mint.jpg" alt="Solana Explorer, devnet: QuantCoin (QC) Token-2022 mint, fixed supply 22,000,000,000,000"><figcaption class="credit">Solana Explorer, devnet, 29 Sep 2026: mint BUoNsF…rukAK8</figcaption></figure>
-  <aside class="notes">QuantCoin is a Solana token whose treasury, team and reserve balances sit in a vault that needs two signatures to open. One is the normal Ed25519 signature. The other is a hash-based signature that a quantum computer cannot forge. It is on devnet and it has not had an external audit yet.</aside>
+  <figure class="pic screen"><img src="img/qc-mainnet-mint.jpg" alt="Solana Explorer, Mainnet Beta: QuantCoin (QC) Token-2022 mint, fixed supply 22,000,000,000,000"><figcaption class="credit">Solana Explorer, Mainnet Beta, 30 Sep 2026: mint AsEEay…hpA68W2</figcaption></figure>
+  <aside class="notes">QuantCoin is a Solana token whose treasury, team and reserve balances sit in a vault that needs two signatures to open. One is the normal Ed25519 signature. The other is a hash-based signature that a quantum computer cannot forge. It is live on mainnet, the upgrade key sits with a two-of-three multisig, and it has not had an external audit yet.</aside>
 </section>
 <section>
   <div class="eyebrow">Problem</div>
@@ -322,13 +342,25 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Product</div>
   <h2>A vault opens only when both signatures check out</h2>
-  <div class="flow rv">
-    <div><svg class="ico"><use href="#i-key"/></svg><b>Ed25519</b><span>Owner's normal wallet signature</span></div><em>+</em>
-    <div><svg class="ico"><use href="#i-lock"/></svg><b>Winternitz</b><span>One-time hash signature over SHA-256</span></div><em>→</em>
-    <div class="hi"><svg class="ico"><use href="#i-shield"/></svg><b>Vault program</b><span>Checks both, or refuses</span></div><em>→</em>
-    <div><svg class="ico"><use href="#i-send"/></svg><b>Spend</b><span>Pays out, refunds the rest to a fresh vault</span></div>
-  </div>
-  <p class="lede" style="margin-top:48px">An attacker has to break both.</p>
+  <svg viewBox="0 0 1152 330" style="width:100%;height:auto;margin-top:auto;margin-bottom:auto" role="img" aria-label="Two checks, four outcomes: the vault pays out only when both the Ed25519 and the Winternitz signature pass; a quantum attacker or a Winternitz bug alone is refused">
+    <g font-family="Inter,sans-serif" font-size="22" fill="#15161A">
+      <text x="290" y="30" font-weight="600">Winternitz passes</text><text x="728" y="30" font-weight="600">Winternitz fails</text>
+      <text x="0" y="118" font-weight="600">Ed25519 passes</text><text x="0" y="256" font-weight="600">Ed25519 fails</text>
+      <rect x="290" y="56" width="420" height="120" rx="14" fill="#0D8A80"/>
+      <text x="318" y="108" font-size="30" font-weight="700" fill="#fff">Spend</text>
+      <text x="318" y="148" fill="#fff">the owner, holding both keys</text>
+      <rect x="728" y="56" width="420" height="120" rx="14" fill="#EDEBE6"/>
+      <text x="756" y="108" font-size="30" font-weight="700" fill="#15161A">Refused</text>
+      <text x="756" y="148" fill="#5F6570">a quantum attacker</text>
+      <rect x="290" y="194" width="420" height="120" rx="14" fill="#EDEBE6"/>
+      <text x="318" y="246" font-size="30" font-weight="700" fill="#15161A">Refused</text>
+      <text x="318" y="286" fill="#5F6570">a Winternitz bug</text>
+      <rect x="728" y="194" width="420" height="120" rx="14" fill="#EDEBE6"/>
+      <text x="756" y="246" font-size="30" font-weight="700" fill="#15161A">Refused</text>
+      
+    </g>
+  </svg>
+  <p class="lede" style="margin-top:0">An attacker has to break both.</p>
   <aside class="notes">An attacker has to break both. Before quantum computers exist, Ed25519 also covers any bug in the newer Winternitz code. After, the hash half still holds. Every spend empties the vault, so no one-time key signs twice. Everyday transfers stay plain Token-2022, so wallets need nothing new.</aside>
 </section>
 <section class="media">
@@ -342,7 +374,7 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">App design</div>
   <h2>Holders see one balance and two keys</h2>
-  <div class="row"><div class="c8"><img class="shot" alt="Quantum Safe desktop vault screen, design mockup" src="img/qc-vaults.png"><p class="cap">Design mockup, not yet built. The vault program and CLI client run on devnet today.</p></div>
+  <div class="row"><div class="c8"><img class="shot" alt="Quantum Safe desktop vault screen, design mockup" src="img/qc-vaults.png"><p class="cap">Design mockup, not yet built. The vault program and CLI client run on mainnet and devnet today.</p></div>
   <div class="c4"><p>Losing either key locks the vault, so the app puts the backup up front.</p></div></div>
   <aside class="notes">This is the design for the holder app, and I want to be clear it is a design, not a shipped app. What runs today is the program and the command-line client. The screen shows the two keys and the encrypted backup, because a lost hash key means locked funds.</aside>
 </section>
@@ -364,7 +396,7 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
     <span class="ax y">↑ Protects balances that already exist</span><span class="ax x">Works today, no protocol change →</span>
     <span class="dot" style="left:6%;bottom:22%">Solana Foundation plan: new wallets, if quantum turns credible [L3]</span>
     <span class="dot" style="left:56%;bottom:52%">Blueshift vault: SOL only [L1]</span>
-    <span class="dot hi" style="left:56%;bottom:86%">QuantCoin: any Token-2022 balance, devnet now</span>
+    <span class="dot hi" style="left:56%;bottom:86%">QuantCoin: any Token-2022 balance, live now</span>
   </div>
   <p class="source">Source: Solana Foundation, April 2026 [L3]; Blueshift on GitHub [L1]</p>
   <aside class="notes">The Foundation says quantum is still years away and plans Falcon for new wallets later. That is fair. But its plan starts when the threat is credible, and a treasury cannot move in a day. Blueshift proved the idea for SOL. QuantCoin extends it to tokens.</aside>
@@ -372,10 +404,14 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Go-to-market</div>
   <h2>The first users are treasuries that plan to hold for years</h2>
-  <div class="cards rv">
-    <div class="hi"><svg class="ico"><use href="#i-bank"/></svg><b>$1.3B</b><span>held in Solana DAO treasuries in 2022, the last public count [L6]</span></div>
-    <div><svg class="ico"><use href="#i-lock"/></svg><b>Team vesting</b><span>balances locked for years, by design</span></div>
-    <div><svg class="ico"><use href="#i-clock"/></svg><b>2035</b><span>NIST disallows EdDSA; holders must move before then [G1]</span></div>
+  <div class="kpis rv">
+    <div class="hi"><b>$1.3B</b><span>in Solana DAO treasuries, 2022, the last public count [L6]</span></div>
+    <div><b>0</b><span>treasuries signed; team vesting goes first</span></div>
+  </div>
+  <div class="gantt" style="--max:10;--ticks:5">
+    <div class="end" style="--a:0;--b:9"><b>Ed25519 wallet<small>Solana today</small></b><i><em>NIST disallows, 2035</em></i></div>
+    <div class="hi end" style="--a:0;--b:10"><b>QuantCoin vault<small>+ hash-based key</small></b><i><em>no NIST end date</em></i></div>
+    <div class="ax"><b></b><p><span>2026</span><span>2028</span><span>2030</span><span>2032</span><span>2034</span><span>2036</span></p></div>
   </div>
   <p class="source">Source: Decrypt citing DeepDAO, March 2022 [L6]; NIST IR 8547 [G1]</p>
   <aside class="notes">The figure is old and secondhand, and I say so. The point is that long-held treasuries exist. I have not signed any of them yet. There are no users today; the signal so far is engineering.</aside>
@@ -383,26 +419,29 @@ section.on .rv>:nth-child(n+8){transition-delay:.84s}
 <section>
   <div class="eyebrow">Team</div>
   <h2>One builder wrote the program, the client and the audit trail</h2>
-  <div class="cards rv">
-    <div><svg class="ico"><use href="#i-code"/></svg><b>Vault program</b><span>Pinocchio, Rust</span></div>
-    <div><svg class="ico"><use href="#i-key"/></svg><b>WOTS client</b><span>TypeScript signer, Codama IDL</span></div>
-    <div><svg class="ico"><use href="#i-doc"/></svg><b>Internal audit</b><span>Findings F1 to F5, all public</span></div>
-    <div class="hi"><svg class="ico"><use href="#i-search"/></svg><b>Next hire</b><span>A reviewer who did not write the code</span></div>
+  <div class="gantt" style="--max:8;--ticks:4">
+    <div style="--a:0;--b:7"><b>Vault program<small>Pinocchio, Rust</small></b><i></i></div>
+    <div style="--a:0;--b:8"><b>WOTS client<small>TypeScript signer</small></b><i></i></div>
+    <div style="--a:0;--b:8"><b>Internal audit<small>findings F1 to F5, public</small></b><i></i></div>
+    <div class="hi end" style="--a:7;--b:8"><b>Mainnet<small>2-of-3 multisig</small></b><i><em>30 Sep</em></i></div>
+    <div class="ax"><b></b><p><span>23 Sep</span><span>25</span><span>27</span><span>29</span><span>1 Oct</span></p></div>
   </div>
-  <p class="lede" style="margin-top:20px">All four by Bryan Kwandou so far.</p>
-  <aside class="notes">It is one person today. That is the main risk, and the reason the external audit comes before anything else.</aside>
+  <p class="lede" style="margin-top:12px">Every commit since the rebuild: Bryan Kwandou.</p>
+  <p class="source">Source: QUANTCOIN git history, first and last commit per folder, 23–30 Sep 2026</p>
+  <aside class="notes">It is one person today. The next hire is a reviewer who did not write the code. That is the main risk, and the reason the external audit comes before anything else.</aside>
 </section>
-<section>
+<section class="media">
   <div class="eyebrow">Ask</div>
   <h2>Fund an external audit, then lock the program for good</h2>
-  <div class="flow rv">
-    <div><svg class="ico"><use href="#i-code"/></svg><b>Today</b><span>Devnet, 7,464-byte program</span></div><em>→</em>
-    <div class="hi"><svg class="ico"><use href="#i-search"/></svg><b>External audit</b><span>What we ask you to fund</span></div><em>→</em>
-    <div><svg class="ico"><use href="#i-globe"/></svg><b>Mainnet</b><span>Same bytes the auditor read</span></div><em>→</em>
-    <div><svg class="ico"><use href="#i-lock"/></svg><b>Upgrade key final</b><span>No Ed25519 backdoor left</span></div>
-  </div>
-  <p class="source">Source: team plan, not outside data</p>
-  <aside class="notes">The ask is simple. An outside audit of a program of seven and a half kilobytes. Then mainnet, and the upgrade key thrown away, because any Ed25519 key left behind would undo the whole point.</aside>
+  <table class="t" style="font-size:24px;margin:auto 0">
+    <tr><th>When</th><th>The upgrade key</th></tr>
+    <tr><td>Today</td><td>Live on mainnet, held by a 2-of-3 Squads multisig</td></tr>
+    <tr class="hi"><td>Your funding</td><td>An outside audit of the 7,464-byte program</td></tr>
+    <tr><td>After audit</td><td>Made final: nobody can change the program</td></tr>
+  </table>
+  <p class="source">Source: Solana Explorer, Mainnet Beta, 30 Sep 2026; team plan</p>
+  <figure class="pic screen"><img src="img/qc-mainnet-program.jpg" alt="Solana Explorer, Mainnet Beta: QuantCoin vault program CiupyG…FACms, upgradeable, upgrade authority 45nAv…TXxez"><figcaption class="credit">Solana Explorer, Mainnet Beta, 30 Sep 2026: program CiupyG…FACms, upgrade authority 45nAv…TXxez</figcaption></figure>
+  <aside class="notes">The ask is simple. The program is already on mainnet, but its upgrade key still exists, held by a two-of-three multisig. The ask is an outside audit of seven and a half kilobytes, then the upgrade key thrown away, because any Ed25519 key left behind would undo the whole point.</aside>
 </section>
 
 </div></div>
